@@ -12,22 +12,21 @@ import {
 import { Button } from '../ui/Button';
 
 export const ThemeSwitcher = () => {
-	const [currentTheme, setCurrentTheme] = useState('');
-	const { theme, setTheme, systemTheme } = useTheme();
+	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 
-	useEffect(() => {
-		setTheme(currentTheme);
-	}, [currentTheme, setTheme]);
+	const changeThemeHandler = (theme: string) => {
+		setTheme(theme);
+	};
 
 	useEffect(() => {
-		if (systemTheme) setTheme(systemTheme);
 		setMounted(true);
-	}, [systemTheme, setMounted, setTheme]);
+	}, []);
 
 	if (!mounted) {
 		return null;
 	}
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -36,7 +35,7 @@ export const ThemeSwitcher = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-auto p-2 bg-muted rounded-md text-sm  absolute top-2  right-[-22px]  '>
-				<DropdownMenuRadioGroup value={currentTheme} onValueChange={setCurrentTheme}>
+				<DropdownMenuRadioGroup value={theme} onValueChange={changeThemeHandler}>
 					<DropdownMenuRadioItem
 						value='light'
 						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
@@ -47,13 +46,12 @@ export const ThemeSwitcher = () => {
 						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
 						<Moon size={20} /> <p>Dark</p>
 					</DropdownMenuRadioItem>
-					{systemTheme && (
-						<DropdownMenuRadioItem
-							value={systemTheme}
-							className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
-							<Laptop size={20} /> <p>System</p>
-						</DropdownMenuRadioItem>
-					)}
+
+					<DropdownMenuRadioItem
+						value='system'
+						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
+						<Laptop size={20} /> <p>System</p>
+					</DropdownMenuRadioItem>
 				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

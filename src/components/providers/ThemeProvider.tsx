@@ -7,6 +7,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 		setMounted(true);
 	}, []);
 
+
 	if (!mounted) {
 		return <>{children}</>;
 	}
