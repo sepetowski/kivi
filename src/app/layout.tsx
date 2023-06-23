@@ -3,6 +3,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Nav } from '@/components/nav/Nav';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,6 +20,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<ThemeProvider>
 						<Nav />
 						{children}
+						<Toaster />
 					</ThemeProvider>
 				</AuthProvider>
 			</body>

@@ -4,8 +4,17 @@ import { GithubIcon } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/themeSwitcher/ThemeSwitcher';
 import { buttonVariants } from '@/components/ui/Button';
+import { usePathname } from 'next/navigation';
 
 export const Nav = () => {
+	const pathname = usePathname();
+
+	let linkUrl = '/sing-in';
+	let linkName = 'Sing In';
+	if (pathname === '/sing-in') {
+		linkUrl = '/sing-up';
+		linkName = 'Sing Up';
+	}
 
 	return (
 		<nav className='hidden md:block fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50'>
@@ -17,10 +26,11 @@ export const Nav = () => {
 
 				<div className='flex items-center gap-4'>
 					<Link
-						href='/sing-in'
+						href={linkUrl}
 						className={buttonVariants({ variant: 'secondary', className: 'font-bold text-lg' })}>
-						Sign In
+						{linkName}
 					</Link>
+
 					<div className='flex gap-1 items-center'>
 						<a href='/' className={buttonVariants({ variant: 'ghost', size: 'xs' })}>
 							<GithubIcon size={25} />

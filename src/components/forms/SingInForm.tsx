@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/Button';
@@ -11,15 +11,12 @@ import { useTheme } from 'next-themes';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import * as Yup from 'yup';
+import Link from 'next/link';
 
-export const SingUpForm = () => {
+export const SingInForm = () => {
 	const { theme } = useTheme();
-	const { toast, dismiss } = useToast();
-	const SignupSchema = Yup.object().shape({
-		name: Yup.string()
-			.required('Name is required')
-			.min(3, 'Name must be at least 3 characters long')
-			.trim(),
+	const { toast } = useToast();
+	const SigninSchema = Yup.object().shape({
 		email: Yup.string().required('Email is required').email('Email must be valid').trim(),
 		password: Yup.string()
 			.required('Password is required')
@@ -30,69 +27,28 @@ export const SingUpForm = () => {
 			.trim(),
 	});
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			dismiss();
-		}, 2000);
-
-		return () => {
-			clearTimeout(timer);
-		};
-	}, [toast, dismiss]);
-
 	const formik = useFormik({
 		initialValues: {
-			name: '',
 			email: '',
 			password: '',
 		},
-		validationSchema: SignupSchema,
+		validationSchema: SigninSchema,
 
-		onSubmit: async (values) => {
-			try {
-				const res = await fetch('/api/auth/register', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						name: values.name,
-						email: values.email,
-						password: values.password,
-					}),
-				});
-				console.log(res);
-				if (res.ok) {
-					toast({
-						title: 'Account creted sucesfuly',
-					});
-				}
-			} catch (err) {
-				toast({
-					variant: 'destructive',
-					title: 'Oh no! Something went wrong.',
-				});
-				console.log(err);
-			}
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Sometihing went wrong.',
+				description: 'Check your password or email',
+				action: <ToastAction altText='Close'>Close</ToastAction>,
+			});
 		},
 	});
 	return (
 		<div className='w-full md:w-1/2 h-full   '>
 			<div className='h-full w-full xl:w-2/3 mx-auto flex flex-col items-center justify-center p-4 md:p-6  '>
-				<h2 className='font-bold text-2xl md:text-3xl my-4 md:my-0'>Create an account</h2>
+				<h2 className='font-bold text-2xl md:text-3xl my-4 md:my-0'>Login to your account</h2>
 				<form className='w-full flex flex-col gap-4 mt-4' onSubmit={formik.handleSubmit}>
-					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='name'>Name</Label>
-						<Input
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							value={formik.values.name}
-							type='text'
-							id='name'
-							placeholder='Name'
-						/>
-						<InputError error={formik.errors.name} isInputTouched={formik.touched.name} />
-					</div>
 					<div className='grid w-full  items-center gap-1.5'>
 						<Label htmlFor='email'>Email</Label>
 						<Input
@@ -119,7 +75,7 @@ export const SingUpForm = () => {
 					</div>
 
 					<Button type='submit' className='flex gap-2 text-lg w-full'>
-						Sing Up
+						Sing In
 					</Button>
 				</form>
 
@@ -144,8 +100,10 @@ export const SingUpForm = () => {
 				</div>
 
 				<p className='text-muted-foreground text-center '>
-					By continuing, you agree to our <span className='underline'>Terms of Service</span> and{' '}
-					<span className='underline'>Privacy Policy.</span>
+					Dont have an account yet?
+					<Link className='text-purple-500 font-bold ml-2' href='/sing-up'>
+						Sing up
+					</Link>
 				</p>
 			</div>
 		</div>
