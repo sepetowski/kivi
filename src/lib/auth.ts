@@ -5,10 +5,15 @@ import { db } from './db';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import bcrypt from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: 'jwt',
+	},
+	pages: {
+		error: '/sign-in',
+		signIn: '/sign-in',
 	},
 	adapter: PrismaAdapter(db) as Adapter,
 	providers: [
@@ -17,8 +22,8 @@ export const authOptions: NextAuthOptions = {
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		}),
 		GithubProvider({
-			clientId: process.env.GITHUB_ID!,
-			clientSecret: process.env.GITHUB_SECRET!,
+			clientId: process.env.GITHUB_CLIENT_ID!,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET!,
 		}),
 		CredentialsProvider({
 			name: 'credentials',
@@ -28,9 +33,23 @@ export const authOptions: NextAuthOptions = {
 				password: { label: 'Password', type: 'password', placeholder: 'Password' },
 			},
 			async authorize(credentials) {
-				const user = { id: '1', name: 'J Smith', email: 'test@test.com' };
-				if (user) return user;
-				else return null;
+				if (!credentials?.email || !credentials.password)
+					throw new Error('Please enter email and password.');
+
+				const user = await db.user.findUnique({
+					where: {
+						email: credentials.email,
+					},
+				});
+
+				if (!user || !user?.hashedPassword)
+					throw new Error('User was not found, Please enter valid email.');
+				const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+
+				if (!passwordMatch)
+					throw new Error('The entered password is incorrect, please enter the correct one.');
+
+				return user;
 			},
 		}),
 	],

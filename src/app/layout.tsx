@@ -20,7 +20,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<ThemeProvider>
 						<Nav />
 						{children}
-						<Toaster />
+						<Toaster  />
 					</ThemeProvider>
 				</AuthProvider>
 			</body>

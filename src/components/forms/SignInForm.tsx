@@ -1,21 +1,26 @@
 'use client';
-import React from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Separator } from '@/components/ui/Separator';
 import { InputError } from '@/components/forms/InputError';
-import { useTheme } from 'next-themes';
-import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import * as Yup from 'yup';
+import { ToastAction } from '@/components/ui/toast';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Loader2Icon } from 'lucide-react';
+import { GithubBtn } from './GithubBtn';
+import { GoogleBtn } from './GoogleBtn';
 import Link from 'next/link';
+import * as Yup from 'yup';
 
 export const SingInForm = () => {
-	const { theme } = useTheme();
 	const { toast } = useToast();
+	const { status } = useSession();
+	const [isSending, setIsSending] = useState(false);
+	const router = useRouter();
 	const SigninSchema = Yup.object().shape({
 		email: Yup.string().required('Email is required').email('Email must be valid').trim(),
 		password: Yup.string()
@@ -27,6 +32,9 @@ export const SingInForm = () => {
 			.trim(),
 	});
 
+	useEffect(() => {
+		if (status === 'authenticated') router.push('/');
+	}, [status,router]);
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -34,14 +42,40 @@ export const SingInForm = () => {
 		},
 		validationSchema: SigninSchema,
 
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Sometihing went wrong.',
-				description: 'Check your password or email',
-				action: <ToastAction altText='Close'>Close</ToastAction>,
-			});
+		onSubmit: (values, { resetForm }) => {
+			setIsSending(true);
+			signIn('credentials', {
+				email: values.email,
+				password: values.password,
+				redirect: false,
+			})
+				.then((res) => {
+					if (res?.error)
+						toast({
+							variant: 'destructive',
+							title: res.error,
+						});
+					else if (res && res.ok && !res?.error) {
+						toast({
+							title: 'You have been logged in.',
+						});
+						resetForm();
+					} else {
+						toast({
+							variant: 'destructive',
+							title: 'Oh no! An error has occured.',
+							description: 'Something went wrong, please try again',
+							action: (
+								<ToastAction onClick={() => formik.submitForm} altText='Try again'>
+									Try again
+								</ToastAction>
+							),
+						});
+					}
+				})
+				.finally(() => {
+					setIsSending(false);
+				});
 		},
 	});
 	return (
@@ -50,8 +84,11 @@ export const SingInForm = () => {
 				<h2 className='font-bold text-2xl md:text-3xl my-4 md:my-0'>Login to your account</h2>
 				<form className='w-full flex flex-col gap-4 mt-4' onSubmit={formik.handleSubmit}>
 					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='email'>Email</Label>
+						<Label className='font-bold' htmlFor='email'>
+							Email
+						</Label>
 						<Input
+							autoComplete='email'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.email}
@@ -62,8 +99,11 @@ export const SingInForm = () => {
 						<InputError error={formik.errors.email} isInputTouched={formik.touched.email} />
 					</div>
 					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='password'>Password</Label>
+						<Label className='font-bold' htmlFor='password'>
+							Password
+						</Label>
 						<Input
+							autoComplete='password'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.password}
@@ -74,8 +114,14 @@ export const SingInForm = () => {
 						<InputError error={formik.errors.password} isInputTouched={formik.touched.password} />
 					</div>
 
-					<Button type='submit' className='flex gap-2 text-lg w-full'>
-						Sing In
+					<Button disabled={isSending} type='submit' className='flex gap-2 text-lg w-full'>
+						{!isSending && <>Sign In</>}
+						{isSending && (
+							<>
+								Please wait
+								<Loader2Icon className='animate-spin' />
+							</>
+						)}
 					</Button>
 				</form>
 
@@ -84,24 +130,13 @@ export const SingInForm = () => {
 					or continue with
 				</p>
 				<div className='w-full flex  gap-4 my-4'>
-					<Button variant='outline' className='flex gap-2 text-lg w-full'>
-						<Image src='/googleLogo.svg' width={25} height={25} alt='google logo' />
-						Google
-					</Button>
-					<Button variant='outline' className='flex gap-2 text-lg w-full relative'>
-						{theme === 'dark' && (
-							<Image src='/githubLogoWhite.svg' width={30} height={30} alt='google logo' />
-						)}
-						{theme === 'light' && (
-							<Image src='/githubLogoBlack.svg' width={30} height={30} alt='google logo' />
-						)}
-						Github
-					</Button>
+					<GoogleBtn isSending={isSending} />
+					<GithubBtn isSending={isSending} />
 				</div>
 
 				<p className='text-muted-foreground text-center '>
 					Dont have an account yet?
-					<Link className='text-purple-500 font-bold ml-2' href='/sing-up'>
+					<Link className='text-purple-500 font-bold ml-2' href='/sign-up'>
 						Sing up
 					</Link>
 				</p>

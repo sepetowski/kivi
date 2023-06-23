@@ -8,23 +8,43 @@ export async function POST(request: Request) {
 	if (!name || !email || !password) {
 		return new NextResponse('Missing Fields.', { status: 400 });
 	}
-	const exist = await db.user.findUnique({
+	const userName = await db.user.findUnique({
+		where: {
+			name,
+		},
+	});
+
+	if(userName) return new NextResponse('This username is taken', { status: 202 });
+
+	const existedUser = await db.user.findUnique({
 		where: {
 			email,
 		},
 	});
 
-	if (exist) throw new Error('Email is already in use.');
+	if (existedUser) return new NextResponse('Email is already in use.', { status: 201 });
 
 	const hashedPassword = await bcrypt.hash(password, 10);
 
-	const newUser = await db.user.create({
-		data: {
-			name,
-			email,
-			hashedPassword,
-		},
-	});
+	try {
+		const newUser = await db.user.create({
+			data: {
+				name,
+				email,
+				hashedPassword,
+			},
+		});
 
-	return NextResponse.json(newUser);
+		return NextResponse.json(newUser, { status: 200 });
+	} catch (err) {
+		let errMsg = 'Unknown error.';
+		if (typeof err === 'string') {
+			errMsg = err;
+		} else if (err instanceof Error) {
+			errMsg = err.message;
+		}
+		return new NextResponse(errMsg, {
+			status: 500,
+		});
+	}
 }

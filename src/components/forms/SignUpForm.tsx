@@ -1,24 +1,30 @@
 'use client';
-import React, { useEffect } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Separator } from '@/components/ui/Separator';
 import { InputError } from '@/components/forms/InputError';
-import { useTheme } from 'next-themes';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Loader2Icon } from 'lucide-react';
+import { GithubBtn } from './GithubBtn';
+import { GoogleBtn } from './GoogleBtn';
 import * as Yup from 'yup';
 
 export const SingUpForm = () => {
-	const { theme } = useTheme();
-	const { toast, dismiss } = useToast();
+	const { toast } = useToast();
+	const [isSending, setIsSending] = useState(false);
+	const router = useRouter();
+	const { status } = useSession();
 	const SignupSchema = Yup.object().shape({
-		name: Yup.string()
-			.required('Name is required')
-			.min(3, 'Name must be at least 3 characters long')
+		username: Yup.string()
+			.required('Username is required')
+			.min(3, 'Username must be at least 3 characters long')
+			.max(25, 'Username must be at least 3 characters long')
 			.trim(),
 		email: Yup.string().required('Email is required').email('Email must be valid').trim(),
 		password: Yup.string()
@@ -31,24 +37,20 @@ export const SingUpForm = () => {
 	});
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			dismiss();
-		}, 2000);
-
-		return () => {
-			clearTimeout(timer);
-		};
-	}, [toast, dismiss]);
+		if (status === 'authenticated') router.push('/');
+	}, [status, router]);
 
 	const formik = useFormik({
 		initialValues: {
-			name: '',
+			username: '',
 			email: '',
 			password: '',
 		},
 		validationSchema: SignupSchema,
 
-		onSubmit: async (values) => {
+		onSubmit: async (values, { resetForm }) => {
+			setIsSending(true);
+
 			try {
 				const res = await fetch('/api/auth/register', {
 					method: 'POST',
@@ -56,24 +58,64 @@ export const SingUpForm = () => {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						name: values.name,
+						name: values.username,
 						email: values.email,
 						password: values.password,
 					}),
 				});
-				console.log(res);
-				if (res.ok) {
-					toast({
-						title: 'Account creted sucesfuly',
-					});
+
+				switch (res.status) {
+					case 200: {
+						toast({
+							title: 'Account was created!',
+						});
+						signIn('credentials', {
+							email: values.email,
+							password: values.password,
+							redirect: false,
+						});
+						resetForm();
+
+						break;
+					}
+					case 201: {
+						toast({
+							variant: 'destructive',
+							title: 'Email is already in use.',
+						});
+
+						break;
+					}
+					case 202: {
+						toast({
+							variant: 'destructive',
+							title: `Username ${values.username} is taken.`,
+						});
+
+						break;
+					}
+					case 400: {
+						toast({
+							variant: 'destructive',
+							title: 'Missing Fields.',
+							description: 'Please enter all fields',
+						});
+						break;
+					}
+					default:
+						toast({
+							variant: 'destructive',
+							title: 'Oh no! An error has occured.',
+							description: 'Something went wrong, please try again',
+							action: (
+								<ToastAction onClick={() => formik.submitForm} altText='Try again'>
+									Try again
+								</ToastAction>
+							),
+						});
 				}
-			} catch (err) {
-				toast({
-					variant: 'destructive',
-					title: 'Oh no! Something went wrong.',
-				});
-				console.log(err);
-			}
+			} catch (err) {}
+			setIsSending(false);
 		},
 	});
 	return (
@@ -82,20 +124,29 @@ export const SingUpForm = () => {
 				<h2 className='font-bold text-2xl md:text-3xl my-4 md:my-0'>Create an account</h2>
 				<form className='w-full flex flex-col gap-4 mt-4' onSubmit={formik.handleSubmit}>
 					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='name'>Name</Label>
+						<Label className='font-bold' htmlFor='username'>
+							Username
+						</Label>
 						<Input
+							autoComplete='username'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							value={formik.values.name}
+							value={formik.values.username}
 							type='text'
-							id='name'
-							placeholder='Name'
+							id='username'
+							placeholder='Username'
 						/>
-						<InputError error={formik.errors.name} isInputTouched={formik.touched.name} />
+						<p className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+							This is your public display name. It is unqie
+						</p>
+						<InputError error={formik.errors.username} isInputTouched={formik.touched.username} />
 					</div>
 					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='email'>Email</Label>
+						<Label className='font-bold' htmlFor='email'>
+							Email
+						</Label>
 						<Input
+							autoComplete='email'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.email}
@@ -106,8 +157,11 @@ export const SingUpForm = () => {
 						<InputError error={formik.errors.email} isInputTouched={formik.touched.email} />
 					</div>
 					<div className='grid w-full  items-center gap-1.5'>
-						<Label htmlFor='password'>Password</Label>
+						<Label className='font-bold' htmlFor='password'>
+							Password
+						</Label>
 						<Input
+							autoComplete='password'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.password}
@@ -118,8 +172,14 @@ export const SingUpForm = () => {
 						<InputError error={formik.errors.password} isInputTouched={formik.touched.password} />
 					</div>
 
-					<Button type='submit' className='flex gap-2 text-lg w-full'>
-						Sing Up
+					<Button disabled={isSending} type='submit' className='flex gap-2 text-lg w-full'>
+						{!isSending && <>Sign Up</>}
+						{isSending && (
+							<>
+								Please wait
+								<Loader2Icon className='animate-spin' />
+							</>
+						)}
 					</Button>
 				</form>
 
@@ -128,19 +188,8 @@ export const SingUpForm = () => {
 					or continue with
 				</p>
 				<div className='w-full flex  gap-4 my-4'>
-					<Button variant='outline' className='flex gap-2 text-lg w-full'>
-						<Image src='/googleLogo.svg' width={25} height={25} alt='google logo' />
-						Google
-					</Button>
-					<Button variant='outline' className='flex gap-2 text-lg w-full relative'>
-						{theme === 'dark' && (
-							<Image src='/githubLogoWhite.svg' width={30} height={30} alt='google logo' />
-						)}
-						{theme === 'light' && (
-							<Image src='/githubLogoBlack.svg' width={30} height={30} alt='google logo' />
-						)}
-						Github
-					</Button>
+					<GoogleBtn isSending={isSending} />
+					<GithubBtn isSending={isSending} />
 				</div>
 
 				<p className='text-muted-foreground text-center '>
