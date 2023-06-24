@@ -16,6 +16,7 @@ import { GoogleBtn } from './GoogleBtn';
 import Link from 'next/link';
 import * as Yup from 'yup';
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
+import { SigninSchema } from '@/validations/SinginSchema';
 
 export const SingInForm = () => {
 	const { toast } = useToast();
@@ -23,16 +24,7 @@ export const SingInForm = () => {
 	useLoginByProviderError();
 	const [isSending, setIsSending] = useState(false);
 	const router = useRouter();
-	const SigninSchema = Yup.object().shape({
-		email: Yup.string().required('Email is required').email('Email must be valid').trim(),
-		password: Yup.string()
-			.required('Password is required')
-			.min(6, 'Password must be at least 6 characters long')
-			.matches(/[A-Z]/, 'Password mast have at least one uppercase char')
-			.matches(/[a-z]/, 'Password mast have at least one lowercase char')
-			.matches(/[0-9]/, 'Password mast have at least one number')
-			.trim(),
-	});
+	
 
 	useEffect(() => {
 		if (status === 'authenticated') router.push('/');
