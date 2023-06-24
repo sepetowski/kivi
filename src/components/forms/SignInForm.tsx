@@ -15,10 +15,12 @@ import { GithubBtn } from './GithubBtn';
 import { GoogleBtn } from './GoogleBtn';
 import Link from 'next/link';
 import * as Yup from 'yup';
+import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 
 export const SingInForm = () => {
 	const { toast } = useToast();
 	const { status } = useSession();
+	useLoginByProviderError();
 	const [isSending, setIsSending] = useState(false);
 	const router = useRouter();
 	const SigninSchema = Yup.object().shape({
@@ -34,7 +36,7 @@ export const SingInForm = () => {
 
 	useEffect(() => {
 		if (status === 'authenticated') router.push('/');
-	}, [status,router]);
+	}, [status, router]);
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -50,15 +52,12 @@ export const SingInForm = () => {
 				redirect: false,
 			})
 				.then((res) => {
-					if (res?.error)
+					if (res?.error && res.error)
 						toast({
 							variant: 'destructive',
 							title: res.error,
 						});
 					else if (res && res.ok && !res?.error) {
-						toast({
-							title: 'You have been logged in.',
-						});
 						resetForm();
 					} else {
 						toast({
@@ -81,7 +80,7 @@ export const SingInForm = () => {
 	return (
 		<div className='w-full md:w-1/2 h-full   '>
 			<div className='h-full w-full xl:w-2/3 mx-auto flex flex-col items-center justify-center p-4 md:p-6  '>
-				<h2 className='font-bold text-2xl md:text-3xl my-4 md:my-0'>Login to your account</h2>
+				<h2 className='font-bold text-2xl md:text-3xl my-4 '>Login to your account</h2>
 				<form className='w-full flex flex-col gap-4 mt-4' onSubmit={formik.handleSubmit}>
 					<div className='grid w-full  items-center gap-1.5'>
 						<Label className='font-bold' htmlFor='email'>

@@ -1,16 +1,16 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
+import Image from 'next/image';
 interface Props {
 	isSending: boolean;
 }
 
 export const GoogleBtn = ({ isSending }: Props) => {
 	const onLoginHandler = () => {
-		signIn('google')
+		signIn('google');
 	};
 
 	return (

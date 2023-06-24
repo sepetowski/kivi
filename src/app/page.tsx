@@ -1,6 +1,4 @@
-import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/Button';
-import { Counter } from '@/components/counter/Counter';
+
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

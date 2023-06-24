@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/themeSwitcher/ThemeSwitcher';
 import { buttonVariants } from '@/components/ui/Button';
 import { usePathname } from 'next/navigation';
@@ -9,6 +8,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/use-toast';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
+import Link from 'next/link';
+import Image from 'next/image';
+
 export const Nav = () => {
 	const { toast } = useToast();
 	const pathname = usePathname();
@@ -27,11 +29,11 @@ export const Nav = () => {
 		});
 	};
 	return (
-		<nav className='hidden md:block fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50'>
+		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50'>
 			<div className='w-full max-w-[1400px] mx-auto flex justify-between items-center  p-3  z-50'>
 				<Link className='flex items-center gap-2' href='/'>
-					<p>Logo</p>
-					<p>Kivi</p>
+					<Image src='/kiviLogo.svg' width={50} height={50} alt='Kivi logo' />
+					<p className='font-medium text-xl sm:text-2xl'>Kivi</p>
 				</Link>
 
 				<div className='flex items-center gap-1'>
@@ -48,14 +50,16 @@ export const Nav = () => {
 								Logout
 							</Button>
 
-							<Avatar className='cursor-pointer'>
-								{session.data.user?.image && <AvatarImage src={session.data.user?.image} />}
-								{session.data?.user?.name && (
-									<AvatarFallback>
-										{generateUsernameInitials(session.data?.user?.name)}
-									</AvatarFallback>
-								)}
-							</Avatar>
+							<Link href='/profile'>
+								<Avatar className='w-10 h-10'>
+									{session.data.user?.image && <AvatarImage src={session.data.user?.image} />}
+									{session.data?.user?.name && (
+										<AvatarFallback>
+											{generateUsernameInitials(session.data?.user?.name)}
+										</AvatarFallback>
+									)}
+								</Avatar>
+							</Link>
 						</>
 					)}
 
