@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { signIn, useSession } from 'next-auth/react';
 
 import Image from 'next/image';

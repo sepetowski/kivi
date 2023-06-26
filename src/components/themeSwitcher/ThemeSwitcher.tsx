@@ -9,7 +9,7 @@ import {
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
 } from '@radix-ui/react-dropdown-menu';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 export const ThemeSwitcher = () => {
 	const { theme, setTheme } = useTheme();

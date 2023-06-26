@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { Separator } from '@/components/ui/Separator';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { InputError } from '@/components/forms/InputError';
 import { useToast } from '@/components/ui/use-toast';
 import { ToastAction } from '@/components/ui/toast';
@@ -24,7 +24,6 @@ export const SingInForm = () => {
 	useLoginByProviderError();
 	const [isSending, setIsSending] = useState(false);
 	const router = useRouter();
-	
 
 	useEffect(() => {
 		if (status === 'authenticated') router.push('/');

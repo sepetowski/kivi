@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import { ThemeSwitcher } from '@/components/themeSwitcher/ThemeSwitcher';
-import { buttonVariants } from '@/components/ui/Button';
+import { buttonVariants } from '@/components/ui/button';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import Link from 'next/link';
@@ -50,7 +50,7 @@ export const Nav = () => {
 								Logout
 							</Button>
 
-							<Link href='/profile'>
+							<Link href={`/profile/${session.data.user?.name}`}>
 								<Avatar className='w-10 h-10'>
 									{session.data.user?.image && <AvatarImage src={session.data.user?.image} />}
 									{session.data?.user?.name && (

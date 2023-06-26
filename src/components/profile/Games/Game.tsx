@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { LucideEdit3, Trash } from 'lucide-react';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { DeleteGame } from '@/components/profile/Games/DeleteGame';
+import { EditGameIfno } from '@/components/profile/Games/EditGameInfo';
 
 import {
 	DropdownMenu,
@@ -12,17 +13,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
-} from '@/components/ui/DropDownMenu';
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog';
-import { EditGameForm } from './EditGameForm';
+} from '@/components/ui/dropdown-menu';
 
 interface Props {
 	game: string;
@@ -33,31 +24,31 @@ interface Props {
 }
 export const Game = ({ account, game, since, rank, isEditing }: Props) => {
 	return (
-		<div className={`flex justify-center items-center gap-4 ${isEditing ? 'w-full' : ''}`}>
+		<div className={`flex justify-center items-center gap-4  ${isEditing ? 'w-full' : ''}`}>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button className={`${isEditing ? 'w-full' : ''}`} variant='outline'>
+					<Button className={ `sm:text-base  ${isEditing ? 'w-full' : ''}`} variant='outline'>
 						{game}
 					</Button>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent className='w-56'>
-					<DropdownMenuLabel>{game}</DropdownMenuLabel>
+				<DropdownMenuContent className='w-56 sm:w-64'>
+					<DropdownMenuLabel className='sm:text-base'>{game}</DropdownMenuLabel>
 					<DropdownMenuSeparator />
-					<DropdownMenuGroup>
-						<DropdownMenuItem>
+					<DropdownMenuGroup >
+						<DropdownMenuItem className='sm:text-base'>
 							Nick
-							<DropdownMenuShortcut>{account}</DropdownMenuShortcut>
+							<DropdownMenuShortcut className='sm:text-base'>{account}</DropdownMenuShortcut>
 						</DropdownMenuItem>
 						{rank && (
-							<DropdownMenuItem>
+							<DropdownMenuItem className='sm:text-base'>
 								Rank
-								<DropdownMenuShortcut>{rank}</DropdownMenuShortcut>
+								<DropdownMenuShortcut className='sm:text-base'>{rank}</DropdownMenuShortcut>
 							</DropdownMenuItem>
 						)}
 						{since && (
-							<DropdownMenuItem>
+							<DropdownMenuItem className='sm:text-base'>
 								Playing since
-								<DropdownMenuShortcut>{since}</DropdownMenuShortcut>
+								<DropdownMenuShortcut className='sm:text-base'>{since}</DropdownMenuShortcut>
 							</DropdownMenuItem>
 						)}
 					</DropdownMenuGroup>
@@ -65,29 +56,8 @@ export const Game = ({ account, game, since, rank, isEditing }: Props) => {
 			</DropdownMenu>
 			{isEditing && (
 				<>
-					<Dialog>
-						<DialogTrigger asChild>
-							<Button variant='ghost' size='icon'>
-								<LucideEdit3 />
-							</Button>
-						</DialogTrigger>
-						<DialogContent className='sm:max-w-[425px]'>
-							<DialogHeader>
-								<DialogTitle>{game}</DialogTitle>
-								<DialogDescription>
-									You can edit inforamtion about your game. Click save when you are done.
-								</DialogDescription>
-							</DialogHeader>
-							<EditGameForm account={account} game={game} rank={rank} since={since} />
-							<DialogFooter>
-								<Button type='submit'>Save changes</Button>
-							</DialogFooter>
-						</DialogContent>
-					</Dialog>
-
-					<Button className='text-destructive' variant='ghost' size='icon'>
-						<Trash />
-					</Button>
+					<EditGameIfno account={account} game={game} rank={rank} since={since} />
+					<DeleteGame />
 				</>
 			)}
 		</div>

@@ -38,14 +38,15 @@ model Session {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?   @unique
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  hashedPassword String?
-  sessions       Session[]
-  createdAt      DateTime  @default(now())
+  id                 String    @id @default(cuid())
+  name               String?   @unique
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  hashedPassword     String?
+  sessions           Session[]
+  createdAt          DateTime  @default(now())
+  profileDescription String    @default("I am new here.")
 
   accounts Account[]
 }
