@@ -65,6 +65,18 @@ model User {
   createdCategories Category[]     @relation("CreatedBy")
   subscription      Subscription[]
   games             Game[]
+  
+  followers         Follows[]      @relation("following")
+  following         Follows[]      @relation("follower")
+}
+
+model Follows {
+  follower    User   @relation("follower", fields: [followerId], references: [id])
+  followerId  String
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  @@id([followerId, followingId])
 }
 
 model Game {
