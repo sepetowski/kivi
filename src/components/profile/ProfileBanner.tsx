@@ -4,15 +4,23 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { UserPlus2, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { EditProfile } from './EditProfile';
+import { User } from '@/types/user';
+import { Session } from 'next-auth';
+import { FollowControl } from './games/FollowControl';
 
 interface Props {
 	userData: User;
+	session: Session;
 }
 
-export const ProfileBanner = ({ userData }: Props) => {
+export const ProfileBanner = ({ userData, session }: Props) => {
+	const isAlreadyFollowing = userData.followers.some(
+		(user) => !userData.sessionUserPage && user.followerId === session.user.id
+	);
+
 	return (
 		<>
 			<div className='w-full  h-56 sm:h-72 shadow-sm bg-secondary mx-auto rounded-2xl '></div>
@@ -27,7 +35,9 @@ export const ProfileBanner = ({ userData }: Props) => {
 				</Avatar>
 				<HoverCard>
 					<HoverCardTrigger>
-						<h1 className='my-2 sm:my-3 font-medium text-center cursor-pointer text-xl sm:text-2xl'>{userData.name}</h1>
+						<h1 className='my-2 sm:my-3 font-medium text-center cursor-pointer text-xl sm:text-2xl'>
+							{userData.name}
+						</h1>
 					</HoverCardTrigger>
 					<HoverCardContent className='text-sm text-center hidden lg:block sm:text-base'>
 						{userData.sessionUserPage && <p>@{userData.email}</p>}
@@ -37,21 +47,21 @@ export const ProfileBanner = ({ userData }: Props) => {
 
 				<div className='flex h-10 sm:h-12 items-center space-x-8 text-sm mt-4 sm:mt-5 sm:text-lg'>
 					<div className='flex flex-col justify-center items-center'>
-						<p>12</p>
+						<p>{userData.posts.length}</p>
 						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
 							posts
 						</p>
 					</div>
 					<Separator orientation='vertical' />
 					<div className='flex flex-col justify-center items-center '>
-						<p>22</p>
+						<p>{userData.followers.length}</p>
 						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
 							followers
 						</p>
 					</div>
 					<Separator orientation='vertical' />
 					<div className='flex flex-col justify-center items-center'>
-						<p>161</p>
+						<p>{userData.following.length}</p>
 						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
 							following
 						</p>
@@ -65,11 +75,13 @@ export const ProfileBanner = ({ userData }: Props) => {
 						<EditProfile />
 					</div>
 				)}
-				{!userData.sessionUserPage && (
-					<Button className='w-full flex gap-2 mt-6 sm:mt-8 sm:text-lg max-w-sm sm:p-5'>
-						Follow <UserPlus2 />
-					</Button>
-				)}
+				<FollowControl
+					userName={userData.name}
+					isAlreadyFollowing={isAlreadyFollowing}
+					sessionUserId={session.user.id}
+					sessionUserPage={userData.sessionUserPage}
+					userId={userData.id}
+				/>
 				<Separator className='w-full mt-4 sm:mt-6' orientation='horizontal' />
 			</header>
 		</>

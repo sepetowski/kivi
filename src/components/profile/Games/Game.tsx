@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { DeleteGame } from '@/components/profile/Games/DeleteGame';
-import { EditGameIfno } from '@/components/profile/Games/EditGameInfo';
+import { DeleteGame } from '@/components/profile/acctions/DeleteGame';
+import { EditGameIfno } from '@/components/profile/acctions/EditGameInfo';
 
 import {
 	DropdownMenu,
@@ -27,14 +27,14 @@ export const Game = ({ account, game, since, rank, isEditing }: Props) => {
 		<div className={`flex justify-center items-center gap-4  ${isEditing ? 'w-full' : ''}`}>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button className={ `sm:text-base  ${isEditing ? 'w-full' : ''}`} variant='outline'>
+					<Button className={`sm:text-base  ${isEditing ? 'w-full' : ''}`} variant='outline'>
 						{game}
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className='w-56 sm:w-64'>
 					<DropdownMenuLabel className='sm:text-base'>{game}</DropdownMenuLabel>
 					<DropdownMenuSeparator />
-					<DropdownMenuGroup >
+					<DropdownMenuGroup>
 						<DropdownMenuItem className='sm:text-base'>
 							Nick
 							<DropdownMenuShortcut className='sm:text-base'>{account}</DropdownMenuShortcut>

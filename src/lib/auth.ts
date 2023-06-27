@@ -55,6 +55,19 @@ export const authOptions: NextAuthOptions = {
 	],
 	secret: process.env.NEXTAUTH_SECRET!,
 	debug: process.env.NODE_ENV === 'development',
+	callbacks: {
+		async session({ session, token }) {
+			if (token) {
+				session.user.id = token.sub!;
+				session.user.name = token.name;
+				session.user.email = token.email;
+				session.user.image = token.picture;
+				session.user.username = token.username;
+			}
+
+			return session;
+		},
+	},
 };
 
 export const getAuthSession = () => getServerSession(authOptions);

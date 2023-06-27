@@ -3,10 +3,11 @@
 import React from 'react';
 import { LucideEdit3, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Game } from '@/components/profile/Games/Game';
+import { Game } from '@/components/profile/games/Game';
 import { Separator } from '@/components/ui/separator';
-import { AddNewGame } from '@/components/profile/Games/AddNewGame';
+import { AddNewGame } from '@/components/profile/acctions/AddNewGame';
 import { useState } from 'react';
+import { User } from '@/types/user';
 
 interface Props {
 	userData: User;
@@ -31,7 +32,7 @@ export const Games = ({ userData }: Props) => {
 						</Button>
 					</>
 				)}
-				{!userData.sessionUserPage && <h2 className='sm:text-xl'>{userData.name} Games</h2>}
+				{!userData.sessionUserPage && <h2 className='sm:text-xl'>{userData.name} games</h2>}
 			</div>
 			<Separator className='w-full mt-4 ' orientation='horizontal' />
 			<div className='mt-4 flex gap-2 flex-wrap'>

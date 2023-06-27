@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 import { GithubBtn } from './GithubBtn';
 import { GoogleBtn } from './GoogleBtn';
-import * as Yup from 'yup';
+
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SignupSchema } from '@/validations/SingupSchema';
 

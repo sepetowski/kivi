@@ -14,7 +14,6 @@ import { Loader2Icon } from 'lucide-react';
 import { GithubBtn } from './GithubBtn';
 import { GoogleBtn } from './GoogleBtn';
 import Link from 'next/link';
-import * as Yup from 'yup';
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SigninSchema } from '@/validations/SinginSchema';
 
