@@ -40,7 +40,6 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			posts: user.post,
 			subscriptions: user.subscription,
 			createdCategories: user.createdCategories,
-		
 		};
 
 		if (session?.user?.name === profile_name)
@@ -52,6 +51,12 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 				status: 200,
 			});
 	} catch (err) {
-		return new NextResponse('Database Error', { status: 500 });
+		let errMsg = 'Database Error';
+		if (typeof err === 'string') {
+			errMsg = err;
+		} else if (err instanceof Error) {
+			errMsg = err.message;
+		}
+		return new NextResponse(errMsg, { status: 500, statusText: errMsg });
 	}
 };

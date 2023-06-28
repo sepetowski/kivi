@@ -7,25 +7,35 @@ export const POST = async (request: Request) => {
 	if (!gameId)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
-	const exisitingGame = await db.game.findFirst({
-		where: {
-			id: gameId,
-		},
-	});
-	if (!exisitingGame)
-		return new NextResponse('No game found', {
-			status: 404,
-			statusText: 'No game found',
+	try {
+		const exisitingGame = await db.game.findFirst({
+			where: {
+				id: gameId,
+			},
+		});
+		if (!exisitingGame)
+			return new NextResponse('No game found', {
+				status: 404,
+				statusText: 'No game found',
+			});
+
+		await db.game.delete({
+			where: {
+				id: gameId,
+			},
 		});
 
-	await db.game.delete({
-		where: {
-			id: gameId,
-		},
-	});
-
-	return new NextResponse('Game was deleted', {
-		status: 200,
-		statusText: 'Game was deleted',
-	});
+		return new NextResponse('Game was deleted', {
+			status: 200,
+			statusText: 'Game was deleted',
+		});
+	} catch (err) {
+		let errMsg = 'Database Error';
+		if (typeof err === 'string') {
+			errMsg = err;
+		} else if (err instanceof Error) {
+			errMsg = err.message;
+		}
+		return new NextResponse(errMsg, { status: 500, statusText: errMsg });
+	}
 };

@@ -17,13 +17,13 @@ interface Props {
 	since: string | null;
 	gameId: string;
 }
-export const EditGameIfno = ({ account, game, rank, since,gameId }: Props) => {
+export const EditGameIfno = ({ account, game, rank, since, gameId }: Props) => {
 	return (
-		<Dialog >
-			<DialogTrigger  className='cursor-pointer' asChild>
+		<Dialog>
+			<DialogTrigger className='cursor-pointer' asChild>
 				<LucideEdit3 />
 			</DialogTrigger>
-			<DialogContent  className='sm:max-w-[425px]'>
+			<DialogContent className='sm:max-w-[425px]'>
 				<DialogHeader>
 					<DialogTitle>{game}</DialogTitle>
 					<DialogDescription>

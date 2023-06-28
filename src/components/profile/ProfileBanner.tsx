@@ -73,7 +73,10 @@ export const ProfileBanner = ({ userData, session }: Props) => {
 						<Button className='w-1/2 max-w-xs sm:text-lg sm:p-5 flex gap-2 '>
 							New post <Plus />
 						</Button>
-						<EditProfile />
+						<EditProfile
+							username={userData.name}
+							profileDescription={userData.profileDescription}
+						/>
 					</div>
 				)}
 				<FollowControl

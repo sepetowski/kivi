@@ -11,8 +11,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
-import { GithubBtn } from './GithubBtn';
-import { GoogleBtn } from './GoogleBtn';
+import { GithubBtn } from './btns/GithubBtn';
+import { GoogleBtn } from './btns/GoogleBtn';
 
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SignupSchema } from '@/validations/SingupSchema';

@@ -37,14 +37,12 @@ export async function POST(request: Request) {
 
 		return NextResponse.json(newUser, { status: 200 });
 	} catch (err) {
-		let errMsg = 'Unknown error.';
+		let errMsg = 'Database Error';
 		if (typeof err === 'string') {
 			errMsg = err;
 		} else if (err instanceof Error) {
 			errMsg = err.message;
 		}
-		return new NextResponse(errMsg, {
-			status: 500,
-		});
+		return new NextResponse(errMsg, { status: 500, statusText: errMsg });
 	}
 }

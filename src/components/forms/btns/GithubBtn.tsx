@@ -22,10 +22,10 @@ export const GithubBtn = ({ isSending }: Props) => {
 			variant='outline'
 			className='flex gap-2 text-lg w-full'>
 			{theme === 'dark' && (
-				<Image src='/githubLogoWhite.svg' width={30} height={30} alt='google logo' />
+				<Image src='/githubLogoWhite.svg' width={30} height={30} alt='Github logo' />
 			)}
 			{theme === 'light' && (
-				<Image src='/githubLogoBlack.svg' width={30} height={30} alt='google logo' />
+				<Image src='/githubLogoBlack.svg' width={30} height={30} alt='Github logo' />
 			)}
 			Github
 		</Button>

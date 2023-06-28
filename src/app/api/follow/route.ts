@@ -31,6 +31,6 @@ export const POST = async (request: Request) => {
 		} else if (err instanceof Error) {
 			errMsg = err.message;
 		}
-		return new NextResponse(errMsg, { status: 500 });
+		return new NextResponse(errMsg, { status: 500, statusText: errMsg });
 	}
 };
