@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 		},
 	});
 
-	if(userName) return new NextResponse('This username is taken', { status: 202 });
+	if (userName) return new NextResponse('This username is taken', { status: 202 });
 
 	const existedUser = await db.user.findUnique({
 		where: {

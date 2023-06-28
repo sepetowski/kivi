@@ -54,7 +54,7 @@ model User {
   hashedPassword     String?
   sessions           Session[]
   createdAt          DateTime  @default(now())
-  profileDescription String    @default("I am new here.")
+  profileDescription String    @default("I am new here")
 
   accounts    Account[]
   post        Post[]
@@ -81,8 +81,8 @@ model Follows {
 
 model Game {
   id           String  @id @default(cuid())
-  name         String
-  nick         String
+  gameName     String
+  nickName     String
   rank         String?
   playingSince String?
   user         User?   @relation(fields: [userId], references: [id])

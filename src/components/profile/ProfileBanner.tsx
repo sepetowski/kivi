@@ -5,7 +5,6 @@ import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { EditProfile } from './EditProfile';
 import { User } from '@/types/user';
 import { Session } from 'next-auth';
@@ -21,6 +20,9 @@ export const ProfileBanner = ({ userData, session }: Props) => {
 		(user) => !userData.sessionUserPage && user.followerId === session.user.id
 	);
 
+	const dateObj = new Date(userData.createdAt);
+	const monthAndYear = dateObj.toLocaleString('en-US', { year: 'numeric', month: 'long' });
+
 	return (
 		<>
 			<div className='w-full  h-56 sm:h-72 shadow-sm bg-secondary mx-auto rounded-2xl '></div>
@@ -33,19 +35,18 @@ export const ProfileBanner = ({ userData, session }: Props) => {
 						</AvatarFallback>
 					)}
 				</Avatar>
-				<HoverCard>
-					<HoverCardTrigger>
-						<h1 className='my-2 sm:my-3 font-medium text-center cursor-pointer text-xl sm:text-2xl'>
-							{userData.name}
-						</h1>
-					</HoverCardTrigger>
-					<HoverCardContent className='text-sm text-center hidden lg:block sm:text-base'>
-						{userData.sessionUserPage && <p>@{userData.email}</p>}
-						<p className='mt-2 text-xs'>Joined December 2021</p>
-					</HoverCardContent>
-				</HoverCard>
 
-				<div className='flex h-10 sm:h-12 items-center space-x-8 text-sm mt-4 sm:mt-5 sm:text-lg'>
+				<h1 className='my-2 sm:my-3 font-medium text-center cursor-pointer text-xl sm:text-2xl mb-2'>
+					{userData.name}
+				</h1>
+				<div className='text-center text-sm w-full'>
+					<p className='w-5/6 mx-auto'>{userData.profileDescription}</p>
+					<p className='text-xs text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mt-2'>
+						Joined <span>{monthAndYear}</span>
+					</p>
+				</div>
+
+				<div className='flex h-10 sm:h-12 items-center space-x-8 text-sm mt-5 sm:mt-6 sm:text-lg'>
 					<div className='flex flex-col justify-center items-center'>
 						<p>{userData.posts.length}</p>
 						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>

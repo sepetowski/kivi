@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { DeleteGame } from '@/components/profile/acctions/DeleteGame';
@@ -18,17 +17,20 @@ import {
 interface Props {
 	game: string;
 	account: string;
-	rank?: string;
-	since?: number;
+	rank: string | null;
+	since: string | null;
 	isEditing: boolean;
+	gameId: string;
+
 }
-export const Game = ({ account, game, since, rank, isEditing }: Props) => {
+export const Game = ({ account, game, since, rank, isEditing, gameId }: Props) => {
+	const gameName = game.charAt(0).toUpperCase() + game.slice(1);
 	return (
 		<div className={`flex justify-center items-center gap-4  ${isEditing ? 'w-full' : ''}`}>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button className={`sm:text-base  ${isEditing ? 'w-full' : ''}`} variant='outline'>
-						{game}
+						{gameName}
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className='w-56 sm:w-64'>
@@ -56,8 +58,14 @@ export const Game = ({ account, game, since, rank, isEditing }: Props) => {
 			</DropdownMenu>
 			{isEditing && (
 				<>
-					<EditGameIfno account={account} game={game} rank={rank} since={since} />
-					<DeleteGame />
+					<EditGameIfno
+						account={account}
+						game={gameName}
+						rank={rank}
+						since={since}
+						gameId={gameId}
+					/>
+					<DeleteGame gameId={gameId}  />
 				</>
 			)}
 		</div>

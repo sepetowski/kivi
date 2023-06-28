@@ -1,5 +1,5 @@
+'use client';
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import {
 	AlertDialog,
@@ -12,8 +12,49 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
 
-export const DeleteGame = () => {
+interface Props {
+	gameId: string;
+}
+
+export const DeleteGame = ({ gameId }: Props) => {
+	const { toast } = useToast();
+	const router = useRouter();
+
+	const onDeleteHnalder = async () => {
+		toast({
+			title: 'Deleting game. Please wait',
+		});
+		try {
+			const res = await fetch('/api/games/delete', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					gameId,
+				}),
+			});
+			if (!res.ok)
+				toast({
+					variant: 'destructive',
+					title: 'Oh no! Something went wrong.',
+					description: res.statusText,
+				});
+			else {
+				toast({
+					title: res.statusText,
+				});
+
+				router.refresh();
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
@@ -26,7 +67,7 @@ export const DeleteGame = () => {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction>Continue</AlertDialogAction>
+					<AlertDialogAction onClick={onDeleteHnalder}>Continue</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>

@@ -28,9 +28,8 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 
 		if (!user) return new NextResponse('User not found', { status: 400 });
 
-
 		const userInfo = {
-			id:user.id,
+			id: user.id,
 			createdAt: user.createdAt,
 			name: user.name,
 			image: user.image,
@@ -41,13 +40,13 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			posts: user.post,
 			subscriptions: user.subscription,
 			createdCategories: user.createdCategories,
+		
 		};
 
 		if (session?.user?.name === profile_name)
-			return new NextResponse(
-				JSON.stringify({ ...userInfo, email: user.email, sessionUserPage: true }),
-				{ status: 200 }
-			);
+			return new NextResponse(JSON.stringify({ ...userInfo, sessionUserPage: true }), {
+				status: 200,
+			});
 		else
 			return new NextResponse(JSON.stringify({ ...userInfo, sessionUserPage: false }), {
 				status: 200,

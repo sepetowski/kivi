@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LucideEdit3, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Game } from '@/components/profile/games/Game';
@@ -20,46 +20,52 @@ export const Games = ({ userData }: Props) => {
 		setIsEditting((prev) => !prev);
 	};
 
+	useEffect(() => {
+		if (userData.games.length === 0) setIsEditting(false);
+	}, [isEditting,userData.games.length]);
+	
 	return (
 		<div className='w-full my-4  p-4 bg-muted rounded-md sm:my-6'>
 			<div className='flex justify-between items-center w-full'>
 				{userData.sessionUserPage && (
 					<>
 						<h2 className='sm:text-xl'>My games</h2>
-						<Button onClick={toogleEditHandler} className='sm:p-1' variant='outline' size='icon'>
-							{isEditting && <X />}
-							{!isEditting && <LucideEdit3 />}
-						</Button>
+						{userData.games.length > 0 && (
+							<Button onClick={toogleEditHandler} className='sm:p-1' variant='outline' size='icon'>
+								{isEditting && <X />}
+								{!isEditting && <LucideEdit3 />}
+							</Button>
+						)}
 					</>
 				)}
 				{!userData.sessionUserPage && <h2 className='sm:text-xl'>{userData.name} games</h2>}
 			</div>
 			<Separator className='w-full mt-4 ' orientation='horizontal' />
 			<div className='mt-4 flex gap-2 flex-wrap'>
-				<Game
-					isEditing={userData.sessionUserPage && isEditting}
-					account='Busmeen2'
-					game='Lol'
-					rank='Daimond'
-				/>
-				<Game
-					isEditing={userData.sessionUserPage && isEditting}
-					account='BUsh'
-					game='Dota 2'
-					rank='gold'
-					since={2019}
-				/>
-				<Game
-					isEditing={userData.sessionUserPage && isEditting}
-					account='Busmeen'
-					game='Wordls of Tanks'
-					since={2020}
-				/>
-				<Game
-					isEditing={userData.sessionUserPage && isEditting}
-					account='Busmeen'
-					game='Wordls of Warship'
-				/>
+				{userData.games.length > 0 &&
+					userData.games.map((game) => (
+						<Game
+							key={game.id}
+							isEditing={userData.sessionUserPage && isEditting}
+							game={game.gameName}
+							rank={game.rank}
+							since={game.playingSince}
+							account={game.nickName}
+							gameId={game.id}
+						/>
+					))}
+				{userData.games.length === 0 && userData.sessionUserPage && !isEditting && (
+					<div className='w-full text-center max-w-md mx-auto'>
+						<p className='my-2'>No games added. Add your fisrt game!</p>
+						<AddNewGame />
+					</div>
+				)}
+				{userData.games.length === 0 && !userData.sessionUserPage && (
+					<div>
+						<p>{userData.name} has no added games yet.</p>
+					</div>
+				)}
+
 				{userData.sessionUserPage && isEditting && <AddNewGame />}
 			</div>
 		</div>
