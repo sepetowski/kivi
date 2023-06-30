@@ -34,22 +34,25 @@ export const ThemeSwitcher = () => {
 					{theme === 'light' ? <Sun size={25} /> : <Moon size={25} />}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className='w-auto p-2 bg-muted rounded-md text-sm  absolute top-2  right-[-22px]  '>
+			<DropdownMenuContent
+				className='w-auto p-2 bg-muted rounded-md '
+				align='end'
+				sideOffset={10}>
 				<DropdownMenuRadioGroup value={theme} onValueChange={changeThemeHandler}>
 					<DropdownMenuRadioItem
 						value='light'
-						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
+						className='flex w-full items-center gap-2 p-2 cursor-pointer'>
 						<Sun size={20} /> <p>Light</p>
 					</DropdownMenuRadioItem>
 					<DropdownMenuRadioItem
 						value='dark'
-						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
+						className='flex w-full items-center gap-2 p-2 cursor-pointer   '>
 						<Moon size={20} /> <p>Dark</p>
 					</DropdownMenuRadioItem>
 
 					<DropdownMenuRadioItem
 						value='system'
-						className='flex w-full items-center gap-2 p-1 cursor-pointer  '>
+						className='flex w-full items-center gap-2 p-2 cursor-pointer  '>
 						<Laptop size={20} /> <p>System</p>
 					</DropdownMenuRadioItem>
 				</DropdownMenuRadioGroup>
