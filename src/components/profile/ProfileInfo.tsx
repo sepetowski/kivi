@@ -8,6 +8,7 @@ import { Session } from 'next-auth';
 import { FollowControl } from '@/components/profile/acctions/FollowControl';
 import { FollowsInfo } from './FollowsInfo';
 import { Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 interface Props {
 	userData: User;
@@ -61,22 +62,33 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 				followingNumber={userData.following.length}
 			/>
 			<div className='w-full mt-8 flex  items-center justify-evenly sm:justify-start sm:gap-6 text-lg lg:text-xl overflow-x-auto mb-2'>
-				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+				<Link
+					href={`/profile/${userData.name}?info=posts`}
+					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<LayoutGrid />
-					<p className='hidden sm:inline'>Posts</p>
-				</div>
-				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<span className='hidden sm:inline'>Posts</span>
+				</Link>
+
+				<Link
+					href={`/profile/${userData.name}?info=likes`}
+					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Heart />
-					<p className='hidden sm:inline'>Likes</p>
-				</div>
-				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<span className='hidden sm:inline'>Likes</span>
+				</Link>
+
+				<Link
+					href={`/profile/${userData.name}?info=games`}
+					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Gamepad />
-					<p className='hidden sm:inline'>Games</p>
-				</div>
-				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<span className='hidden sm:inline'>Games</span>
+				</Link>
+
+				<Link
+					href={`/profile/${userData.name}?info=communities`}
+					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Users2 />
-					<p className='hidden sm:inline'>Communities</p>
-				</div>
+					<span className='hidden sm:inline'>Communities</span>
+				</Link>
 			</div>
 		</header>
 	);
