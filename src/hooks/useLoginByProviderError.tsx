@@ -20,6 +20,13 @@ export const useLoginByProviderError = () => {
 					description: 'Email is already taken',
 				});
 
+			if (error === 'OAuthCreateAccount' && session.status === 'unauthenticated')
+				toast({
+					variant: 'destructive',
+					title: 'Failed to Sgin up',
+					description: 'Username already taken',
+				});
+
 			if (error === 'Callback' && session.status === 'unauthenticated')
 				toast({
 					variant: 'destructive',

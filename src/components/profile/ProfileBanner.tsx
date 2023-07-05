@@ -7,7 +7,8 @@ import { Plus } from 'lucide-react';
 import { EditProfile } from './EditProfile';
 import { User } from '@/types/user';
 import { Session } from 'next-auth';
-import { FollowControl } from './games/FollowControl';
+import { FollowControl } from '@/components/profile/acctions/FollowControl';
+import { FollowsInfo } from './FollowsInfo';
 
 interface Props {
 	userData: User;
@@ -45,33 +46,13 @@ export const ProfileBanner = ({ userData, session }: Props) => {
 					</p>
 				</div>
 
-				<div className='flex h-10 sm:h-12 items-center space-x-8 text-sm mt-5 sm:mt-6 sm:text-lg'>
-					<div className='flex flex-col justify-center items-center'>
-						<p>{userData.posts.length}</p>
-						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-							posts
-						</p>
-					</div>
-					<Separator orientation='vertical' />
-					<div className='flex flex-col justify-center items-center '>
-						<p>{userData.followers.length}</p>
-						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-							followers
-						</p>
-					</div>
-					<Separator orientation='vertical' />
-					<div className='flex flex-col justify-center items-center'>
-						<p>{userData.following.length}</p>
-						<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-							following
-						</p>
-					</div>
-				</div>
+				<FollowsInfo
+					postsNumber={userData.posts.length}
+					followersNumber={userData.followers.length}
+					followingNumber={userData.following.length}
+				/>
 				{userData.sessionUserPage && (
 					<div className='w-full flex justify-evenly items-center gap-3  mt-6 '>
-						<Button className='w-1/2 max-w-xs sm:text-lg sm:p-5 flex gap-2 '>
-							New post <Plus />
-						</Button>
 						<EditProfile
 							username={userData.name}
 							profileDescription={userData.profileDescription}

@@ -45,7 +45,7 @@ export const UserAccount = ({ name, email, image }: Props) => {
 				<DropdownMenuSeparator />
 				<DropdownMenuRadioGroup className='p-2 flex flex-col gap-1'>
 					<DropdownMenuItem asChild>
-						<Link className='p-1' href='/'>
+						<Link className='p-1' href={`/profile/${name}`}>
 							Profile
 						</Link>
 					</DropdownMenuItem>

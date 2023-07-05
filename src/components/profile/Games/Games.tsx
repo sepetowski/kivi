@@ -25,7 +25,7 @@ export const Games = ({ userData }: Props) => {
 	}, [isEditting,userData.games.length]);
 	
 	return (
-		<div className='w-full my-4  p-4 bg-muted rounded-md sm:my-6'>
+		<div className='w-full lg:top-24 lg:left-0 my-4  p-4 bg-muted rounded-md sm:my-6'>
 			<div className='flex justify-between items-center w-full'>
 				{userData.sessionUserPage && (
 					<>

@@ -19,10 +19,8 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 
 	return (
 		<>
-			<div className='w-full mx-auto max-w-[1400px] pl-4 pr-4'>
-				<ProfileBanner userData={userData} session={session} />
-				<Games userData={userData} />
-			</div>
+			<ProfileBanner userData={userData} session={session} />
+			<Games userData={userData} />
 		</>
 	);
 };

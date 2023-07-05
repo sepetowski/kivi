@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Nav } from '@/components/nav/Nav';
 import { Toaster } from '@/components/ui/toaster';
+import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
+import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,8 +21,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 				<AuthProvider>
 					<ThemeProvider>
 						<Nav />
-						{children}
-						<Toaster  />
+						<div className='flex justify-between w-full max-w-[2000px] mx-auto'>
+							<LeftSidebar />
+							<div className='w-full p-4'>{children}</div>
+							<RightSidebar />
+						</div>
+						<Toaster />
 					</ThemeProvider>
 				</AuthProvider>
 			</body>
