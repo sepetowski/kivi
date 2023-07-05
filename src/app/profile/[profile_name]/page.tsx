@@ -1,5 +1,7 @@
 import { Games } from '@/components/profile/games/Games';
 import { ProfileBanner } from '@/components/profile/ProfileBanner';
+import { ProfileInfo } from '@/components/profile/ProfileInfo';
+import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
 import { User } from '@/types/user';
@@ -18,10 +20,12 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 	const userData: User = await getProfileInfo(profile_name);
 
 	return (
-		<>
-			<ProfileBanner userData={userData} session={session} />
-			<Games userData={userData} />
-		</>
+		<div className='md:pl-4 md:pr-4 lg:pl-8 lg:pr-8'>
+			<ProfileBanner />
+			<ProfileInfo userData={userData} session={session} />
+			<Separator />
+			{/* <Games userData={userData} /> */}
+		</div>
 	);
 };
 export default Profile;

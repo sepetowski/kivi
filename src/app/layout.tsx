@@ -16,14 +16,14 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang='en'>
+		<html lang='en' suppressHydrationWarning>
 			<body className={inter.className}>
 				<AuthProvider>
-					<ThemeProvider>
+					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 						<Nav />
 						<div className='flex justify-between w-full max-w-[2000px] mx-auto'>
 							<LeftSidebar />
-							<div className='w-full p-4'>{children}</div>
+							<div className='w-full'>{children}</div>
 							<RightSidebar />
 						</div>
 						<Toaster />

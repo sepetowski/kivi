@@ -20,9 +20,11 @@ export const EditProfile = ({ profileDescription, username }: Props) => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button className='w-1/2 max-w-xs sm:text-lg sm:p-5 flex gap-2 ' variant='outline'>
+				<Button
+					className='text-xs xs:text-sm mt-2 md:mt-4 rounded-full sm:text-lg sm:p-5 flex gap-2 '
+					variant='outline'>
 					Edit profile
-					<UserCog2 />
+					<UserCog2 className='hidden md:inline-block' />
 				</Button>
 			</SheetTrigger>
 			<SheetContent>

@@ -1,0 +1,83 @@
+import React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
+import { Heart, LayoutGrid, Gamepad, Users2 } from 'lucide-react';
+import { EditProfile } from './EditProfile';
+import { User } from '@/types/user';
+import { Session } from 'next-auth';
+import { FollowControl } from '@/components/profile/acctions/FollowControl';
+import { FollowsInfo } from './FollowsInfo';
+import { Calendar } from 'lucide-react';
+
+interface Props {
+	userData: User;
+	session: Session;
+}
+
+export const ProfileInfo = ({ session, userData }: Props) => {
+	const isAlreadyFollowing = userData.followers.some(
+		(user) => !userData.sessionUserPage && user.followerId === session.user.id
+	);
+
+	const dateObj = new Date(userData.createdAt);
+	const monthAndYear = dateObj.toLocaleString('en-US', { year: 'numeric', month: 'long' });
+
+	return (
+		<header className='w-full flex flex-col justify-start items-center  mx-auto pl-8 pr-8   '>
+			<div className='flex justify-between  w-full'>
+				<Avatar className='w-20 h-20 mt-[-2.5rem] sm:w-24 sm:h-24 sm:mt-[-3rem] lg:w-28 lg:h-28 lg:mt-[-3.5rem]  '>
+					{userData.image && <AvatarImage src={userData.image} />}
+					{!userData.image && (
+						<AvatarFallback className='bg-accent '>
+							{generateUsernameInitials(userData.name)}
+						</AvatarFallback>
+					)}
+				</Avatar>
+				{userData.sessionUserPage && (
+					<EditProfile username={userData.name} profileDescription={userData.profileDescription} />
+				)}
+				<FollowControl
+					userName={userData.name}
+					isAlreadyFollowing={isAlreadyFollowing}
+					sessionUserId={session.user.id}
+					sessionUserPage={userData.sessionUserPage}
+					userId={userData.id}
+				/>
+			</div>
+			<div className=' text-sm w-full flex flex-col gap-2 mt-2'>
+				<h1 className='text-xl font-medium '>{userData.name}</h1>
+				<p>{userData.profileDescription}</p>
+				<div className='flex items-center gap-2 text-xs text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 '>
+					<Calendar size={20} />
+					<p>
+						Joined <span>{monthAndYear}</span>
+					</p>
+				</div>
+			</div>
+
+			<FollowsInfo
+				postsNumber={userData.posts.length}
+				followersNumber={userData.followers.length}
+				followingNumber={userData.following.length}
+			/>
+			<div className='w-full mt-8 flex  items-center justify-evenly sm:justify-start sm:gap-6 text-lg lg:text-xl overflow-x-auto mb-2'>
+				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<LayoutGrid />
+					<p className='hidden sm:inline'>Posts</p>
+				</div>
+				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<Heart />
+					<p className='hidden sm:inline'>Likes</p>
+				</div>
+				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<Gamepad />
+					<p className='hidden sm:inline'>Games</p>
+				</div>
+				<div className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
+					<Users2 />
+					<p className='hidden sm:inline'>Communities</p>
+				</div>
+			</div>
+		</header>
+	);
+};

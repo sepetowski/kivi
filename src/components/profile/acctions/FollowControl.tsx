@@ -110,7 +110,7 @@ export const FollowControl = ({
 			{!sessionUserPage && !isAlreadyFollowing && (
 				<Button
 					onClick={startFollowHandler}
-					className='w-full flex gap-2 mt-6 sm:mt-8 sm:text-lg max-w-sm sm:p-5'>
+					className=' flex gap-2 mt-2 md:mt-4 sm:text-lg max-w-sm sm:p-5'>
 					{!isSending && (
 						<>
 							Follow <UserPlus2 />
@@ -128,7 +128,7 @@ export const FollowControl = ({
 			{!sessionUserPage && isAlreadyFollowing && (
 				<Button
 					onClick={unfollowHandler}
-					className='w-full flex gap-2 mt-6 sm:mt-8 sm:text-lg max-w-sm sm:p-5'>
+					className='flex gap-2 mt-2 md:mt-4  sm:text-lg max-w-sm sm:p-5'>
 					{!isSending && (
 						<>
 							Unfollow <UserMinus2 />

@@ -13,19 +13,10 @@ import { Button } from '../ui/button';
 
 export const ThemeSwitcher = () => {
 	const { theme, setTheme } = useTheme();
-	const [mounted, setMounted] = useState(false);
 
 	const changeThemeHandler = (theme: string) => {
 		setTheme(theme);
 	};
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
-
-	if (!mounted) {
-		return null;
-	}
 
 	return (
 		<DropdownMenu>
@@ -34,10 +25,7 @@ export const ThemeSwitcher = () => {
 					{theme === 'light' ? <Sun size={25} /> : <Moon size={25} />}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent
-				className='w-auto p-2 bg-muted rounded-md '
-				align='end'
-				sideOffset={10}>
+			<DropdownMenuContent className='w-auto p-2 bg-muted rounded-md ' align='end' sideOffset={10}>
 				<DropdownMenuRadioGroup value={theme} onValueChange={changeThemeHandler}>
 					<DropdownMenuRadioItem
 						value='light'

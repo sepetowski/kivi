@@ -6,12 +6,11 @@ import Image from 'next/image';
 import { UserAccount } from './UserAccount';
 import { SignInOrUpLink } from './SignInOrUpLink';
 import { useSession } from 'next-auth/react';
-import { Bell, Home, Mail, Menu, Search, Users2 } from 'lucide-react';
+import { Bell, Home, Search } from 'lucide-react';
 import { MobileNav } from './MobileNav';
-import { useMediaQuery } from '@react-hook/media-query';
+
 export const Nav = () => {
 	const session = useSession();
-	
 
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
@@ -33,18 +32,20 @@ export const Nav = () => {
 					<ThemeSwitcher />
 				</div>
 			</div>
-			<div className='w-full md:hidden  flex justify-around items-center  p-3  bg-secondary'>
-				<Link href='/'>
-					<Home />
-				</Link>
-				<Link href='/'>
-					<Search />
-				</Link>
-				<Link href='/'>
-					<Bell />
-				</Link>
-				<MobileNav />
-			</div>
+			{session.status === 'authenticated' && (
+				<div className='w-full md:hidden  flex justify-around items-center  p-3  bg-secondary'>
+					<Link href='/'>
+						<Home />
+					</Link>
+					<Link href='/'>
+						<Search />
+					</Link>
+					<Link href='/'>
+						<Bell />
+					</Link>
+					<MobileNav />
+				</div>
+			)}
 		</nav>
 	);
 };
