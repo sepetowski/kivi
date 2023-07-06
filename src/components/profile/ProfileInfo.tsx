@@ -46,7 +46,7 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 				/>
 			</div>
 			<div className=' text-sm w-full flex flex-col gap-2 mt-2'>
-				<h1 className='text-xl font-medium '>{userData.name}</h1>
+				<h2 className='text-xl font-medium '>{userData.name}</h2>
 				<p>{userData.profileDescription}</p>
 				<div className='flex items-center gap-2 text-xs text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 '>
 					<Calendar size={20} />

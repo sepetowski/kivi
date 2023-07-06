@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -12,7 +12,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { Mail, Menu, User2, Users2, Bookmark, PlusSquare } from 'lucide-react';
+import { Mail, Menu, User2, Users2, Bookmark} from 'lucide-react';
 
 export const MobileNav = () => {
 	return (
@@ -63,17 +63,22 @@ export const MobileNav = () => {
 					</SheetClose>
 				</div>
 				<Separator className='my-10' />
-				<SheetFooter className='flex flex-col gap-6 sm:flex-col'>
-					<SheetClose asChild>
-						<Button className='w-full'>
-							<span>New Post</span>
-						</Button>
+				<SheetFooter className='flex flex-col gap-6 gap-x-0 sm:flex-col sm:sm:space-x-0 w-full '>
+					{/* <SheetClose asChild>
+						<Link href='/communities/create' className={buttonVariants()}>
+							Create Community
+						</Link>
 					</SheetClose>
+
 					<SheetClose asChild>
-						<Button variant='secondary' className='w-full'>
-							<span>Create Community</span>
-						</Button>
-					</SheetClose>
+						<Link
+							href='/communitiy/create'
+							className={buttonVariants({
+								variant: 'secondary',
+							})}>
+							Create Community
+						</Link>
+					</SheetClose> */}
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>

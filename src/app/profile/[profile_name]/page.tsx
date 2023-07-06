@@ -21,7 +21,7 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 	const userData: User = await getProfileInfo(profile_name);
 
 	return (
-		<div className='md:pl-4 md:pr-4 lg:pl-8 lg:pr-8'>
+		<div className='md:px-4 lg:px-8'>
 			<ProfileBanner />
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />

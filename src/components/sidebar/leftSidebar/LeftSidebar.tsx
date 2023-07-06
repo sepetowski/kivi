@@ -11,7 +11,7 @@ import {
 	PlusSquare,
 	SmilePlus,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 
@@ -68,10 +68,10 @@ export const LeftSidebar = () => {
 					<PlusSquare className='lg:hidden' />
 					<span className='hidden lg:inline'>New Post</span>
 				</Button>
-				<Button variant='secondary' className='w-full'>
+				<Link href='/communities/create' className={buttonVariants({ variant: 'secondary' })}>
 					<SmilePlus className='lg:hidden' />
-					<span className='hidden lg:inline'>Create Community</span>
-				</Button>
+					<span className='hidden lg:inline text-center'>Create Community</span>
+				</Link>
 			</div>
 		</Sidebar>
 	);

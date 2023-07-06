@@ -17,12 +17,9 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 				name: profile_name,
 			},
 			include: {
-				games: true,
-				subscription: true,
 				followers: true,
 				following: true,
 				post: true,
-				createdCategories: true,
 			},
 		});
 
@@ -34,12 +31,9 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			name: user.name,
 			image: user.image,
 			profileDescription: user.profileDescription,
-			games: user.games,
 			following: user.following,
 			followers: user.followers,
 			posts: user.post,
-			subscriptions: user.subscription,
-			createdCategories: user.createdCategories,
 		};
 
 		if (session?.user?.name === profile_name)

@@ -17,7 +17,7 @@ export const Nav = () => {
 			<div className='w-full max-w-[1800px] mx-auto flex justify-between items-center  p-3 md:pl-6 md:pr-6 '>
 				<Link className='flex items-center gap-2' href='/'>
 					<Image src='/kiviLogo.svg' width={50} height={50} alt='Kivi logo' priority />
-					<p className='font-medium text-xl sm:text-2xl'>Kivi</p>
+					<h1 className='font-medium text-xl sm:text-2xl'>Kivi</h1>
 				</Link>
 
 				<div className='flex items-center gap-1'>

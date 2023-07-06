@@ -1,49 +1,39 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import * as React from 'react';
+import { Sun, Moon, Laptop } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Laptop } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
-} from '@radix-ui/react-dropdown-menu';
-import { Button } from '../ui/button';
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export const ThemeSwitcher = () => {
-	const { theme, setTheme } = useTheme();
-
-	const changeThemeHandler = (theme: string) => {
-		setTheme(theme);
-	};
+	const { setTheme } = useTheme();
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button size='xs' variant={'ghost'}>
-					{theme === 'light' ? <Sun size={25} /> : <Moon size={25} />}
+				<Button variant='ghost' size={'xs'}>
+					<Sun className=' w-7 h-7 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
+					<Moon className='absolute w-7 h-7 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+					<span className='sr-only'>Toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className='w-auto p-2 bg-muted rounded-md ' align='end' sideOffset={10}>
-				<DropdownMenuRadioGroup value={theme} onValueChange={changeThemeHandler}>
-					<DropdownMenuRadioItem
-						value='light'
-						className='flex w-full items-center gap-2 p-2 cursor-pointer'>
-						<Sun size={20} /> <p>Light</p>
-					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem
-						value='dark'
-						className='flex w-full items-center gap-2 p-2 cursor-pointer   '>
-						<Moon size={20} /> <p>Dark</p>
-					</DropdownMenuRadioItem>
-
-					<DropdownMenuRadioItem
-						value='system'
-						className='flex w-full items-center gap-2 p-2 cursor-pointer  '>
-						<Laptop size={20} /> <p>System</p>
-					</DropdownMenuRadioItem>
-				</DropdownMenuRadioGroup>
+			<DropdownMenuContent align='end' alignOffset={10} sideOffset={10}>
+				<DropdownMenuItem className='flex gap-2 items-center cursor-pointer' onClick={() => setTheme('light')}>
+					<Sun /> Light
+				</DropdownMenuItem>
+				<DropdownMenuItem className='flex gap-2 items-center cursor-pointer' onClick={() => setTheme('dark')}>
+					<Moon /> Dark
+				</DropdownMenuItem>
+				<DropdownMenuItem className='flex gap-2 items-center cursor-pointer' onClick={() => setTheme('system')}>
+					<Laptop /> System
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
