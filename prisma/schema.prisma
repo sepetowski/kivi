@@ -90,15 +90,15 @@ model Game {
 }
 
 model Community {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]
-
-  creatorId String?
-  creator   User?   @relation("CreatedBy", fields: [creatorId], references: [id])
-  description String 
+  id             String   @id @default(cuid())
+  name           String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  posts          Post[]
+ 
+  creatorId   String?
+  creator     User?   @relation("CreatedBy", fields: [creatorId], references: [id])
+  description String
 
   postCount    Int            @default(0)
   subscription Subscription[]

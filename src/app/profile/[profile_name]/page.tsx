@@ -1,4 +1,3 @@
-import { Games } from '@/components/profile/games/Games';
 import { ProfileBanner } from '@/components/profile/ProfileBanner';
 import { ProfileContentBox } from '@/components/profile/ProfileContentBox';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
@@ -26,7 +25,6 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />
 			<ProfileContentBox />
-			{/* <Games userData={userData} /> */}
 		</div>
 	);
 };

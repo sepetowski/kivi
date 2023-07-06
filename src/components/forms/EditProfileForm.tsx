@@ -57,7 +57,10 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 					if (res.status === 200) router.refresh();
 				}
 			} catch (err) {
-				console.log(err);
+				toast({
+					variant: 'destructive',
+					title: 'Oh no! Something went wrong. Please try again',
+				});
 			}
 
 			setIsSending(false);

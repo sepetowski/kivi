@@ -1,7 +1,13 @@
+import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export const POST = async (request: Request) => {
+	const session = await getAuthSession();
+
+	if (!session?.user)
+		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+
 	const { followingUserId, followerUserId } = await request.json();
 	try {
 		const followingExist = await db.follows.findFirst({

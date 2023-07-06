@@ -1,41 +1,22 @@
 import React from 'react';
-
-import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CreateCommunityForm } from '../forms/CreateCommunityForm';
 
 export const CreateCommunityCard = () => {
 	return (
 		<Card className='w-full'>
 			<CardHeader>
-				<CardTitle>Create project</CardTitle>
-				<CardDescription>Deploy your new project in one-click.</CardDescription>
+				<CardTitle>Create Community!</CardTitle>
+				<CardDescription>
+					Create a vibrant online community where individuals can share and contribute their
+					thoughts, ideas, and experiences through the creation of new posts. As the creator and
+					administrator of the community, you will have the opportunity to shape the overall vision
+					and direction, and actively participate in the conversations.
+				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<form>
-					<div className='grid w-full items-center gap-4'>
-						<div className='flex flex-col space-y-1.5'>
-							<Label htmlFor='name'>Name</Label>
-							<Input id='name' placeholder='Name of your project' />
-						</div>
-						<div className='flex flex-col space-y-1.5'>
-							<Label htmlFor='name'>Framework</Label>
-						</div>
-					</div>
-				</form>
+				<CreateCommunityForm />
 			</CardContent>
-			<CardFooter className='flex justify-end gap-4'>
-				<Button>Create Community</Button>
-				<Button variant='outline'>Cancel</Button>
-			</CardFooter>
 		</Card>
 	);
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { ProfileAvatar } from '@/components/nav/ProfileAvatar';
 import { signOut } from 'next-auth/react';
 import { useToast } from '@/components/ui/use-toast';
@@ -11,10 +10,10 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuRadioGroup,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
 interface Props {
 	name: string | undefined | null;
 	email: string | undefined | null;
@@ -23,6 +22,8 @@ interface Props {
 
 export const UserAccount = ({ name, email, image }: Props) => {
 	const { toast } = useToast();
+	const router = useRouter();
+
 	const logOutHandler = () => {
 		signOut();
 		toast({
@@ -41,18 +42,24 @@ export const UserAccount = ({ name, email, image }: Props) => {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<DropdownMenuItem>
-						<Link href={`/profile/${name}`}>Profile</Link>
+					<DropdownMenuItem
+						className='cursor-pointer'
+						onClick={() => router.push(`/profile/${name}`)}>
+						Profile
 					</DropdownMenuItem>
-					<DropdownMenuItem>
-						<Link href='/'>Messeges</Link>
+					<DropdownMenuItem className='cursor-pointer' onClick={() => router.push('/')}>
+						Messeges
 					</DropdownMenuItem>
-					<DropdownMenuItem>
-						<Link href='/ '>Create Community</Link>
+					<DropdownMenuItem
+						className='cursor-pointer'
+						onClick={() => router.push('/communities/create')}>
+						Create Community
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem className='text-destructive'>Log out</DropdownMenuItem>
+				<DropdownMenuItem onClick={logOutHandler} className='text-destructive cursor-pointer'>
+					Log out
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

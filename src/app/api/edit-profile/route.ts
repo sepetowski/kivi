@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getAuthSession } from '@/lib/auth';
 
 export const POST = async (request: Request) => {
+	const session = await getAuthSession();
+
+	if (!session?.user) return new Response('Unauthorized', { status: 401 ,statusText:"Unauthorized User"});
+
 	const { username, profileDescription, orignalUserName } = await request.json();
 
 	if (!username || !profileDescription || !orignalUserName)
