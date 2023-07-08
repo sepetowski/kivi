@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Community" ALTER COLUMN "image" DROP DEFAULT,
+ALTER COLUMN "fileName" DROP DEFAULT;

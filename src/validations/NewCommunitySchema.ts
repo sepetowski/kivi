@@ -1,4 +1,8 @@
+import { File } from 'buffer';
 import * as Yup from 'yup';
+
+const FILE_SIZE = 5242880; //5MB
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
 
 export const NewCommunitySchema = Yup.object().shape({
 	name: Yup.string()
@@ -9,6 +13,14 @@ export const NewCommunitySchema = Yup.object().shape({
 	description: Yup.string()
 		.required('Description is required')
 		.min(2, 'Description is too short')
-		.max(500, 'Description is to long')
+		.max(250, 'Description is to long')
 		.trim(),
+	picture: Yup.mixed<File>()
+		.required('Picture is required')
+		.test('fileSize', 'The file is too large', (value) => value && value.size <= FILE_SIZE)
+		.test(
+			'fileFormat',
+			'Unsupported Format',
+			(value) => value && SUPPORTED_FORMATS.includes(value.type)
+		),
 });

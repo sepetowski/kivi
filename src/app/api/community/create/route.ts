@@ -7,13 +7,20 @@ export const POST = async (request: Request) => {
 
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+	const {
+		name,
+		description,
+		picture,
+		fileName,
+	}: { name: string; description: string; picture: string; fileName: string } =
+		await request.json();
 
-	const { name, description }: { name: string; description: string } = await request.json();
+	console.log(picture);
 
 	const communityName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 	console.log(communityName);
 
-	if (!name || !description)
+	if (!name || !description || !picture || !fileName)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
 	try {
@@ -37,6 +44,8 @@ export const POST = async (request: Request) => {
 				name: communityName,
 				description,
 				creatorId: session.user.id,
+				image: picture,
+				fileName,
 			},
 		});
 
