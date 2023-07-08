@@ -7,38 +7,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { InputError } from '@/components/forms/InputError';
-import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
-import Image from 'next/image';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { v4 as uuidv4 } from 'uuid';
 import { Loader2Icon } from 'lucide-react';
+import { removeFromBucket } from '@/lib/removeFromBucket';
+import Link from 'next/link';
+import Image from 'next/image';
+import { saveImageInBucket } from '@/lib/saveImageInBucket';
 
 const COMMUNITY_AVATARS = 'communitiesavatars';
 
 export const CreateCommunityForm = () => {
 	const [image, setImage] = useState<null | string>(null);
 	const [isSending, setIsSending] = useState(false);
-	const supabase = createClientComponentClient();
-
-	const savePictureInStorageAndReciveUrlAndFileName = async (picture: File) => {
-		try {
-			const filename = `${uuidv4()}-${picture.name}`;
-			const { data } = await supabase.storage.from(COMMUNITY_AVATARS).upload(filename, picture, {
-				cacheControl: '3600',
-				upsert: false,
-			});
-
-			if (!data) return null;
-			const { data: url } = supabase.storage.from(COMMUNITY_AVATARS).getPublicUrl(data.path);
-
-			if (!url) return null;
-			return [url.publicUrl, filename];
-		} catch (err) {
-			console.log(err);
-			return null;
-		}
-	};
 
 	const { toast } = useToast();
 	const formik = useFormik({
@@ -51,7 +31,7 @@ export const CreateCommunityForm = () => {
 
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			const urlAndFileName = await savePictureInStorageAndReciveUrlAndFileName(values.picture!);
+			const urlAndFileName = await saveImageInBucket(values.picture!, COMMUNITY_AVATARS);
 
 			if (!urlAndFileName) {
 				toast({
@@ -76,13 +56,14 @@ export const CreateCommunityForm = () => {
 					}),
 				});
 				console.log(res);
-				if (!res.ok)
+				if (!res.ok) {
 					toast({
 						variant: 'destructive',
 						title: 'Oh no! Something went wrong.',
 						description: res.statusText,
 					});
-				else {
+					await removeFromBucket(COMMUNITY_AVATARS, fileName);
+				} else {
 					toast({
 						title: res.statusText,
 					});
@@ -94,6 +75,7 @@ export const CreateCommunityForm = () => {
 					variant: 'destructive',
 					title: 'Oh no! Something went wrong. Please try again',
 				});
+				await removeFromBucket(COMMUNITY_AVATARS, fileName);
 			}
 			setIsSending(false);
 		},
@@ -151,7 +133,6 @@ export const CreateCommunityForm = () => {
 							<Image className=' rounded-full' alt='preview image' src={image} fill />
 						</div>
 					)}
-				
 
 					<InputError error={formik.errors.picture} isInputTouched={formik.touched.picture} />
 				</div>

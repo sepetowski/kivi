@@ -15,10 +15,7 @@ export const POST = async (request: Request) => {
 	}: { name: string; description: string; picture: string; fileName: string } =
 		await request.json();
 
-	console.log(picture);
-
 	const communityName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-	console.log(communityName);
 
 	if (!name || !description || !picture || !fileName)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
