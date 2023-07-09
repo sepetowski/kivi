@@ -6,7 +6,7 @@ import { Nav } from '@/components/nav/Nav';
 import { Toaster } from '@/components/ui/toaster';
 import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
-
+import { getUserCommunities } from '@/lib/getUserCommunities';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,17 +20,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 		<html lang='en' suppressHydrationWarning>
 			<body className={inter.className}>
 				<AuthProvider>
-					
-						<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-							<Nav />
-							<div className='flex justify-between w-full max-w-[2000px] mx-auto'>
-								<LeftSidebar />
-								<div className='w-full'>{children}</div>
-								<RightSidebar />
-							</div>
-							<Toaster />
-						</ThemeProvider>
-					
+					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+						<Nav />
+						<div className='flex justify-between w-full max-w-[2000px] mx-auto'>
+							<LeftSidebar />
+							<div className='w-full'>{children}</div>
+							<RightSidebar />
+						</div>
+						<Toaster />
+					</ThemeProvider>
 				</AuthProvider>
 			</body>
 		</html>

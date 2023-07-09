@@ -6,8 +6,6 @@ import { Communities } from '@/types/communities';
 import { CommunityItem } from '@/components/sidebar/rightSidebar/CommunityItem';
 export const RightSidebar = async () => {
 	const communities = (await getUserCommunities()) as Communities[];
-	console.log(communities);
-
 	return (
 		<Sidebar left={true}>
 			<div className='mt-24 w-full h-full flex flex-col items-center lg:items-start p-4 lg:p-6 gap-6 lg:gap-10 text-sm '>
@@ -15,7 +13,7 @@ export const RightSidebar = async () => {
 					<Users2 />
 					<p className='hidden lg:inline font-bold uppercase text-center'>Your Communities</p>
 				</div>
-				<div className='w-full h-full flex flex-col  overflow-y-auto gap-3'>
+				<div className='w-full h-full flex flex-col  overflow-y-auto gap-3  xl:text-lg'>
 					{communities.length !== 0 &&
 						communities.map((community) => (
 							<CommunityItem

@@ -97,7 +97,7 @@ model Community {
   posts     Post[]
 
   creatorId   String?
-  creator     User?   @relation("CreatedBy", fields: [creatorId], references: [id])
+  creator     User?   @relation("CreatedBy", fields: [creatorId], references: [id], onDelete: Cascade)
   description String
 
   image        String
@@ -109,9 +109,9 @@ model Community {
 }
 
 model Subscription {
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  community   Community @relation(fields: [communityId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
   communityId String
 
   @@id([userId, communityId])

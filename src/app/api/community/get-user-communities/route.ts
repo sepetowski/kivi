@@ -8,6 +8,7 @@ export const GET = async (request: Request) => {
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 	try {
+		
 		const communities = await db.subscription.findMany({
 			where: {
 				userId: session.user.id,
