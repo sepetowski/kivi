@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 export const metadata = {
 	title: 'Create Community',
-	description: 'Create Community in Kivi app- Social for gamers',
+	description: 'Create Community in Kivi app - Social for gamers',
 };
 
 const Create = async () => {

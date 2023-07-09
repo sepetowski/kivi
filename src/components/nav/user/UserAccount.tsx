@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ProfileAvatar } from '@/components/nav/ProfileAvatar';
+import { ProfileAvatar } from '@/components/nav/user/ProfileAvatar';
 import { signOut } from 'next-auth/react';
 import { useToast } from '@/components/ui/use-toast';
 import {

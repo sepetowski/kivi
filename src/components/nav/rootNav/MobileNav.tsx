@@ -6,15 +6,19 @@ import {
 	Sheet,
 	SheetClose,
 	SheetContent,
-	SheetDescription,
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { Mail, Menu, User2, Users2, Bookmark} from 'lucide-react';
+import { Mail, Menu, User2, Users2, Bookmark } from 'lucide-react';
+import { ActiveLink } from '@/components/ui/ActiveLink';
 
-export const MobileNav = () => {
+interface Props {
+	userName: string | null | undefined;
+}
+
+export const MobileNav = ({ userName }: Props) => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -29,42 +33,37 @@ export const MobileNav = () => {
 				<Separator className='my-10' />
 				<div className='text-xl flex flex-col gap-6  font-bold'>
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<Link
-							href='/'
-							className='flex gap-3 hover:text-muted-foreground cursor-pointer transiti duration-200'>
+						<ActiveLink href={`/profile/${userName}`} className='flex gap-3 cursor-pointer'>
 							<User2 />
 							<span>Profile</span>
-						</Link>
+						</ActiveLink>
 					</SheetClose>
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<Link
-							href='/'
-							className='flex gap-3 hover:text-muted-foreground cursor-pointer transiti duration-200'>
+						<ActiveLink
+							className='flex gap-3 cursor-pointer'
+							href='/communities/browse'
+							include='/communities/browse/created'>
 							<Users2 />
 							<span>Communities</span>
-						</Link>
+						</ActiveLink>
 					</SheetClose>
 
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<Link
-							href='/'
-							className='flex gap-3 hover:text-muted-foreground cursor-pointer transiti duration-200'>
+						<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>
 							<Mail />
 							<span>Messages</span>
-						</Link>
+						</ActiveLink>
 					</SheetClose>
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<Link
-							href='/'
-							className='flex gap-3 hover:text-muted-foreground cursor-pointer transiti duration-200'>
+						<ActiveLink className='flex gap-3 cursor-pointer' href='/saved'>
 							<Bookmark />
 							<span>Saved</span>
-						</Link>
+						</ActiveLink>
 					</SheetClose>
 				</div>
 				<Separator className='my-10' />
-				<SheetFooter className='flex flex-col gap-6 gap-x-0 sm:flex-col sm:sm:space-x-0 w-full '>
-					{/* <SheetClose asChild>
+				<SheetFooter className='flex flex-col gap-6 gap-x-0 sm:flex-col  w-full sm:space-x-0 '>
+					<SheetClose asChild>
 						<Link href='/communities/create' className={buttonVariants()}>
 							Create Community
 						</Link>
@@ -78,7 +77,7 @@ export const MobileNav = () => {
 							})}>
 							Create Community
 						</Link>
-					</SheetClose> */}
+					</SheetClose>
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>

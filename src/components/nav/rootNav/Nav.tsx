@@ -3,11 +3,12 @@ import React from 'react';
 import { ThemeSwitcher } from '@/components/themeSwitcher/ThemeSwitcher';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserAccount } from './UserAccount';
+import { UserAccount } from '../user/UserAccount';
 import { SignInOrUpLink } from './SignInOrUpLink';
 import { useSession } from 'next-auth/react';
 import { Bell, Home, Search } from 'lucide-react';
 import { MobileNav } from './MobileNav';
+import { ActiveLink } from '@/components/ui/ActiveLink';
 
 export const Nav = () => {
 	const session = useSession();
@@ -34,16 +35,18 @@ export const Nav = () => {
 			</div>
 			{session.status === 'authenticated' && (
 				<div className='w-full md:hidden  flex justify-around items-center  p-3  bg-secondary'>
-					<Link href='/'>
+					<ActiveLink href='/'>
 						<Home />
-					</Link>
-					<Link href='/'>
+					</ActiveLink>
+
+					<ActiveLink href='/explore'>
 						<Search />
-					</Link>
-					<Link href='/'>
+					</ActiveLink>
+					<ActiveLink href='/notifications'>
 						<Bell />
-					</Link>
-					<MobileNav />
+					</ActiveLink>
+
+					<MobileNav userName={session.data.user.name} />
 				</div>
 			)}
 		</nav>

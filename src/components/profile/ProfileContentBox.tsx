@@ -7,5 +7,5 @@ export const ProfileContentBox = () => {
 	let info = params.get('info');
 	if (!info) info = 'posts';
 
-	return <div>{info}</div>;
+	return <div className='px-4 lg:px-8'>{info}</div>;
 };

@@ -24,7 +24,7 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 	const monthAndYear = dateObj.toLocaleString('en-US', { year: 'numeric', month: 'long' });
 
 	return (
-		<header className='w-full flex flex-col justify-start items-center  mx-auto pl-8 pr-8   '>
+		<header className='w-full flex flex-col justify-start items-center  mx-auto px-4 lg:px-8   '>
 			<div className='flex justify-between  w-full'>
 				<Avatar className='w-20 h-20 mt-[-2.5rem] sm:w-24 sm:h-24 sm:mt-[-3rem] lg:w-28 lg:h-28 lg:mt-[-3.5rem]  '>
 					{userData.image && <AvatarImage src={userData.image} />}
@@ -63,28 +63,40 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 			/>
 			<div className='w-full mt-8 flex  items-center justify-evenly sm:justify-start sm:gap-6 text-lg lg:text-xl overflow-x-auto mb-2'>
 				<Link
-					href={`/profile/${userData.name}?info=posts`}
+					href={{
+						pathname: `/profile/${userData.name}`,
+						query: { info: 'posts' },
+					}}
 					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<LayoutGrid />
 					<span className='hidden sm:inline'>Posts</span>
 				</Link>
 
 				<Link
-					href={`/profile/${userData.name}?info=likes`}
+					href={{
+						pathname: `/profile/${userData.name}`,
+						query: { info: 'likes' },
+					}}
 					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Heart />
 					<span className='hidden sm:inline'>Likes</span>
 				</Link>
 
 				<Link
-					href={`/profile/${userData.name}?info=games`}
+					href={{
+						pathname: `/profile/${userData.name}`,
+						query: { info: 'games' },
+					}}
 					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Gamepad />
 					<span className='hidden sm:inline'>Games</span>
 				</Link>
 
 				<Link
-					href={`/profile/${userData.name}?info=communities`}
+					href={{
+						pathname: `/profile/${userData.name}`,
+						query: { info: 'communities' },
+					}}
 					className='flex gap-1 lg:gap-2 cursor-pointer hover:text-muted-foreground  transiti duration-200'>
 					<Users2 />
 					<span className='hidden sm:inline'>Communities</span>
