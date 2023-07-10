@@ -43,6 +43,7 @@ export const POST = async (request: Request) => {
 				creatorId: session.user.id,
 				image: picture,
 				fileName,
+				members: 1,
 			},
 		});
 

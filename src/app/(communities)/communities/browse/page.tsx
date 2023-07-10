@@ -1,3 +1,4 @@
+import { CommunitiesBrowseCardsContener } from '@/components/communities/CommunitiesBrowseCardsContener';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
@@ -9,6 +10,6 @@ export const metadata = {
 const Browse = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
-	return <p>Browse</p>;
+	return <CommunitiesBrowseCardsContener />;
 };
 export default Browse;

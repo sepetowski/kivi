@@ -5,6 +5,7 @@ import { getUserCommunities } from '@/lib/getUserCommunities';
 import { Communities } from '@/types/communities';
 import { CommunityItem } from '@/components/sidebar/rightSidebar/CommunityItem';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import Link from 'next/link';
 export const RightSidebar = async () => {
 	const communities = (await getUserCommunities()) as Communities[];
 	return (
@@ -14,7 +15,7 @@ export const RightSidebar = async () => {
 					<Users2 />
 					<p className='hidden lg:inline font-bold uppercase text-center'>Your Communities</p>
 				</div>
-				<ScrollArea className='w-full h-full flex flex-col   gap-3  xl:text-lg'>
+				<div className='w-full h-full flex flex-col   gap-4  xl:text-lg'>
 					{communities.length !== 0 &&
 						communities.map((community) => (
 							<CommunityItem
@@ -23,7 +24,15 @@ export const RightSidebar = async () => {
 								url={community.community.image}
 							/>
 						))}
-				</ScrollArea>
+					{communities.length === 0 && (
+						<p className='text-center text-sm lg:text-base'>
+							You have not join to any community yet.{' '}
+							<Link className='font-bold cursor-pointer' href='/communities/browse'>
+								Join now
+							</Link>
+						</p>
+					)}
+				</div>
 			</div>
 		</Sidebar>
 	);

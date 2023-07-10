@@ -103,6 +103,7 @@ model Community {
   image        String
   fileName     String
   postCount    Int            @default(0)
+  members      Int            @default(0)
   subscription Subscription[]
 
   @@index([name])
