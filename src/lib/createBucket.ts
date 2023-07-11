@@ -1,9 +1,9 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-export const createBucket = async (userId: string) => {
+export const createBucket = async (bucketName: string) => {
 	const supabase = createClientComponentClient();
 	try {
-		const { data, error } = await supabase.storage.createBucket(`${userId}`, {
+		const { data, error } = await supabase.storage.createBucket(`${bucketName}`, {
 			public: true,
 			allowedMimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
 			fileSizeLimit: 5242880, //5MB

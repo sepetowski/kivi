@@ -4,6 +4,7 @@ import { checkIfBucketExist } from '@/lib/checkIfBucketExist';
 import { createBucket } from '@/lib/createBucket';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
+import { useToast } from '@/components/ui/use-toast';
 import {
 	AlertDialogAction,
 	AlertDialogCancel,
@@ -13,10 +14,12 @@ import {
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { InputError } from '@/components/forms/InputError';
 import { useFormik } from 'formik';
-import Image from 'next/image';
+import { ImageSchema } from '@/validations/UploadImageSchema';
+import { saveImageInBucket } from '@/lib/saveImageInBucket';
+import { removeFromBucket } from '@/lib/removeFromBucket';
+import { useRouter } from 'next/navigation';
 
 interface Props {
 	userId: string;
@@ -29,13 +32,73 @@ interface Props {
 }
 
 export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
-	const [isSending, setIsSending] = useState(false);
+	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
+	const { toast } = useToast();
+
 	const formik = useFormik({
 		initialValues: {
 			picture: null,
 		},
-		onSubmit: () => {},
+		validationSchema: ImageSchema,
+
+		onSubmit: async (values) => {
+			toast({
+				title: 'Saving your profile please wait...',
+			});
+
+			const { founded, error, errorMsg } = await checkIfBucketExist(userId);
+			console.log(founded, error, errorMsg);
+			if (error) {
+				toast({
+					variant: 'destructive',
+					title: 'Ops. Sometnig went wrong!',
+					description: errorMsg,
+				});
+				return;
+			}
+
+			if (!error && !founded) await createBucket(userId);
+			const urlAndFileName = await saveImageInBucket(values.picture!, userId);
+
+			if (
+				Array.isArray(urlAndFileName) &&
+				urlAndFileName.every((item) => typeof item === 'string')
+			) {
+				const [url, _] = urlAndFileName;
+				try {
+					const res = await fetch('/api/change-profile-picture', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							picture: url,
+						}),
+					});
+					if (!res.ok) {
+						toast({
+							variant: 'destructive',
+							title: 'Oh no! Something went wrong.',
+							description: res.statusText,
+						});
+						await removeFromBucket(userId, userId);
+					} else {
+						toast({
+							title: res.statusText,
+						});
+
+						router.refresh();
+					}
+				} catch (err) {
+					toast({
+						variant: 'destructive',
+						title: 'Oh no! Something went wrong. Please try again',
+					});
+					await removeFromBucket(userId, userId);
+				}
+			}
+		},
 	});
 
 	const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,24 +108,6 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 		}
 	};
 
-	const setImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e);
-		const target = e.target.files;
-		console.log(target);
-		if (target?.length != 0 && target !== null) chnageImageHnalder(target);
-	};
-
-	const chnageImageHnalder = async (img: FileList) => {
-		console.log(img);
-		const { founded, error, errorMsg } = await checkIfBucketExist(userId);
-		console.log(founded, error, errorMsg);
-		if (error) return;
-		if (founded) console.log('znaleziony');
-		if (!error && !founded) await createBucket(userId);
-
-		// await saveImageInBucket();
-	};
-
 	return (
 		<>
 			<AlertDialogHeader>
@@ -70,7 +115,9 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 				<AlertDialogDescription>
 					Upload your photo and when you are ready approve the changes
 				</AlertDialogDescription>
-				<form className='w-full flex flex-col md:flex-row items-center justify-evenly gap-4 '>
+				<form
+					onSubmit={formik.handleSubmit}
+					className='w-full flex flex-col md:flex-row items-center justify-evenly gap-4 '>
 					<Avatar className='w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 '>
 						{imagePreview && <AvatarImage src={imagePreview} />}
 						{!imagePreview && (
@@ -85,12 +132,15 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 							<p>Supported formats: JPG, JPEG, GIF, PNG.</p>
 							<p>Maximum size of image is 5MB.</p>
 						</div>
+						<InputError error={formik.errors.picture} isInputTouched={formik.touched.picture} />
 					</div>
 				</form>
 			</AlertDialogHeader>
 			<AlertDialogFooter>
 				<AlertDialogCancel>Cancel</AlertDialogCancel>
-				<AlertDialogAction>Save</AlertDialogAction>
+				<AlertDialogAction disabled={!(formik.dirty && formik.isValid)} onClick={formik.submitForm}>
+					Save
+				</AlertDialogAction>
 			</AlertDialogFooter>
 		</>
 	);

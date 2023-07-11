@@ -13,6 +13,7 @@ import { ActiveLink } from '@/components/ui/ActiveLink';
 export const Nav = () => {
 	const session = useSession();
 
+
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
 			<div className='w-full max-w-[1800px] mx-auto flex justify-between items-center  p-3 md:pl-6 md:pr-6 '>

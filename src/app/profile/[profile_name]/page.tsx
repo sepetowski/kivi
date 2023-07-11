@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
 import { User } from '@/types/user';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 interface Params {
