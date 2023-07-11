@@ -1,6 +1,4 @@
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { Heart, LayoutGrid, Gamepad, Users2 } from 'lucide-react';
 import { EditProfile } from './EditProfile';
 import { User } from '@/types/user';
@@ -9,6 +7,7 @@ import { FollowControl } from '@/components/profile/acctions/FollowControl';
 import { FollowsInfo } from './FollowsInfo';
 import { Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { ProfileAvatar } from '@/components/profile/avatar/ProfileAvatar';
 
 interface Props {
 	userData: User;
@@ -26,14 +25,13 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 	return (
 		<header className='w-full flex flex-col justify-start items-center  mx-auto px-4 lg:px-8   '>
 			<div className='flex justify-between  w-full'>
-				<Avatar className='w-20 h-20 mt-[-2.5rem] sm:w-24 sm:h-24 sm:mt-[-3rem] lg:w-28 lg:h-28 lg:mt-[-3.5rem]  '>
-					{userData.image && <AvatarImage src={userData.image} />}
-					{!userData.image && (
-						<AvatarFallback className='bg-accent '>
-							{generateUsernameInitials(userData.name)}
-						</AvatarFallback>
-					)}
-				</Avatar>
+				<ProfileAvatar
+					image={userData.image}
+					name={userData.name}
+					sessionUserPage={userData.sessionUserPage}
+					userId={userData.id}
+				/>
+
 				{userData.sessionUserPage && (
 					<EditProfile username={userData.name} profileDescription={userData.profileDescription} />
 				)}

@@ -5,6 +5,7 @@ import { NewCommunitySchema } from '@/validations/NewCommunitySchema';
 import { useFormik } from 'formik';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { InputError } from '@/components/forms/InputError';
 import { useToast } from '@/components/ui/use-toast';
@@ -112,11 +113,10 @@ export const CreateCommunityForm = () => {
 				</div>
 				<div className='flex flex-col space-y-1.5'>
 					<Label htmlFor='description'>Description</Label>
-
-					<Input
+					<Textarea
+						className='max-h-96'
+						placeholder='Type your description here.'
 						id='description'
-						type='text'
-						placeholder='Description of your Community'
 						value={formik.values.description}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}

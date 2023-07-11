@@ -1,4 +1,4 @@
-import { ProfileBanner } from '@/components/profile/ProfileBanner';
+import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
 import { ProfileContentBox } from '@/components/profile/ProfileContentBox';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
 import { Separator } from '@/components/ui/separator';
@@ -21,7 +21,7 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 
 	return (
 		<div className='md:px-4 lg:px-8'>
-			<ProfileBanner />
+			<ProfileBanner sessionUserPage={userData.sessionUserPage} userId={userData.id} />
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />
 			<ProfileContentBox />

@@ -4,6 +4,7 @@ import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { columns } from '@/components/table/columns';
 import { CreatedCommunitiesTable } from '@/components/table/CreatedCommunitiesTable';
+import Link from 'next/link';
 
 export const metadata = {
 	title: 'Created Communities',
@@ -18,7 +19,15 @@ const Created = async () => {
 
 	return (
 		<div className='w-full mx-auto max-w-5xl mt-8 sm:mt-14'>
-			<CreatedCommunitiesTable columns={columns} data={communities} />
+			{communities.length !== 0 && <CreatedCommunitiesTable columns={columns} data={communities} />}
+			{communities.length === 0 && (
+				<p className='text-center mt-16 text-lg md:text-xl xl:text-2xl'>
+					You have not created any community yet.{' '}
+					<Link className='font-bold cursor-pointer' href='/communities/create'>
+						Create Your first community!
+					</Link>{' '}
+				</p>
+			)}
 		</div>
 	);
 };
