@@ -8,10 +8,10 @@ interface Props {
 	userId: string;
 	image: string | null | undefined;
 	name: string;
+	onSave: () => void;
 }
 
-
-export const ChangeProfileImage = ({ userId, image, name }: Props) => {
+export const ChangeProfileImage = ({ userId, image, name,onSave }: Props) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger
@@ -22,7 +22,7 @@ export const ChangeProfileImage = ({ userId, image, name }: Props) => {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className='max-w-xl'>
-				<ChangePorfileImageForm userId={userId} image={image} name={name} />
+				<ChangePorfileImageForm userId={userId} image={image} name={name} onSave={onSave} />
 			</AlertDialogContent>
 		</AlertDialog>
 	);

@@ -7,9 +7,10 @@ import { ChangeProfileBackgroundImageForm } from '@/components/forms/ChangeProfi
 interface Props {
 	userId: string;
 	backgroundImage: string | null;
+	onSave: () => void;
 }
 
-export const ChnageBackgroundImage = ({ userId, backgroundImage }: Props) => {
+export const ChnageBackgroundImage = ({ userId, backgroundImage,onSave }: Props) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger className='absolute bottom-2 md:bottom-3 right-5 ' asChild>
@@ -19,7 +20,7 @@ export const ChnageBackgroundImage = ({ userId, backgroundImage }: Props) => {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className='max-w-2xl lg:max-w-4xl'>
-				<ChangeProfileBackgroundImageForm userId={userId} backgroundImage={backgroundImage} />
+				<ChangeProfileBackgroundImageForm userId={userId} backgroundImage={backgroundImage} onSave={onSave} />
 			</AlertDialogContent>
 		</AlertDialog>
 	);

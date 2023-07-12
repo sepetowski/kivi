@@ -26,9 +26,10 @@ interface Props {
 	userId: string;
 	image: string | null | undefined;
 	name: string;
+	onSave: () => void;
 }
 
-export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
+export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) => {
 	const session = useSession();
 	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
@@ -41,6 +42,7 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 		validationSchema: ImageSchema,
 
 		onSubmit: async (values) => {
+			onSave();
 			toast({
 				title: 'Saving your profile please wait...',
 			});
@@ -104,6 +106,7 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 				});
 				await removeFromBucket(userId, fileName);
 			}
+			onSave();
 		},
 	});
 

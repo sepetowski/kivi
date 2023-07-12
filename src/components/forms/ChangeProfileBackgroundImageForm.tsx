@@ -26,9 +26,10 @@ import Image from 'next/image';
 interface Props {
 	userId: string;
 	backgroundImage: string | null;
+	onSave: () => void;
 }
 
-export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage }: Props) => {
+export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage, onSave }: Props) => {
 	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(backgroundImage);
 	const { toast } = useToast();
@@ -40,6 +41,7 @@ export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage }: Pr
 		validationSchema: ImageSchema,
 
 		onSubmit: async (values) => {
+			onSave();
 			toast({
 				title: 'Saving your profile please wait...',
 			});
@@ -102,6 +104,7 @@ export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage }: Pr
 				});
 				await removeFromBucket(userId, fileName);
 			}
+			onSave();
 		},
 	});
 
