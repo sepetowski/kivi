@@ -46,15 +46,18 @@ model VerificationToken {
 }
 
 model User {
-  id                 String    @id @default(cuid())
-  name               String?   @unique
-  email              String?   @unique
-  emailVerified      DateTime?
-  image              String?
-  hashedPassword     String?
-  sessions           Session[]
-  createdAt          DateTime  @default(now())
-  profileDescription String    @default("I am new here")
+  id                      String    @id @default(cuid())
+  name                    String?   @unique
+  email                   String?   @unique
+  emailVerified           DateTime?
+  image                   String?
+  imageFileName           String?
+  backgroundImage         String?
+  backgroundImageFileName String?
+  hashedPassword          String?
+  sessions                Session[]
+  createdAt               DateTime  @default(now())
+  profileDescription      String    @default("I am new here")
 
   accounts    Account[]
   post        Post[]

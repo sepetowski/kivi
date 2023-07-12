@@ -22,7 +22,7 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 
 	return (
 		<div className='md:px-4 lg:px-8'>
-			<ProfileBanner sessionUserPage={userData.sessionUserPage} userId={userData.id} />
+			<ProfileBanner sessionUserPage={userData.sessionUserPage} userId={userData.id} backgroundImage={userData.backgroundImage} />
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />
 			<ProfileContentBox />

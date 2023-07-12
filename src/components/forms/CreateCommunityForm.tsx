@@ -34,56 +34,52 @@ export const CreateCommunityForm = () => {
 
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			const urlAndFileName = await saveImageInBucket(values.picture!, COMMUNITY_AVATARS);
+			const { url, fileName } = await saveImageInBucket(values.picture!, COMMUNITY_AVATARS);
 
-			if (typeof urlAndFileName === null) {
+			if (!url || !fileName) {
 				toast({
 					variant: 'destructive',
 					title: 'Oh no! Something went wrong.',
-					description: 'Could not save community avatar in database, please try again!',
+					description: 'Could not save image. Please try again',
 				});
+
 				return;
 			}
-			if (
-				Array.isArray(urlAndFileName) &&
-				urlAndFileName.every((item) => typeof item === 'string')
-			) {
-				const [url, fileName] = urlAndFileName;
-				try {
-					const res = await fetch('/api/community/create', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							name: values.name,
-							description: values.description,
-							picture: url,
-							fileName,
-						}),
-					});
-					if (!res.ok) {
-						toast({
-							variant: 'destructive',
-							title: 'Oh no! Something went wrong.',
-							description: res.statusText,
-						});
-						await removeFromBucket(COMMUNITY_AVATARS, fileName);
-					} else {
-						toast({
-							title: res.statusText,
-						});
-						resetForm();
-						setImage(null);
-						router.refresh();
-					}
-				} catch (err) {
+
+			try {
+				const res = await fetch('/api/community/create', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						name: values.name,
+						description: values.description,
+						picture: url,
+						fileName,
+					}),
+				});
+				if (!res.ok) {
 					toast({
 						variant: 'destructive',
-						title: 'Oh no! Something went wrong. Please try again',
+						title: 'Oh no! Something went wrong.',
+						description: res.statusText,
 					});
 					await removeFromBucket(COMMUNITY_AVATARS, fileName);
+				} else {
+					toast({
+						title: res.statusText,
+					});
+					resetForm();
+					setImage(null);
+					router.refresh();
 				}
+			} catch (err) {
+				toast({
+					variant: 'destructive',
+					title: 'Oh no! Something went wrong. Please try again',
+				});
+				await removeFromBucket(COMMUNITY_AVATARS, fileName);
 			}
 			setIsSending(false);
 		},

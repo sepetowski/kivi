@@ -5,6 +5,7 @@ import { createBucket } from '@/lib/createBucket';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { useToast } from '@/components/ui/use-toast';
+import { useSession } from 'next-auth/react';
 import {
 	AlertDialogAction,
 	AlertDialogCancel,
@@ -20,17 +21,16 @@ import { ImageSchema } from '@/validations/UploadImageSchema';
 import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { useRouter } from 'next/navigation';
-
+import Image from 'next/image';
 
 interface Props {
 	userId: string;
-	image: string | null | undefined;
-	name: string;
+	backgroundImage: string | null;
 }
 
-export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
+export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage }: Props) => {
 	const router = useRouter();
-	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
+	const [imagePreview, setImagePreview] = useState<null | string | undefined>(backgroundImage);
 	const { toast } = useToast();
 
 	const formik = useFormik({
@@ -69,7 +69,7 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 			}
 
 			try {
-				const res = await fetch('/api/change-profile-picture', {
+				const res = await fetch('/api/change-background-picture', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -115,27 +115,24 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 	return (
 		<>
 			<AlertDialogHeader>
-				<AlertDialogTitle>Change your profile picture.</AlertDialogTitle>
+				<AlertDialogTitle>Change your background image.</AlertDialogTitle>
 				<AlertDialogDescription>
 					Upload your photo and when you are ready approve the changes
 				</AlertDialogDescription>
 				<form
 					onSubmit={formik.handleSubmit}
-					className='w-full flex flex-col md:flex-row items-center justify-evenly gap-4 '>
-					<Avatar className='w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 '>
-						{imagePreview && <AvatarImage src={imagePreview} />}
-						{!imagePreview && (
-							<AvatarFallback className='bg-accent '>
-								{generateUsernameInitials(name)}
-							</AvatarFallback>
-						)}
-					</Avatar>
-					<div className='flex flex-col space-y-1.5'>
+					className='w-full flex flex-col  items-center justify-evenly gap-4 '>
+					<div className='relative w-full h-36 md:h-52 lg:h-60 xl:h-72 overflow-hidden rounded-md md:rounded-lg lg:rounded-xl shadow-sm bg-muted-foreground'>
+						{imagePreview && <Image className='object-cover' src={imagePreview} fill alt='' />}
+					</div>
+
+					<div className='flex flex-col space-y-1.5 w-full'>
 						<Input className='cursor-pointer' id='picture' type='file' onChange={onImageChange} />
-						<div className='text-xs text-muted-foreground  font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 space-y-1.5'>
-							<p>Supported formats: JPG, JPEG, GIF, PNG.</p>
-							<p>Maximum size of image is 5MB.</p>
-						</div>
+
+						<p className='text-xs text-muted-foreground  font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 space-y-1.5'>
+							Supported formats: JPG, JPEG, GIF, PNG. Maximum size of image is 5MB
+						</p>
+
 						<InputError error={formik.errors.picture} isInputTouched={formik.touched.picture} />
 					</div>
 				</form>

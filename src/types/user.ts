@@ -1,4 +1,4 @@
-import { Category, Follows, Game, Post, Subscription } from '@prisma/client';
+import { Community, Follows, Game, Post, Subscription } from '@prisma/client';
 
 export interface User {
 	id: string;
@@ -8,10 +8,11 @@ export interface User {
 	sessionUserPage: boolean;
 	posts: Post[];
 	profileDescription: string;
-	createdCategories: Category[];
+	createdCommunities: Community[];
 	subscription: Subscription[];
 	games: Game[];
 
 	followers: Follows[];
 	following: Follows[];
+	backgroundImage: string | null;
 }

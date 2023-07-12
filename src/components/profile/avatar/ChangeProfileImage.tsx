@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ImagePlus } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -10,10 +10,13 @@ interface Props {
 	name: string;
 }
 
+
 export const ChangeProfileImage = ({ userId, image, name }: Props) => {
 	return (
 		<AlertDialog>
-			<AlertDialogTrigger className='absolute bottom-[-2px] right-[-2px] md:right-[-5px] z-50 ' asChild>
+			<AlertDialogTrigger
+				className='absolute bottom-[-2px] right-[-2px] md:right-[-5px] z-50 '
+				asChild>
 				<Button className='rounded-full w-8 h-8 md:w-9 md:h-9' variant={'default'} size={'xs'}>
 					<ImagePlus />
 				</Button>

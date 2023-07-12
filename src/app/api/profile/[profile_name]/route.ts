@@ -34,6 +34,7 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			following: user.following,
 			followers: user.followers,
 			posts: user.post,
+			backgroundImage: user.backgroundImage,
 		};
 
 		if (session?.user?.name === profile_name)

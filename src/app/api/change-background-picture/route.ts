@@ -30,14 +30,14 @@ export const POST = async (request: Request) => {
 				id: session.user.id,
 			},
 			data: {
-				image: picture,
-				imageFileName: fileName,
+				backgroundImage: picture,
+				backgroundImageFileName: fileName,
 			},
 		});
 
 		return NextResponse.json(
-			{ previousFileName: user.imageFileName },
-			{ status: 200, statusText: 'Profile picture updated!' }
+			{ previousFileName: user.backgroundImageFileName },
+			{ status: 200, statusText: 'Background image updated!' }
 		);
 	} catch (err) {
 		let errMsg = 'Database Error';

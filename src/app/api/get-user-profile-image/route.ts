@@ -2,15 +2,11 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getAuthSession } from '@/lib/auth';
 
-export const POST = async (request: Request) => {
+export const GET = async (request: Request) => {
 	const session = await getAuthSession();
 
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
-	const { picture, fileName }: { picture: string; fileName: string } = await request.json();
-
-	if (!picture || !fileName)
-		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
 	try {
 		const user = await db.user.findUnique({
@@ -25,20 +21,7 @@ export const POST = async (request: Request) => {
 				statusText: `No user found`,
 			});
 
-		await db.user.update({
-			where: {
-				id: session.user.id,
-			},
-			data: {
-				image: picture,
-				imageFileName: fileName,
-			},
-		});
-
-		return NextResponse.json(
-			{ previousFileName: user.imageFileName },
-			{ status: 200, statusText: 'Profile picture updated!' }
-		);
+		return NextResponse.json({ image: user.image }, { status: 200, statusText: 'Image loaded' });
 	} catch (err) {
 		let errMsg = 'Database Error';
 		if (typeof err === 'string') {

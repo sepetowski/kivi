@@ -1,23 +1,25 @@
-'use client';
 import React from 'react';
 
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { ImagePlus } from 'lucide-react';
+import { AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { ChangeProfileBackgroundImageForm } from '@/components/forms/ChangeProfileBackgroundImageForm';
+interface Props {
+	userId: string;
+	backgroundImage: string | null;
+}
 
-export const ChnageBackgroundImage = () => {
+export const ChnageBackgroundImage = ({ userId, backgroundImage }: Props) => {
 	return (
-		<div className='absolute bottom-0 right-5'>
-			<Label htmlFor='file' role='button'>
-				<ImagePlus color='white' />
-				<Input
-					className='z-[-1] relative border-none h-[0.1px] w-[0.1px] overflow-hidden'
-					accept='image/*'
-					type='file'
-					name='file'
-					id='file'
-				/>
-			</Label>
-		</div>
+		<AlertDialog>
+			<AlertDialogTrigger className='absolute bottom-2 md:bottom-3 right-5 ' asChild>
+				<Button variant={'link'} size={'xs'}>
+					<ImagePlus color='white' />
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className='max-w-2xl lg:max-w-4xl'>
+				<ChangeProfileBackgroundImageForm userId={userId} backgroundImage={backgroundImage} />
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };
