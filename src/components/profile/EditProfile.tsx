@@ -33,9 +33,6 @@ export const EditProfile = ({ profileDescription, username }: Props) => {
 					<SheetDescription>
 						Make changes to your profile here. Click save when you are re done.
 					</SheetDescription>
-					<SheetDescription className='text-destructive text-xs md:text-sm  font-bold'>
-						Note: if you change your username, you will be automatically logged out
-					</SheetDescription>
 				</SheetHeader>
 				<EdditProfileForm profileDescription={profileDescription} username={username} />
 			</SheetContent>

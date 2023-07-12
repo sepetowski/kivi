@@ -29,7 +29,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 		},
 		validationSchema: ProfileEditSchema,
 
-		onSubmit: async (values, ) => {
+		onSubmit: async (values) => {
 			setIsSending(true);
 			toast({
 				title: 'Saving your profile please wait...',
@@ -53,7 +53,10 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 						description: res.statusText,
 					});
 				else {
-					if (res.status === 201) signOut();
+					if (res.status === 201) {
+						await session.update();
+						router.push(`/profile/${values.username}`);
+					}
 					toast({
 						title: res.statusText,
 					});

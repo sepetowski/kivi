@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import {
@@ -15,10 +16,10 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { ActiveLink } from '@/components/ui/ActiveLink';
-import { getAuthSession } from '@/lib/auth';
+import { useSession } from 'next-auth/react';
 
-export const LeftSidebar = async () => {
-	const session = await getAuthSession();
+export const LeftSidebar = () => {
+	const session = useSession();
 
 	return (
 		<Sidebar left={false}>
@@ -27,7 +28,9 @@ export const LeftSidebar = async () => {
 					<Home />
 					<span className='hidden lg:inline'>Home</span>
 				</ActiveLink>
-				<ActiveLink className='flex gap-3 cursor-pointer' href={`/profile/${session?.user.name}`}>
+				<ActiveLink
+					className='flex gap-3 cursor-pointer'
+					href={`/profile/${session.data?.user.name}`}>
 					<User2 />
 					<span className='hidden lg:inline'>Profile</span>
 				</ActiveLink>

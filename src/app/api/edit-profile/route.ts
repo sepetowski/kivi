@@ -51,9 +51,9 @@ export const POST = async (request: Request) => {
 				},
 			});
 
-			return new NextResponse('Username was changed. You will be logged out', {
+			return new NextResponse('Username was changed', {
 				status: 201,
-				statusText: 'Username was changed. You will be logged out',
+				statusText: 'Username was changed.',
 			});
 		}
 		//chnage desceription
@@ -94,9 +94,9 @@ export const POST = async (request: Request) => {
 				},
 			});
 
-			return new NextResponse('Your profile data was changed. You will be logged out', {
+			return new NextResponse('Your profile data was changed.', {
 				status: 201,
-				statusText: 'Your profile data was changed. You will be logged out',
+				statusText: 'Your profile data was changed.',
 			});
 		}
 	} catch (err) {

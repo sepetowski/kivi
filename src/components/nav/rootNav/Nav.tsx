@@ -10,11 +10,7 @@ import { Bell, Home, Search } from 'lucide-react';
 import { MobileNav } from './MobileNav';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 
-interface Props {
-	image: string | null;
-}
-
-export const Nav = ({ image }: Props) => {
+export const Nav = () => {
 	const session = useSession();
 
 	return (
@@ -30,7 +26,7 @@ export const Nav = ({ image }: Props) => {
 						<UserAccount
 							name={session.data.user.name}
 							email={session.data.user.email}
-							image={image}
+							image={session.data.user.image}
 						/>
 					)}
 					{!session.data && <SignInOrUpLink />}

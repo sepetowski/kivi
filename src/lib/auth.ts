@@ -64,6 +64,15 @@ export const authOptions: NextAuthOptions = {
 				session.user.image = token.picture;
 				session.user.username = token.username;
 			}
+			const user = await db.user.findUnique({
+				where: {
+					id: token.sub!,
+				},
+			});
+			if (user) {
+				session.user.image = user.image;
+				session.user.name = user.name;
+			}
 
 			return session;
 		},

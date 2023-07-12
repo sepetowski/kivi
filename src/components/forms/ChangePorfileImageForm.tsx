@@ -20,6 +20,7 @@ import { ImageSchema } from '@/validations/UploadImageSchema';
 import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface Props {
 	userId: string;
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
+	const session = useSession();
 	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
 	const { toast } = useToast();
@@ -89,6 +91,7 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 					toast({
 						title: res.statusText,
 					});
+					await session.update();
 
 					const { previousFileName }: { previousFileName: string | null } = await res.json();
 					if (previousFileName) await removeFromBucket(userId, previousFileName);

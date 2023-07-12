@@ -6,7 +6,7 @@ import { Nav } from '@/components/nav/rootNav/Nav';
 import { Toaster } from '@/components/ui/toaster';
 import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
-import { getUserImage } from '@/lib/getUserImage';
+
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,8 +16,8 @@ export const metadata = {
 	description: 'Social app for gamers',
 };
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-	const { image }: { image: string | null } = await getUserImage();
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
+
 
 	return (
 		<html lang='en' suppressHydrationWarning>
@@ -27,7 +27,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 			<body className={inter.className}>
 				<AuthProvider>
 					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-						<Nav image={image} />
+						<Nav  />
 						<div className='flex justify-between w-full max-w-[2000px] mx-auto relative'>
 							<LeftSidebar />
 							<div className='w-full'>{children}</div>
