@@ -23,7 +23,7 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			},
 		});
 
-		if (!user) return new NextResponse('User not found', { status: 400 });
+		if (!user) return new NextResponse('User not found', { status: 404 });
 
 		const userInfo = {
 			id: user.id,

@@ -1,6 +1,9 @@
 import { CommunitiesBrowseCardsContener } from '@/components/communities/CommunitiesBrowseCardsContener';
 import { getAuthSession } from '@/lib/auth';
+import { getAllCommunities } from '@/lib/getAllCommunities';
+import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 export const metadata = {
 	title: 'Avaible Communities',
@@ -10,6 +13,12 @@ export const metadata = {
 const Browse = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
-	return <CommunitiesBrowseCardsContener />;
+	const communitiesProsmie: Promise<Community[]> = getAllCommunities();
+
+	return (
+		<Suspense fallback={<h2>Loading...</h2>}>
+			<CommunitiesBrowseCardsContener promise={communitiesProsmie} />
+		</Suspense>
+	);
 };
 export default Browse;

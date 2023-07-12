@@ -29,8 +29,11 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 		},
 		validationSchema: ProfileEditSchema,
 
-		onSubmit: async (values, { resetForm }) => {
+		onSubmit: async (values, ) => {
 			setIsSending(true);
+			toast({
+				title: 'Saving your profile please wait...',
+			});
 			try {
 				const res = await fetch('/api/edit-profile', {
 					method: 'POST',

@@ -21,7 +21,6 @@ import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { useRouter } from 'next/navigation';
 
-
 interface Props {
 	userId: string;
 	image: string | null | undefined;
@@ -123,9 +122,9 @@ export const ChangePorfileImageForm = ({ userId, image, name }: Props) => {
 					onSubmit={formik.handleSubmit}
 					className='w-full flex flex-col md:flex-row items-center justify-evenly gap-4 '>
 					<Avatar className='w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 '>
-						{imagePreview && <AvatarImage src={imagePreview} />}
+						{imagePreview && <AvatarImage className='object-cover' src={imagePreview} />}
 						{!imagePreview && (
-							<AvatarFallback className='bg-accent '>
+							<AvatarFallback className='bg-accent  '>
 								{generateUsernameInitials(name)}
 							</AvatarFallback>
 						)}

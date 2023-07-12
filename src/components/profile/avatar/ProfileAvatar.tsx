@@ -17,7 +17,7 @@ export const ProfileAvatar = ({ name, image, sessionUserPage, userId }: Props) =
 			}`}>
 			{image && (
 				<AvatarImage
-					className={`${sessionUserPage ? 'overflow-hidden rounded-full' : ''}`}
+					className={`${sessionUserPage ? 'overflow-hidden rounded-full object-cover' : ''}`}
 					src={image}
 				/>
 			)}

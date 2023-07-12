@@ -13,8 +13,9 @@ export const ChnageBackgroundImage = ({ userId, backgroundImage }: Props) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger className='absolute bottom-2 md:bottom-3 right-5 ' asChild>
-				<Button variant={'link'} size={'xs'}>
-					<ImagePlus color='white' />
+				<Button className='flex gap-2' variant={'secondary'} size={'xs'}>
+					<ImagePlus />
+					<p className='hidden md:inline'>Chnage your background</p>
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className='max-w-2xl lg:max-w-4xl'>
