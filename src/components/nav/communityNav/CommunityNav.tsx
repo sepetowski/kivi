@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 import { Input } from '@/components/ui/input';
@@ -13,15 +13,15 @@ import { SearchSchema } from '@/validations/SearchSchema';
 export const CommunityNav = () => {
 	const currentRoute = usePathname();
 	const router = useRouter();
-	const [isSearching, setIsSearching] = useState(false);
+	const params = useSearchParams();
+	const search = params.get('search');
 
 	const formik = useFormik({
 		initialValues: {
-			search: '',
+			search: search ? search : '',
 		},
 		validationSchema: SearchSchema,
 		onSubmit: (values) => {
-			setIsSearching(true);
 			router.push(`/communities/browse?search=${values.search}`);
 		},
 	});
@@ -46,22 +46,20 @@ export const CommunityNav = () => {
 						className=''
 						placeholder='Serach for community...'
 					/>
-					<Button disabled={!(formik.isValid && formik.dirty)} size={'xs'} type='submit'>
+					<Button disabled={!formik.isValid} size={'xs'} type='submit'>
 						<Search />
 					</Button>
-					{isSearching && (
-						<Button
-							onClick={() => {
-								router.push(`/communities/browse`);
-								setIsSearching(false);
-								formik.resetForm();
-							}}
-							variant={'secondary'}
-							size={'xs'}
-							type='button'>
-							<RotateCcw />
-						</Button>
-					)}
+
+					<Button
+						onClick={() => {
+							router.push(`/communities/browse`);
+							formik.setFieldValue('search', '');
+						}}
+						variant={'secondary'}
+						size={'xs'}
+						type='button'>
+						<RotateCcw />
+					</Button>
 				</form>
 			)}
 			<div
