@@ -37,7 +37,7 @@ export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
 		if (community.length === 0) setIsEmpty(true);
 	}, [query, communities]);
 
-	if (!isMounted)
+	if (!isMounted && query)
 		return (
 			<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
 				<BrowseCommunityCradSkieleton />
@@ -49,35 +49,34 @@ export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
 			</div>
 		);
 
-	if (isMounted)
-		return (
-			<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
-				{queryCommunities.length !== 0 &&
-					queryCommunities.map((communitiy) => (
-						<BrowseCommunityCard
-							key={communitiy.id}
-							name={communitiy.name}
-							description={communitiy.description}
-							id={communitiy.id}
-							members={communitiy.members}
-							posts={communitiy.postCount}
-							image={communitiy.image}
-							userJoined={communitiy.userJoined}
-							creatorId={communitiy.creatorId}
-						/>
-					))}
+	return (
+		<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
+			{queryCommunities.length !== 0 &&
+				queryCommunities.map((communitiy) => (
+					<BrowseCommunityCard
+						key={communitiy.id}
+						name={communitiy.name}
+						description={communitiy.description}
+						id={communitiy.id}
+						members={communitiy.members}
+						posts={communitiy.postCount}
+						image={communitiy.image}
+						userJoined={communitiy.userJoined}
+						creatorId={communitiy.creatorId}
+					/>
+				))}
 
-				{isEmpty && (
-					<div className='flex flex-col gap-2 text-center mt-20'>
-						<p className='text-2xl md:text-4xl'>
-							No results for {''}
-							<span className='font-bold'>
-								<q>{query}</q>
-							</span>
-						</p>
-						<p>Try searching for something else.</p>
-					</div>
-				)}
-			</div>
-		);
+			{isEmpty && (
+				<div className='flex flex-col gap-2 text-center mt-20'>
+					<p className='text-2xl md:text-4xl'>
+						No results for {''}
+						<span className='font-bold'>
+							<q>{query}</q>
+						</span>
+					</p>
+					<p>Try searching for something else.</p>
+				</div>
+			)}
+		</div>
+	);
 };
