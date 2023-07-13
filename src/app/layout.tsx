@@ -7,8 +7,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
 
-
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -17,8 +15,6 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-
-
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head>
@@ -27,10 +23,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 			<body className={inter.className}>
 				<AuthProvider>
 					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-						<Nav  />
+						<Nav />
 						<div className='flex justify-between w-full max-w-[2000px] mx-auto relative'>
 							<LeftSidebar />
-							<div className='w-full'>{children}</div>
+							<div className='w-full '>{children}</div>
 							<RightSidebar />
 						</div>
 						<Toaster />

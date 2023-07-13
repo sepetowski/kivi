@@ -16,10 +16,10 @@ export const CommunityItem = ({ name, url }: Props) => {
 	}, [loaded]);
 
 	return (
-		<div className='flex items-center gap-3'>
+		<div className='flex items-center lg:gap-3'>
 			{showCommunity && (
 				<>
-					<div className='w-12 h-12 relative'>
+					<div className='w-12 h-12 lg:w-10 lg:h-10 xl:w-12 xl:h-12 relative'>
 						<Image
 							onLoad={() => setLoaded(true)}
 							className='rounded-full object-cover'
