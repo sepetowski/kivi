@@ -15,8 +15,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { useRouter } from 'next/navigation';
+import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
 
-const COMMUNITY_AVATARS = 'communitiesavatars';
+
 
 export const CreateCommunityForm = () => {
 	const router = useRouter();

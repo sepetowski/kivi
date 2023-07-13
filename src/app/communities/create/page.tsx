@@ -1,4 +1,4 @@
-import { CreateCommunityCard } from '@/components/cards/CreateCommunityCard';
+import { CreateCommunityCard } from '@/components/cards/community/CreateCommunityCard';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

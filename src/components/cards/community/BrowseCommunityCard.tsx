@@ -1,26 +1,42 @@
+'use client';
 import React from 'react';
-import {
-	Card,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSession } from 'next-auth/react';
+import { JoinToCommunity } from './joinToCommunity/JoinToCommunity';
+import { LeaveFromCommunity } from './leaveFromCommunity/LeaveFromCommunity';
+import { DeleteCommunity } from './deleteCommunity/DeleteCommunity';
 
 interface Props {
 	name: string;
 	posts: number;
-	mebmers: number;
+	members: number;
 	description: string;
 	id: string;
 	image: string;
+	userJoined: boolean;
+	creatorId: string | null;
 }
 
-export const BrowseCommunityCard = ({ name, description, id, mebmers, posts, image }: Props) => {
+export const BrowseCommunityCard = ({
+	name,
+	description,
+	id,
+	members,
+	posts,
+	image,
+	userJoined,
+	creatorId,
+}: Props) => {
+	const session = useSession();
+
+	const { data } = session;
+	const isCreatorOfCommunity = data?.user.id === creatorId;
+
 	return (
 		<Card className='w-full  sm:w-[75%] lg:w-80 xl:w-96'>
 			<CardHeader>
@@ -37,17 +53,31 @@ export const BrowseCommunityCard = ({ name, description, id, mebmers, posts, ima
 					</p>
 
 					<p>
-						Members: <span className='font-medium text-primary'>{mebmers}</span>
+						Members: <span className='font-medium text-primary'>{members}</span>
 					</p>
 				</div>
 			</CardHeader>
 
-			<ScrollArea className='h-24 lg:h-32 p-6 pt-0  text-sm text-muted-foreground'>
+			<ScrollArea className='h-24  p-6 pt-0  text-sm text-muted-foreground'>
 				{description}
 			</ScrollArea>
 
 			<CardFooter className='flex items-center justify-end gap-2'>
-				<Button size={'sm'}>Join</Button>
+				<DeleteCommunity
+					id={id}
+					isCreatorOfCommunity={isCreatorOfCommunity}
+					userJoined={userJoined}
+				/>
+				<LeaveFromCommunity
+					id={id}
+					isCreatorOfCommunity={isCreatorOfCommunity}
+					userJoined={userJoined}
+				/>
+				<JoinToCommunity
+					isCreatorOfCommunity={isCreatorOfCommunity}
+					userJoined={userJoined}
+					id={id}
+				/>
 				<Link className={buttonVariants({ variant: 'outline', size: 'sm' })} href='/'>
 					Check
 				</Link>
