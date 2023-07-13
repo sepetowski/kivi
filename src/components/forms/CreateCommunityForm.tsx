@@ -17,8 +17,6 @@ import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { useRouter } from 'next/navigation';
 import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
 
-
-
 export const CreateCommunityForm = () => {
 	const router = useRouter();
 	const [image, setImage] = useState<null | string>(null);
@@ -146,8 +144,8 @@ export const CreateCommunityForm = () => {
 					{!isSending && <>Create Community</>}
 					{isSending && (
 						<>
-							Please wait
-							<Loader2Icon className='animate-spin' />
+							Creating community
+							<Loader2Icon className='animate-spin ml-2' />
 						</>
 					)}
 				</Button>

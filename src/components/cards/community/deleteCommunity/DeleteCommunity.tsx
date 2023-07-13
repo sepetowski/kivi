@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
+import { Loader2Icon } from 'lucide-react';
 
 interface Props {
 	isCreatorOfCommunity: boolean;
@@ -15,8 +16,10 @@ interface Props {
 export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props) => {
 	const { toast } = useToast();
 	const router = useRouter();
+	const [isSending, setIsSending] = useState(false);
 
 	const deleteCommunityHandler = async () => {
+		setIsSending(true);
 		try {
 			const res = await fetch('/api/community/delete', {
 				method: 'POST',
@@ -48,13 +51,20 @@ export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 				title: 'Oh no! Something went wrong. Please try again',
 			});
 		}
+		setIsSending(false);
 	};
 
 	return (
 		<>
 			{isCreatorOfCommunity && userJoined && (
 				<Button onClick={deleteCommunityHandler} size={'sm'}>
-					Delete
+					{!isSending && <>Delete</>}
+					{isSending && (
+						<>
+							Deleting
+							<Loader2Icon className='animate-spin ml-2' />
+						</>
+					)}
 				</Button>
 			)}
 		</>

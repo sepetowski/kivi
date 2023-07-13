@@ -1,17 +1,36 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { BrowseCommunityCard } from '@/components/cards/community/BrowseCommunityCard';
 import { BrowseCommunity } from '@/types/communities';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
-	promise: Promise<BrowseCommunity[]>;
+	communities: BrowseCommunity[];
 }
 
-export const CommunitiesBrowseCardsContener = async ({ promise }: Props) => {
-	const communities = await promise;
+export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
+	const searchQuery = useSearchParams();
+	const [queryCommunities, setQueryCommunities] = useState(communities);
+
+	const query = searchQuery.get('search');
+
+	useEffect(() => {
+		if (!query) {
+			setQueryCommunities(communities);
+			return;
+		}
+
+		const community = communities.filter((community) =>
+			community.name.toLocaleLowerCase().includes(query.toLowerCase())
+		);
+		setQueryCommunities(community);
+	}, [query, communities]);
+
 	return (
 		<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
-			{communities.length !== 0 &&
-				communities.map((communitiy) => (
+			{queryCommunities.length !== 0 &&
+				queryCommunities.map((communitiy) => (
 					<BrowseCommunityCard
 						key={communitiy.id}
 						name={communitiy.name}

@@ -14,12 +14,8 @@ export const metadata = {
 const Browse = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
-	const communitiesProsmie: Promise<BrowseCommunity[]> = await getAllCommunities();
+	const communities: BrowseCommunity[] = await getAllCommunities();
 
-	return (
-		<Suspense fallback={<p>loading..</p>}>
-			<CommunitiesBrowseCardsContener promise={communitiesProsmie} />
-		</Suspense>
-	);
+	return <CommunitiesBrowseCardsContener communities={communities} />;
 };
 export default Browse;

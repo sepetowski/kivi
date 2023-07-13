@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Loader2Icon } from 'lucide-react';
 interface Props {
 	isCreatorOfCommunity: boolean;
 	userJoined: boolean;
@@ -12,8 +13,10 @@ interface Props {
 export const LeaveFromCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props) => {
 	const { toast } = useToast();
 	const router = useRouter();
+	const [isSending, setIsSending] = useState(false);
 
 	const leaveFromCommunityHandler = async () => {
+		setIsSending(true);
 		try {
 			const res = await fetch('/api/community/leave', {
 				method: 'POST',
@@ -43,13 +46,20 @@ export const LeaveFromCommunity = ({ isCreatorOfCommunity, userJoined, id }: Pro
 				title: 'Oh no! Something went wrong. Please try again',
 			});
 		}
+		setIsSending(false);
 	};
 
 	return (
 		<>
 			{!isCreatorOfCommunity && userJoined && (
 				<Button onClick={leaveFromCommunityHandler} size={'sm'}>
-					Leave
+					{!isSending && <>Leave</>}
+					{isSending && (
+						<>
+							Leaving
+							<Loader2Icon className='animate-spin ml-2' />
+						</>
+					)}
 				</Button>
 			)}
 		</>
