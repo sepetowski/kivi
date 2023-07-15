@@ -5,7 +5,6 @@ import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
 import { User } from '@/types/user';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 interface Params {
@@ -22,7 +21,11 @@ const Profile = async ({ params: { profile_name } }: Params) => {
 
 	return (
 		<div className='md:px-4 lg:px-8'>
-			<ProfileBanner sessionUserPage={userData.sessionUserPage} userId={userData.id} backgroundImage={userData.backgroundImage} />
+			<ProfileBanner
+				sessionUserPage={userData.sessionUserPage}
+				userId={userData.id}
+				backgroundImage={userData.backgroundImage}
+			/>
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />
 			<ProfileContentBox />

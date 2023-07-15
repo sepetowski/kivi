@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowseCommunityCard } from '@/components/cards/community/BrowseCommunityCard';
 import { BrowseCommunity } from '@/types/communities';
 import { useSearchParams } from 'next/navigation';
-import { BrowseCommunityCradSkieleton } from '@/components/skieletons/BrowseCommunityCradSkieleton';
+import { BrowseCommunityCradSkieleton } from '@/components/skieletons/cards/BrowseCommunityCradSkieleton';
 
 interface Props {
 	communities: BrowseCommunity[];
@@ -69,7 +69,7 @@ export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
 			{isEmpty && (
 				<div className='flex flex-col gap-2 text-center mt-20'>
 					<p className='text-2xl md:text-4xl'>
-						No results for {''} 
+						No results for {''}
 						<span className='font-bold'>
 							<q>{query}</q>
 						</span>

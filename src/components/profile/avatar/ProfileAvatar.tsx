@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { ChangeProfileImage } from './ChangeProfileImage';
 import { Loader2Icon } from 'lucide-react';
-import { UserAvatarSkieleton } from '@/components/skieletons/UserAvatarSkieleton';
+import { UserAvatarSkieleton } from '@/components/skieletons/avatars/UserAvatarSkieleton';
 
 interface Props {
 	image: string | null | undefined;

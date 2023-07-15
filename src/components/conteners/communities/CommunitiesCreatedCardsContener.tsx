@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { CreatedCommunityCard } from '@/components/cards/community/CreatedCommunityCard';
 import { Community } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
-import { BrowseCommunityCradSkieleton } from '@/components/skieletons/BrowseCommunityCradSkieleton';
+import { BrowseCommunityCradSkieleton } from '@/components/skieletons/cards/BrowseCommunityCradSkieleton';
+import { CreatedCommunityCardSkieleton } from '@/components/skieletons/cards/CreatedCommunityCardSkieleton';
 
 interface Props {
 	communities: Community[];
@@ -40,12 +41,8 @@ export const CommunitiesCreatedCardsContener = ({ communities }: Props) => {
 	if (!isMounted && query)
 		return (
 			<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
-				<BrowseCommunityCradSkieleton />
-				<BrowseCommunityCradSkieleton />
-				<BrowseCommunityCradSkieleton />
-				<BrowseCommunityCradSkieleton />
-				<BrowseCommunityCradSkieleton />
-				<BrowseCommunityCradSkieleton />
+				<CreatedCommunityCardSkieleton />
+				<CreatedCommunityCardSkieleton />
 			</div>
 		);
 
@@ -64,6 +61,7 @@ export const CommunitiesCreatedCardsContener = ({ communities }: Props) => {
 						creatorId={communitiy.creatorId}
 					/>
 				))}
+
 			{communities.length !== 0 && isEmpty && (
 				<div className='flex flex-col gap-2 text-center mt-20'>
 					<p className='text-2xl md:text-4xl'>

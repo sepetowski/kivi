@@ -1,4 +1,4 @@
-import { CreateCommunityCardSkieleton } from '@/components/skieletons/CreateCommunityCardSkieleton';
+import { CreateCommunityCardSkieleton } from '@/components/skieletons/cards/CreateCommunityCardSkieleton';
 
 const CreateLoading = () => {
 	return (

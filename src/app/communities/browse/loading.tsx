@@ -1,4 +1,4 @@
-import { BrowseCommunityCradSkieleton } from '@/components/skieletons/BrowseCommunityCradSkieleton';
+import { BrowseCommunityCradSkieleton } from '@/components/skieletons/cards/BrowseCommunityCradSkieleton';
 
 const BrowseLoading = () => {
 	return (
