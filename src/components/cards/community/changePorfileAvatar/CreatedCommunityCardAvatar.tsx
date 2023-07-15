@@ -10,11 +10,10 @@ interface Props {
 	image: string;
 	name: string;
 	isNameEditting: boolean;
-    communityId:string
-
+	communityId: string;
 }
 
-export const CreatedCommunityCardAvatar = ({ image, name, isNameEditting ,communityId}: Props) => {
+export const CreatedCommunityCardAvatar = ({ image, name, isNameEditting, communityId }: Props) => {
 	const [isSending, setIsSending] = useState(false);
 
 	const toogleSendingHanlder = () => {
@@ -23,9 +22,7 @@ export const CreatedCommunityCardAvatar = ({ image, name, isNameEditting ,commun
 
 	return (
 		<Avatar
-			className={`relative overflow-visible w-14 h-14 ${
-				isNameEditting ? 'hidden md:block' : ''
-			}`}>
+			className={`relative overflow-visible w-14 h-14 ${isNameEditting ? 'hidden md:block' : ''}`}>
 			<AvatarImage className='overflow-hidden rounded-full object-cover' src={image} />
 
 			{isSending && (
@@ -35,7 +32,12 @@ export const CreatedCommunityCardAvatar = ({ image, name, isNameEditting ,commun
 			)}
 
 			<AvatarFallback className='bg-accent '>{generateUsernameInitials(name)}</AvatarFallback>
-            <ChangeCreatedCommunityCardAvatar name={name} image={image} communityId={communityId} onSave={toogleSendingHanlder} />
+			<ChangeCreatedCommunityCardAvatar
+				name={name}
+				image={image}
+				communityId={communityId}
+				onSave={toogleSendingHanlder}
+			/>
 		</Avatar>
 	);
 };
