@@ -42,7 +42,7 @@ export const BrowseCommunityCard = ({
 			<CardHeader>
 				<CardTitle className='flex justify-between items-center'>
 					{name}
-					<Avatar>
+					<Avatar className='w-14 h-14'>
 						<AvatarImage src={image} />
 						<AvatarFallback>{generateUsernameInitials(name)}</AvatarFallback>
 					</Avatar>
@@ -58,7 +58,7 @@ export const BrowseCommunityCard = ({
 				</div>
 			</CardHeader>
 
-			<ScrollArea className='h-24  p-6 pt-0  text-sm text-muted-foreground'>
+			<ScrollArea className='h-24  p-6 pt-0 '>
 				{description}
 			</ScrollArea>
 

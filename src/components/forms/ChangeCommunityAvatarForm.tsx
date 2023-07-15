@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { checkIfBucketExist } from '@/lib/checkIfBucketExist';
-import { createBucket } from '@/lib/createBucket';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { useToast } from '@/components/ui/use-toast';
@@ -21,15 +19,16 @@ import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
 
 interface Props {
-	userId: string;
+	communityId: string;
 	image: string | null | undefined;
 	name: string;
 	onSave: () => void;
 }
 
-export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) => {
+export const ChangeCommunityAvatarForm = ({ communityId, image, name, onSave }: Props) => {
 	const session = useSession();
 	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
@@ -44,22 +43,10 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 		onSubmit: async (values) => {
 			onSave();
 			toast({
-				title: 'Saving your profile picture. Please wait...',
+				title: 'Saving new avatar. Please wait...',
 			});
 
-			const { founded, error, errorMsg } = await checkIfBucketExist(userId);
-
-			if (error) {
-				toast({
-					variant: 'destructive',
-					title: 'Ops. Sometnig went wrong!',
-					description: errorMsg,
-				});
-				return;
-			}
-
-			if (!error && !founded) await createBucket(userId);
-			const { url, fileName } = await saveImageInBucket(values.picture!, userId);
+			const { url, fileName } = await saveImageInBucket(values.picture!, COMMUNITY_AVATARS);
 
 			if (!url || !fileName) {
 				toast({
@@ -72,7 +59,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 			}
 
 			try {
-				const res = await fetch('/api/change-profile-picture', {
+				const res = await fetch('/api/community/change-avatar', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -80,6 +67,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 					body: JSON.stringify({
 						picture: url,
 						fileName,
+						communityId,
 					}),
 				});
 				if (!res.ok) {
@@ -88,7 +76,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 						title: 'Oh no! Something went wrong.',
 						description: res.statusText,
 					});
-					await removeFromBucket(userId, fileName);
+					await removeFromBucket(COMMUNITY_AVATARS, fileName);
 				} else {
 					toast({
 						title: res.statusText,
@@ -96,7 +84,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 					await session.update();
 
 					const { previousFileName }: { previousFileName: string | null } = await res.json();
-					if (previousFileName) await removeFromBucket(userId, previousFileName);
+					if (previousFileName) await removeFromBucket(COMMUNITY_AVATARS, previousFileName);
 					router.refresh();
 				}
 			} catch (err) {
@@ -104,7 +92,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 					variant: 'destructive',
 					title: 'Oh no! Something went wrong. Please try again',
 				});
-				await removeFromBucket(userId, fileName);
+				await removeFromBucket(COMMUNITY_AVATARS, fileName);
 			}
 			onSave();
 		},
@@ -120,7 +108,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 	return (
 		<>
 			<AlertDialogHeader>
-				<AlertDialogTitle>Change your profile picture.</AlertDialogTitle>
+				<AlertDialogTitle>Change avatr of {name} Community.</AlertDialogTitle>
 				<AlertDialogDescription>
 					Upload your photo and when you are ready approve the changes
 				</AlertDialogDescription>

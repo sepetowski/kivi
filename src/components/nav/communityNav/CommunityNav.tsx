@@ -22,63 +22,57 @@ export const CommunityNav = () => {
 		},
 		validationSchema: SearchSchema,
 		onSubmit: (values) => {
-			router.push(`/communities/browse?search=${values.search}`);
+			router.push(`${currentRoute}?search=${values.search}`);
 		},
 	});
 	return (
-		<nav
-			className={`flex flex-col-reverse  gap-3  items-center ${
-				currentRoute === '/communities/browse'
-					? 'xl:flex-row xl:justify-between'
-					: 'md:flex-row md:justify-end'
-			}`}>
-			{currentRoute === '/communities/browse' && (
-				<form
-					onSubmit={formik.handleSubmit}
-					className='w-full sm:w-[75%]  xl:w-72 2xl:w-96 flex items-center gap-2'
-					action=''>
-					<Input
-						id='search'
-						value={formik.values.search}
-						onBlur={formik.handleBlur}
-						onChange={formik.handleChange}
-						type='text'
-						className=''
-						placeholder='Serach for community...'
-					/>
-					<Button disabled={!formik.isValid} size={'xs'} type='submit'>
-						<Search />
-					</Button>
+		<nav className='flex flex-col-reverse  gap-3  items-center xl:flex-row xl:justify-between '>
+			<form
+				onSubmit={formik.handleSubmit}
+				className='w-full sm:w-[75%]  xl:w-72 2xl:w-96 flex items-center gap-2'
+				action=''>
+				<Input
+					id='search'
+					value={formik.values.search}
+					onBlur={formik.handleBlur}
+					onChange={formik.handleChange}
+					type='text'
+					className=''
+					placeholder='Serach for community...'
+				/>
+				<Button disabled={!formik.isValid} size={'xs'} type='submit'>
+					<Search />
+				</Button>
 
-					<Button
-						onClick={() => {
-							router.push(`/communities/browse`);
-							formik.setFieldValue('search', '');
-						}}
-						variant={'secondary'}
-						size={'xs'}
-						type='button'>
-						<RotateCcw />
-					</Button>
-				</form>
-			)}
-			<div
-				className={`w-full   flex flex-col gap-3 rounded-md items-center sm:justify-center border p-2  ${
-					currentRoute === '/communities/browse'
-						? ' md:flex-row sm:w-[75%]  xl:w-auto '
-						: 'md:w-auto md:flex-row'
-				}`}>
-				<ActiveLink href='/communities/browse'>Browse Communities</ActiveLink>
-				<Separator
-					className={` ${currentRoute === '/communities/browse' ? 'md:hidden' : 'md:hidden'}`}
-				/>
-				<Separator
-					orientation='vertical'
-					className={`hidden h-6 ${
-						currentRoute === '/communities/browse' ? ' md:block' : ' md:block'
-					}`}
-				/>
-				<ActiveLink href='/communities/browse/created'>Your Creadted Communities</ActiveLink>
+				<Button
+					onClick={() => {
+						router.push(`${currentRoute}`);
+						formik.setFieldValue('search', '');
+					}}
+					variant={'secondary'}
+					size={'xs'}
+					type='button'>
+					<RotateCcw />
+				</Button>
+			</form>
+
+			<div className='w-full   flex flex-col gap-3 rounded-md items-center sm:justify-center border p-2 md:flex-row sm:w-[75%]  xl:w-auto '>
+				<ActiveLink
+					onClickHandler={() => {
+						formik.setFieldValue('search', '');
+					}}
+					href='/communities/browse'>
+					Browse Communities
+				</ActiveLink>
+				<Separator className='md:hidden ' />
+				<Separator orientation='vertical' className='hidden h-6 md:block ' />
+				<ActiveLink
+					onClickHandler={() => {
+						formik.setFieldValue('search', '');
+					}}
+					href='/communities/browse/created'>
+					Your Created Communities
+				</ActiveLink>
 			</div>
 		</nav>
 	);

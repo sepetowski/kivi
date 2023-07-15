@@ -8,7 +8,7 @@ export const NewCommunitySchema = Yup.object().shape({
 	name: Yup.string()
 		.required('Name is required')
 		.min(2, 'Name is too short')
-		.max(50, 'Name is too long')
+		.max(25, 'Name is too long')
 		.trim(),
 	description: Yup.string()
 		.required('Description is required')

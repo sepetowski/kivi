@@ -3,7 +3,7 @@ import { getCreatedByUserCommunities } from '@/lib/getCreatedByUserCommunities';
 import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-
+import { CommunitiesCreatedCardsContener } from '@/components/conteners/communities/CommunitiesCreatedCardsContener';
 
 export const metadata = {
 	title: 'Created Communities',
@@ -18,7 +18,8 @@ const Created = async () => {
 
 	return (
 		<div className='w-full mx-auto max-w-5xl mt-8 sm:mt-14'>
-		
+			{communities.length !== 0 && <CommunitiesCreatedCardsContener communities={communities} />}
+
 			{communities.length === 0 && (
 				<p className='text-center mt-16 text-lg md:text-xl xl:text-2xl'>
 					You have not created any community yet.{' '}
@@ -27,7 +28,6 @@ const Created = async () => {
 					</Link>{' '}
 				</p>
 			)}
-		
 		</div>
 	);
 };

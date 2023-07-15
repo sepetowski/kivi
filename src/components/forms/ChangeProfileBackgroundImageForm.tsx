@@ -43,7 +43,7 @@ export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage, onSa
 		onSubmit: async (values) => {
 			onSave();
 			toast({
-				title: 'Saving your profile please wait...',
+				title: 'Saving your background picture. Please wait...',
 			});
 
 			const { founded, error, errorMsg } = await checkIfBucketExist(userId);

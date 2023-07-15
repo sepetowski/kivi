@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BrowseCommunityCard } from '@/components/cards/community/BrowseCommunityCard';
-import { BrowseCommunity } from '@/types/communities';
+import { CreatedCommunityCard } from '@/components/cards/community/CreatedCommunityCard';
+import { Community } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 import { BrowseCommunityCradSkieleton } from '@/components/skieletons/BrowseCommunityCradSkieleton';
 
 interface Props {
-	communities: BrowseCommunity[];
+	communities: Community[];
 }
 
-export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
+export const CommunitiesCreatedCardsContener = ({ communities }: Props) => {
 	const searchQuery = useSearchParams();
 	const [queryCommunities, setQueryCommunities] = useState(communities);
 	const [isEmpty, setIsEmpty] = useState(false);
@@ -53,7 +53,7 @@ export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
 		<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
 			{queryCommunities.length !== 0 &&
 				queryCommunities.map((communitiy) => (
-					<BrowseCommunityCard
+					<CreatedCommunityCard
 						key={communitiy.id}
 						name={communitiy.name}
 						description={communitiy.description}
@@ -61,15 +61,13 @@ export const CommunitiesBrowseCardsContener = ({ communities }: Props) => {
 						members={communitiy.members}
 						posts={communitiy.postCount}
 						image={communitiy.image}
-						userJoined={communitiy.userJoined}
 						creatorId={communitiy.creatorId}
 					/>
 				))}
-
-			{isEmpty && (
+			{communities.length !== 0 && isEmpty && (
 				<div className='flex flex-col gap-2 text-center mt-20'>
 					<p className='text-2xl md:text-4xl'>
-						No results for {''} 
+						No results for {''}
 						<span className='font-bold'>
 							<q>{query}</q>
 						</span>
