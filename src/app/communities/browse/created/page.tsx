@@ -4,6 +4,7 @@ import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CommunitiesCreatedCardsContener } from '@/components/conteners/communities/CommunitiesCreatedCardsContener';
+import { CreatedCommunityCardSkieleton } from '@/components/skieletons/cards/CreatedCommunityCardSkieleton';
 
 export const metadata = {
 	title: 'Created Communities',

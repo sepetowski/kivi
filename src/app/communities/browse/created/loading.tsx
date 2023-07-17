@@ -2,12 +2,10 @@ import { CreatedCommunityCardSkieleton } from '@/components/skieletons/cards/Cre
 
 const CreatedLoading = () => {
 	return (
-		<main className='px-4 lg:px-8 mt-36 md:mt-28 flex flex-col'>
-			<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
-				<CreatedCommunityCardSkieleton />
-				<CreatedCommunityCardSkieleton />
-			</div>
-		</main>
+		<div className='w-full flex flex-col gap-4 mx-auto max-w-5xl mt-8 sm:mt-14'>
+			<CreatedCommunityCardSkieleton />
+			<CreatedCommunityCardSkieleton />
+		</div>
 	);
 };
 export default CreatedLoading;

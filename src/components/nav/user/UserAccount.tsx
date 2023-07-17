@@ -50,6 +50,9 @@ export const UserAccount = ({ name, email, image }: Props) => {
 					<DropdownMenuItem className='cursor-pointer' onClick={() => router.push('/')}>
 						Messeges
 					</DropdownMenuItem>
+					<DropdownMenuItem className='cursor-pointer' onClick={() => router.push('/add/games')}>
+						Add games
+					</DropdownMenuItem>
 					<DropdownMenuItem
 						className='cursor-pointer'
 						onClick={() => router.push('/communities/create')}>

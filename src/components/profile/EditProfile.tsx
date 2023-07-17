@@ -9,7 +9,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { EdditProfileForm } from '../forms/EditProfileForm';
+import { EdditProfileForm } from '../forms/profile/EditProfileForm';
 
 interface Props {
 	username: string;

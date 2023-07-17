@@ -1,8 +1,8 @@
 import React from 'react';
-import { SingUpForm } from '@/components/forms/SignUpForm';
+import { SingUpForm } from '@/components/forms/auth/SignUpForm';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import { FormImage } from '@/components/forms/FormImage';
+import { FormImage } from '@/components/forms/auth/FormImage';
 
 const SingUp = async () => {
 	const session = await getAuthSession();

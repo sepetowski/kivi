@@ -3,7 +3,7 @@ import { Heart, LayoutGrid, Gamepad, Users2 } from 'lucide-react';
 import { EditProfile } from './EditProfile';
 import { User } from '@/types/user';
 import { Session } from 'next-auth';
-import { FollowControl } from '@/components/profile/acctions/FollowControl';
+import { FollowControl } from '@/components/profile/follow/FollowControl';
 import { FollowsInfo } from './FollowsInfo';
 import { Calendar } from 'lucide-react';
 import Link from 'next/link';

@@ -1,5 +1,6 @@
+import { ProfileContentBox } from '@/components/conteners/profile/ProfileContentBox';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
-import { ProfileContentBox } from '@/components/profile/ProfileContentBox';
+
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
 import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';

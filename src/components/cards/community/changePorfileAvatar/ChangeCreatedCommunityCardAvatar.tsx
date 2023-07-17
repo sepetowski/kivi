@@ -3,7 +3,7 @@ import React from 'react';
 import { ImagePlus } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { ChangeCommunityAvatarForm } from '@/components/forms/ChangeCommunityAvatarForm';
+import { ChangeCommunityAvatarForm } from '@/components/forms/community/ChangeCommunityAvatarForm';
 interface Props {
 	communityId: string;
 	image: string | null | undefined;

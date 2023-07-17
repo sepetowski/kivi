@@ -180,3 +180,10 @@ model CommentVote {
 
   @@id([userId, commentId])
 }
+
+model AvaiableGames {
+  id    String @id @default(cuid())
+  label String
+  value String
+  image String
+}

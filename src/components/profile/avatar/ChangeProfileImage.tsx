@@ -3,7 +3,7 @@ import React from 'react';
 import { ImagePlus } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { ChangePorfileImageForm } from '@/components/forms/ChangePorfileImageForm';
+import { ChangePorfileImageForm } from '@/components/forms/profile/ChangePorfileImageForm';
 interface Props {
 	userId: string;
 	image: string | null | undefined;

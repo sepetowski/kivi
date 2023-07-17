@@ -2,9 +2,8 @@ import { CommunitiesBrowseCardsContener } from '@/components/conteners/communiti
 import { getAuthSession } from '@/lib/auth';
 import { getAllCommunities } from '@/lib/getAllCommunities';
 import { BrowseCommunity } from '@/types/communities';
-import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
-import { Suspense } from 'react';
+
 
 export const metadata = {
 	title: 'Browse Communities',

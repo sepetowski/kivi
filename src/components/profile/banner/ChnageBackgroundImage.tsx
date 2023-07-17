@@ -3,7 +3,7 @@ import React from 'react';
 import { ImagePlus } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { ChangeProfileBackgroundImageForm } from '@/components/forms/ChangeProfileBackgroundImageForm';
+import { ChangeProfileBackgroundImageForm } from '@/components/forms/profile/ChangeProfileBackgroundImageForm';
 interface Props {
 	userId: string;
 	backgroundImage: string | null;

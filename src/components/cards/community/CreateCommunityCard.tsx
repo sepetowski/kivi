@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CreateCommunityForm } from '../../forms/CreateCommunityForm';
+import { CreateCommunityForm } from '../../forms/community/CreateCommunityForm';
 
 export const CreateCommunityCard = () => {
 	return (
