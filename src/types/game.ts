@@ -11,21 +11,11 @@ export interface Game {
 	ratings_count: number;
 	reviews_text_count: number;
 	added: number;
-	added_by_status: any;
 	metacritic: number;
 	playtime: number;
 	suggestions_count: number;
 	updated: string;
-	user_game: null | any;
 	reviews_count: number;
 	saturated_color: string;
 	dominant_color: string;
-	platforms: any[];
-	parent_platforms: any[];
-	genres: any[];
-	stores: any[];
-	clip: null | any;
-	tags: any[];
-	esrb_rating: any;
-	short_screenshots: any[];
 }
