@@ -1,16 +1,26 @@
 import { AddGameCard } from '@/components/cards/game/AddGameCard';
 import { UserGameCard } from '@/components/cards/game/UserGameCard';
-import React from 'react';
+import { Game } from '@prisma/client';
 
-export const GamesContent = () => {
+interface Props {
+	promise: Promise<Game[]>;
+	sessionUserPage: boolean;
+}
+
+export const GamesContent = async ({ promise, sessionUserPage }: Props) => {
+	const games = await promise;
+	console.log(games);
 	return (
 		<div className='flex gap-6 items-center flex-wrap w-full my-8 '>
-			<AddGameCard />
-			<UserGameCard />
-			<UserGameCard />
-			<UserGameCard />
-			<UserGameCard />
-			<UserGameCard />
+			{sessionUserPage && <AddGameCard />}
+			{games.map((game) => (
+				<UserGameCard
+					key={game.id}
+					image_background={game.image}
+					name={game.gameName}
+					sessionUserPage={sessionUserPage}
+				/>
+			))}
 		</div>
 	);
 };

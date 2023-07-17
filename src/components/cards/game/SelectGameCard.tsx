@@ -4,15 +4,16 @@ import { Card } from '@/components/ui/card';
 import { PlusSquare } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface Props {
 	image_background: string;
 	name: string;
-
 }
 
-export const SelectGameCard = ({ image_background, name}: Props) => {
+export const SelectGameCard = ({ image_background, name }: Props) => {
 	const { toast } = useToast();
+	const router = useRouter();
 
 	const onSaveCard = async () => {
 		console.log(image_background, name);
@@ -23,7 +24,6 @@ export const SelectGameCard = ({ image_background, name}: Props) => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-				
 					gameName: name,
 					image: image_background,
 				}),
@@ -38,6 +38,7 @@ export const SelectGameCard = ({ image_background, name}: Props) => {
 				toast({
 					title: res.statusText,
 				});
+				router.refresh();
 			}
 		} catch (err) {
 			toast({

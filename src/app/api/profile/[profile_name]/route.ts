@@ -11,6 +11,9 @@ interface Params {
 export const GET = async (request: Request, { params: { profile_name } }: Params) => {
 	const session = await getAuthSession();
 
+	if (!session?.user)
+		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+
 	try {
 		const user = await db.user.findUnique({
 			where: {

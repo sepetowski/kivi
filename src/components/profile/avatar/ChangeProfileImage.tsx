@@ -15,7 +15,7 @@ export const ChangeProfileImage = ({ userId, image, name,onSave }: Props) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger
-				className='absolute bottom-[-2px] right-[-2px] md:right-[-5px] z-50 '
+				className='absolute bottom-[-2px] right-[-2px] md:right-[-5px] z-20 '
 				asChild>
 				<Button className='rounded-full w-8 h-8 md:w-9 md:h-9' variant={'default'} size={'xs'}>
 					<ImagePlus />
