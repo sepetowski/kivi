@@ -16,13 +16,14 @@ const NewGame = async ({ searchParams }: Params) => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 	const page = searchParams.page ? Number(searchParams.page) : 1;
-	const games: Games = await getGames(page);
+	const seqrchQuery = searchParams.search ? searchParams.search : '';
+	const games: Games = await getGames(page, seqrchQuery);
 	const lastPage = Math.ceil(games.count / PAGE_SIZE);
 
 	return (
 		<>
 			<AddGamesContener games={games.results} />
-			<AddGamePaginate lastPage={lastPage} currentPage={page} />
+			 <AddGamePaginate lastPage={lastPage} currentPage={page} /> 
 		</>
 	);
 };

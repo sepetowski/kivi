@@ -4,8 +4,8 @@ import { Users2 } from 'lucide-react';
 import { getUserCommunities } from '@/lib/getUserCommunities';
 import { Communities } from '@/types/communities';
 import { CommunityItem } from '@/components/sidebar/rightSidebar/CommunityItem';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import Link from 'next/link';
+
 export const RightSidebar = async () => {
 	const communities = (await getUserCommunities()) as Communities[];
 	return (

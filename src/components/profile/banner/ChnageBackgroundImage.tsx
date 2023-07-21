@@ -10,17 +10,21 @@ interface Props {
 	onSave: () => void;
 }
 
-export const ChnageBackgroundImage = ({ userId, backgroundImage,onSave }: Props) => {
+export const ChnageBackgroundImage = ({ userId, backgroundImage, onSave }: Props) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger className='absolute bottom-2 md:bottom-3 right-5 ' asChild>
 				<Button className='flex gap-2' variant={'secondary'} size={'xs'}>
 					<ImagePlus />
-					<p className='hidden md:inline'>Chnage your background</p>
+					<p className='hidden md:inline'>Change your background</p>
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className='max-w-2xl lg:max-w-4xl'>
-				<ChangeProfileBackgroundImageForm userId={userId} backgroundImage={backgroundImage} onSave={onSave} />
+				<ChangeProfileBackgroundImageForm
+					userId={userId}
+					backgroundImage={backgroundImage}
+					onSave={onSave}
+				/>
 			</AlertDialogContent>
 		</AlertDialog>
 	);

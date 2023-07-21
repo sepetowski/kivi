@@ -9,13 +9,13 @@ interface Props {
 
 export const GamesContent = async ({ promise, sessionUserPage }: Props) => {
 	const games = await promise;
-	console.log(games);
 	return (
 		<div className='flex gap-6 items-center flex-wrap w-full my-8 '>
 			{sessionUserPage && <AddGameCard />}
 			{games.map((game) => (
 				<UserGameCard
 					key={game.id}
+					id={game.id}
 					image_background={game.image}
 					name={game.gameName}
 					sessionUserPage={sessionUserPage}

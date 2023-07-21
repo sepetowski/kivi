@@ -16,7 +16,9 @@ export const SelectGameCard = ({ image_background, name }: Props) => {
 	const router = useRouter();
 
 	const onSaveCard = async () => {
-		console.log(image_background, name);
+		toast({
+			title: `${name} is adding to your account. Please wait.`,
+		});
 		try {
 			const res = await fetch('/api/add-game', {
 				method: 'POST',

@@ -1,10 +1,14 @@
+import { CommunitiesProfileCardsContener } from '@/components/conteners/communities/CommunitiesProfileCardsContener';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
 import { GamesContent } from '@/components/profile/games/GamesContent';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
+import { CommunityAndGameSuspense } from '@/components/skieletons/susepnse/CommunityAndGameSuspense';
 import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
+import { getUserCommunities } from '@/lib/getUserCommunities';
 import { getUserGames } from '@/lib/getUserGames';
+import { Communities } from '@/types/communities';
 import { User } from '@/types/user';
 import { Game } from '@prisma/client';
 import { redirect } from 'next/navigation';
@@ -27,6 +31,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 
 	const userData: User = await getProfileInfo(profile_name);
 	const userGames: Promise<Game[]> = getUserGames();
+	const userCommunities: Promise<Communities[]> = getUserCommunities();
 
 	return (
 		<div className='md:px-4 lg:px-8'>
@@ -39,8 +44,16 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 			<Separator />
 			<main className='px-4 lg:px-8 w-full'>
 				{currentPath === 'games' && (
-					<Suspense  fallback={<p>loading</p>}>
+					<Suspense fallback={<CommunityAndGameSuspense />}>
 						<GamesContent promise={userGames} sessionUserPage={userData.sessionUserPage} />
+					</Suspense>
+				)}
+				{currentPath === 'communities' && (
+					<Suspense fallback={<CommunityAndGameSuspense />}>
+						<CommunitiesProfileCardsContener
+							promise={userCommunities}
+							sessionUserPage={userData.sessionUserPage}
+						/>
 					</Suspense>
 				)}
 			</main>
