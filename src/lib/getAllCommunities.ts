@@ -1,7 +1,7 @@
 import { headers } from 'next/dist/client/components/headers';
 
 export const getAllCommunities = async () => {
-	const res = await fetch(`http://localhost:3000/api/community/get-all-communities`, {
+	const res = await fetch(`http://localhost:3000/api/communities/get-all-communities`, {
 		method: 'GET',
 		headers: headers(),
 		cache: 'no-store',

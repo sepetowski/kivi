@@ -41,7 +41,7 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 		onSubmit: async (values) => {
 			setIsSendingName(true);
 			try {
-				const res = await fetch('/api/community/change-name', {
+				const res = await fetch('/api/communities/change-name', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 		onSubmit: async (values) => {
 			setIsSendingDescription(true);
 			try {
-				const res = await fetch('/api/community/change-description', {
+				const res = await fetch('/api/communities/change-description', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -241,7 +241,8 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 			</CardContent>
 			<CardFooter className='flex items-center justify-end gap-2'>
 				<DeleteCommunity id={id} isCreatorOfCommunity={true} userJoined={true} />
-				<Link className={buttonVariants({ variant: 'outline', size: 'sm' })} href='/'>
+				<Link 	className={buttonVariants({ variant: 'outline', size: 'sm' })}
+					href={`/communities/community/${name}`}>
 					Check
 				</Link>
 			</CardFooter>

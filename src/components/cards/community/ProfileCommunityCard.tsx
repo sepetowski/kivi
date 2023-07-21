@@ -13,7 +13,7 @@ interface Props {
 export const ProfileCommunityCard = ({ image, name }: Props) => {
 	const router = useRouter();
 	const goToCommunitySite = () => {
-		router.push(`/communities/browse?search=${name}`);
+		router.push(`/communities/community/${name}`);
 	};
 
 	return (

@@ -64,8 +64,8 @@ export const MobileNav = ({ userName }: Props) => {
 				<Separator className='my-10' />
 				<SheetFooter className='flex flex-col gap-6 gap-x-0 sm:flex-col  w-full sm:space-x-0 '>
 					<SheetClose asChild>
-						<Link href='/communities/create' className={buttonVariants()}>
-							Create Community
+						<Link href='/post' className={buttonVariants()}>
+							New Post
 						</Link>
 					</SheetClose>
 

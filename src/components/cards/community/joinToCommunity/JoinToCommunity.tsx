@@ -18,7 +18,7 @@ export const JoinToCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 	const joinToCommunityHandler = async () => {
 		setIsSending(true);
 		try {
-			const res = await fetch('/api/community/join', {
+			const res = await fetch('/api/communities/join', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -46,7 +46,7 @@ export const CreateCommunityForm = () => {
 			}
 
 			try {
-				const res = await fetch('/api/community/create', {
+				const res = await fetch('/api/communities/create', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

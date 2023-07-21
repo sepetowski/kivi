@@ -58,9 +58,7 @@ export const BrowseCommunityCard = ({
 				</div>
 			</CardHeader>
 
-			<ScrollArea className='h-24  p-6 pt-0 '>
-				{description}
-			</ScrollArea>
+			<ScrollArea className='h-24  p-6 pt-0 '>{description}</ScrollArea>
 
 			<CardFooter className='flex items-center justify-end gap-2'>
 				<DeleteCommunity
@@ -78,7 +76,9 @@ export const BrowseCommunityCard = ({
 					userJoined={userJoined}
 					id={id}
 				/>
-				<Link className={buttonVariants({ variant: 'outline', size: 'sm' })} href='/'>
+				<Link
+					className={buttonVariants({ variant: 'outline', size: 'sm' })}
+					href={`/communities/community/${name}`}>
 					Check
 				</Link>
 			</CardFooter>

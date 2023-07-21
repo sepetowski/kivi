@@ -32,7 +32,7 @@ export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 	const deleteCommunityHandler = async () => {
 		setIsSending(true);
 		try {
-			const res = await fetch('/api/community/delete', {
+			const res = await fetch('/api/communities/delete', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ export const LeaveFromCommunity = ({ isCreatorOfCommunity, userJoined, id }: Pro
 	const leaveFromCommunityHandler = async () => {
 		setIsSending(true);
 		try {
-			const res = await fetch('/api/community/leave', {
+			const res = await fetch('/api/communities/leave', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

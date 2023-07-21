@@ -59,7 +59,7 @@ export const ChangeCommunityAvatarForm = ({ communityId, image, name, onSave }: 
 			}
 
 			try {
-				const res = await fetch('/api/community/change-avatar', {
+				const res = await fetch('/api/communities/change-avatar', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

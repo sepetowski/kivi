@@ -11,6 +11,7 @@ import { getUserGames } from '@/lib/getUserGames';
 import { Communities } from '@/types/communities';
 import { User } from '@/types/user';
 import { Game } from '@prisma/client';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -20,6 +21,15 @@ interface Params {
 	};
 	searchParams: {
 		[key: string]: string | undefined;
+	};
+}
+
+export async function generateMetadata({ params: { profile_name } }: Params): Promise<Metadata> {
+	const userData: User = await getProfileInfo(profile_name);
+
+	return {
+		title: userData.name,
+		description: `This is the page of ${userData.name} - Kivi social app for gamers `,
 	};
 }
 
