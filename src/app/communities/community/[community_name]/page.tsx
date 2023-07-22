@@ -8,6 +8,7 @@ import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/foramtDate';
+import { PostCard } from '@/components/cards/post/PostCard';
 
 interface Params {
 	params: {
@@ -31,7 +32,7 @@ const Community = async ({ params: { community_name } }: Params) => {
 	const monthAndYear = formatDate(communityData.createdAt);
 
 	return (
-		<div className=' w-full  max-w-[1000px] mx-auto px-4 lg:px-8  mt-36 md:mt-28'>
+		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28'>
 			<header className='w-full'>
 				<div className='flex  justify-between items-center border rounded-md p-4'>
 					<div className='w-full flex items-center gap-4'>
@@ -46,7 +47,11 @@ const Community = async ({ params: { community_name } }: Params) => {
 					</div>
 				</div>
 			</header>
-			<main className=' w-full  mt-16'>posty</main>
+			<main className=' w-full  mt-16 flex flex-col gap-6 max-w-[800px] mx-auto'>
+				<PostCard />
+				<PostCard />
+				<PostCard />
+			</main>
 		</div>
 	);
 };

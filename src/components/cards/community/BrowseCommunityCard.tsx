@@ -40,13 +40,13 @@ export const BrowseCommunityCard = ({
 	return (
 		<Card className='w-full  sm:w-[75%] lg:w-80 xl:w-96'>
 			<CardHeader>
-				<CardTitle className='flex justify-between items-center'>
-					{name}
+				<div className='flex justify-between items-center'>
+					<CardTitle>{name}</CardTitle>
 					<Avatar className='w-14 h-14'>
 						<AvatarImage src={image} />
 						<AvatarFallback>{generateUsernameInitials(name)}</AvatarFallback>
 					</Avatar>
-				</CardTitle>
+				</div>
 				<div className='flex flex-col text-sm text-muted-foreground'>
 					<p>
 						Posts: <span className='font-medium text-primary'>{posts}</span>

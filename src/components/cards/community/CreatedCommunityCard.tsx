@@ -117,10 +117,10 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 	return (
 		<Card className='w-full  '>
 			<CardHeader>
-				<CardTitle className='flex justify-between items-center'>
+				<div className='flex justify-between items-center'>
 					{!isNameEditting && !isSendingName && (
 						<div className='flex items-center gap-2'>
-							{name}
+							<CardTitle>{name}</CardTitle>
 							<Button
 								onClick={() => {
 									setIsNameEditting(true);
@@ -173,7 +173,7 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 						name={name}
 						isNameEditting={isNameEditting}
 					/>
-				</CardTitle>
+				</div>
 				<div className='flex flex-col text-sm text-muted-foreground'>
 					<p>
 						Posts: <span className='font-medium text-primary'>{posts}</span>
@@ -241,7 +241,8 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 			</CardContent>
 			<CardFooter className='flex items-center justify-end gap-2'>
 				<DeleteCommunity id={id} isCreatorOfCommunity={true} userJoined={true} />
-				<Link 	className={buttonVariants({ variant: 'outline', size: 'sm' })}
+				<Link
+					className={buttonVariants({ variant: 'outline', size: 'sm' })}
 					href={`/communities/community/${name}`}>
 					Check
 				</Link>
