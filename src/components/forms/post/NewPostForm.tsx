@@ -5,30 +5,26 @@ import { useFormik } from 'formik';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { InputError } from '@/components/forms/InputError';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2Icon } from 'lucide-react';
+import { Loader2Icon, X } from 'lucide-react';
 import { removeFromBucket } from '@/lib/removeFromBucket';
-import Link from 'next/link';
 import Image from 'next/image';
 import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { useRouter } from 'next/navigation';
-import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
 import { NewPostSchema } from '@/validations/NewPostSchema';
 import { Separator } from '@/components/ui/separator';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
-import { File, ImagePlus, SmilePlus } from 'lucide-react';
+import { ImagePlus, SmilePlus } from 'lucide-react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { createBucket } from '@/lib/createBucket';
+import { v4 as uuidv4 } from 'uuid';
 
-export const NewPostForm = () => {
+interface Props {
+	communityName: string;
+}
+
+export const NewPostForm = ({ communityName }: Props) => {
 	const router = useRouter();
 	const [image, setImage] = useState<null | string>(null);
 	const [isSending, setIsSending] = useState(false);
@@ -44,6 +40,63 @@ export const NewPostForm = () => {
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
 
+			let imageFileName = null;
+			let imageUrl = null;
+			const bucketName = uuidv4();
+			if (values.picture) {
+				await createBucket(bucketName);
+				const { url, fileName } = await saveImageInBucket(values.picture, bucketName);
+
+				if (!url || !fileName) {
+					toast({
+						variant: 'destructive',
+						title: 'Oh no! Something went wrong.',
+						description: 'Could not save image. Please try again',
+					});
+
+					return;
+				}
+
+				imageFileName = fileName;
+				imageUrl = url;
+			}
+
+			try {
+				const res = await fetch('/api/post/add', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						content: values.content,
+						image: imageUrl,
+						imageName: imageFileName,
+						communityName,
+					}),
+				});
+				if (!res.ok) {
+					toast({
+						variant: 'destructive',
+						title: 'Oh no! Something went wrong.',
+						description: res.statusText,
+					});
+					if (imageFileName) await removeFromBucket(bucketName, imageFileName);
+				} else {
+					toast({
+						title: res.statusText,
+					});
+					resetForm();
+					setImage(null);
+					router.refresh();
+				}
+			} catch (err) {
+				toast({
+					variant: 'destructive',
+					title: 'Oh no! Something went wrong. Please try again',
+				});
+				if (imageFileName) await removeFromBucket(bucketName, imageFileName);
+			}
+
 			setIsSending(false);
 		},
 	});
@@ -54,11 +107,13 @@ export const NewPostForm = () => {
 			setImage(URL.createObjectURL(e.target.files[0]));
 		}
 	};
+	const removeImageFromPostHandler = () => {
+		formik.setFieldValue('picture', null);
+		setImage(null);
+	};
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
-			
-
 			<Textarea
 				id='content'
 				value={formik.values.content}
@@ -71,16 +126,22 @@ export const NewPostForm = () => {
 			{image && (
 				<div className='relative w-full h-96 mt-6'>
 					<Image alt='preview image' src={image} fill />
+					<Button
+						onClick={removeImageFromPostHandler}
+						className='absolute top-2 right-2 z-20'
+						size={'icon'}
+						variant={'default'}>
+						<X />
+					</Button>
 				</div>
 			)}
 			<Separator className='w-full my-6' />
 			<div className='flex justify-between items-center mt-4 '>
-				<div className='flex gap-3 items-center'>
+				<div>
 					<Label htmlFor='picture' className='cursor-pointer'>
 						<ImagePlus size={20} />
 					</Label>
 					<Input id='picture' className='hidden' type='file' onChange={onImageChange} />
-					<SmilePlus />
 				</div>
 				<div className='flex gap-3 items-center '>
 					{formik.values.content.length <= 250 && (
@@ -97,8 +158,14 @@ export const NewPostForm = () => {
 					)}
 
 					<Separator className='h-8' orientation='vertical' />
-					<Button disabled={!(formik.dirty && formik.isValid)} type='submit'>
-						Add Post
+					<Button disabled={isSending || !(formik.dirty && formik.isValid)} type='submit'>
+						{!isSending && <>Add Post</>}
+						{isSending && (
+							<>
+								Adding...
+								<Loader2Icon className='animate-spin ml-2' />
+							</>
+						)}
 					</Button>
 				</div>
 			</div>

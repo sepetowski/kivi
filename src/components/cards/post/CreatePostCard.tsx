@@ -1,16 +1,23 @@
+'use client';
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { NewPostForm } from '@/components/forms/post/NewPostForm';
 
-export const CreatePostCard = () => {
+
+interface Props {
+	communityName: string;
+}
+
+export const CreatePostCard = ({ communityName }: Props) => {
 	return (
-		<Card className='w-full'>
+		<Card className='w-full '>
 			<CardHeader>
-				<CardTitle>Create a new post!</CardTitle>
+				<CardTitle>Create post in {communityName}</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<NewPostForm />
+				<NewPostForm communityName={communityName} />
 			</CardContent>
+		
 		</Card>
 	);
 };

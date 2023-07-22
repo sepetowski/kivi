@@ -64,9 +64,9 @@ export const LeftSidebar = () => {
 			</div>
 			<Separator className='mb-4' />
 			<div className='text-sm lg:text-base mb-10 w-full p-4 flex flex-col gap-6 '>
-				<Link href='/post' className={buttonVariants({ variant: 'default' })}>
+				<Link href='/add/games' className={buttonVariants({ variant: 'default' })}>
 					<PlusSquare className='lg:hidden' />
-					<span className='hidden lg:inline'>New Post</span>
+					<span className='hidden lg:inline'>Add Games</span>
 				</Link>
 				<Link href='/communities/create' className={buttonVariants({ variant: 'secondary' })}>
 					<SmilePlus className='lg:hidden' />

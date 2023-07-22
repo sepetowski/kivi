@@ -20,7 +20,7 @@ export const saveImageInBucket = async (picture: File, from: string, upsertSetti
 		if (!url)
 			return {
 				url: '',
-				filename: '',
+				fileName: '',
 			};
 
 		return {

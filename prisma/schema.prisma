@@ -128,10 +128,10 @@ model Post {
   imageName   String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  community   Community @relation(fields: [communityId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
   communityId String
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
 
   comments Comment[]

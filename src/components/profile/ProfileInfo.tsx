@@ -8,6 +8,7 @@ import { FollowsInfo } from './FollowsInfo';
 import { Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { ProfileAvatar } from '@/components/profile/avatar/ProfileAvatar';
+import { formatDate } from '@/lib/foramtDate';
 
 interface Props {
 	userData: User;
@@ -19,8 +20,7 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 		(user) => !userData.sessionUserPage && user.followerId === session.user.id
 	);
 
-	const dateObj = new Date(userData.createdAt);
-	const monthAndYear = dateObj.toLocaleString('en-US', { year: 'numeric', month: 'long' });
+	const monthAndYear = formatDate(userData.createdAt);
 
 	return (
 		<header className='w-full flex flex-col justify-start items-center  mx-auto px-4 lg:px-8   '>
