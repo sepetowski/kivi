@@ -1,4 +1,5 @@
-import { Community } from '@prisma/client';
+import { Community, Post } from '@prisma/client';
+import { ExtednedPost } from './post';
 
 export interface Communities {
 	userId: string;
@@ -11,4 +12,8 @@ export interface Communities {
 
 export interface BrowseCommunity extends Community {
 	userJoined: boolean;
+}
+
+export interface ExtednedCommunities extends Community {
+	posts: ExtednedPost[];
 }

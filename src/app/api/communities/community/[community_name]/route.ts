@@ -1,5 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
 
 interface Params {
@@ -19,10 +20,33 @@ export const GET = async (request: Request, { params: { community_name } }: Para
 			where: {
 				name: community_name,
 			},
+			include: {
+				posts: {
+					take: PAGINATION_RESULTS,
+					include: {
+						author: true,
+						votes: true,
+						comments: {
+							select: {
+								id: true,
+							},
+						},
+						community: {
+							select: {
+								name: true,
+							},
+						},
+					},
+					orderBy: {
+						createdAt: 'desc',
+					},
+				},
+
+				subscription: true,
+			},
 		});
 
 		if (!community) return new NextResponse('Community not found', { status: 404 });
-
 		return new NextResponse(JSON.stringify(community), {
 			status: 200,
 		});

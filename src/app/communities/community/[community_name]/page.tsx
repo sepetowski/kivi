@@ -1,14 +1,12 @@
 import { getAuthSession } from '@/lib/auth';
 import { getCommunity } from '@/lib/getCommunity';
-import { Community } from '@prisma/client';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/foramtDate';
-import { PostCard } from '@/components/cards/post/PostCard';
+import { PostContener } from '@/components/conteners/posts/PostContener';
+import { ExtednedCommunities } from '@/types/communities';
 
 interface Params {
 	params: {
@@ -17,7 +15,7 @@ interface Params {
 }
 
 export async function generateMetadata({ params: { community_name } }: Params): Promise<Metadata> {
-	const communityData: Community = await getCommunity(community_name);
+	const communityData: ExtednedCommunities = await getCommunity(community_name);
 
 	return {
 		title: communityData.name,
@@ -28,7 +26,7 @@ export async function generateMetadata({ params: { community_name } }: Params): 
 const Community = async ({ params: { community_name } }: Params) => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
-	const communityData: Community = await getCommunity(community_name);
+	const communityData: ExtednedCommunities = await getCommunity(community_name);
 	const monthAndYear = formatDate(communityData.createdAt);
 
 	return (
@@ -47,11 +45,11 @@ const Community = async ({ params: { community_name } }: Params) => {
 					</div>
 				</div>
 			</header>
-			<main className=' w-full  mt-16 flex flex-col gap-6 max-w-[800px] mx-auto'>
-				<PostCard />
-				<PostCard />
-				<PostCard />
-			</main>
+			<PostContener
+				initialPosts={communityData.posts}
+				communityName={community_name}
+				userId={session.user.id}
+			/>
 		</div>
 	);
 };

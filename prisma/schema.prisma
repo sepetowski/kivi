@@ -123,7 +123,7 @@ model Subscription {
 model Post {
   id String @id @default(cuid())
 
-  content     String?
+  content     String
   image       String?
   imageName   String?
   createdAt   DateTime  @default(now())
@@ -164,7 +164,6 @@ model Vote {
   user   User     @relation(fields: [userId], references: [id])
   userId String
   post   Post     @relation(fields: [postId], references: [id])
-  postID String
   type   VoteType
 
   postId String
