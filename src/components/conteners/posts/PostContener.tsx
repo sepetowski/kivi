@@ -14,16 +14,15 @@ interface Props {
 }
 
 export const PostContener = ({ initialPosts, communityName, userId }: Props) => {
-	console.log(initialPosts);
 	const lastPostRef = useRef<null | HTMLElement>(null);
-
+	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
 
 	const { entry, ref } = useIntersection({
 		root: lastPostRef.current,
 		threshold: 1,
 	});
 	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-		['infinite-query'],
+		['infinite-query', communityName],
 		async ({ pageParam = 1 }) => {
 			const query =
 				`/api/post/posts?limit=${PAGINATION_RESULTS}&page=${pageParam}` +
@@ -48,8 +47,12 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 		}
 	}, [entry, fetchNextPage]);
 
-	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+	useEffect(() => {
+		const allDataFetched = !isFetchingNextPage && data && data.pages.length > 0 ? true : false;
+		setIsAllPostsFetched(allDataFetched);
+	}, [data, isFetchingNextPage]);
 
+	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
 	return (
 		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
@@ -110,6 +113,11 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 			{isFetchingNextPage && (
 				<li className='flex justify-center mt-8'>
 					<Loader2Icon className='animate-spin' />
+				</li>
+			)}
+			{isAllPostsFetched && (
+				<li className='flex justify-center mt-8'>
+					<p>Thats all for now. You have seen evreyting &#128512;</p>
 				</li>
 			)}
 		</main>
