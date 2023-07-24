@@ -14,7 +14,7 @@ import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { useRouter } from 'next/navigation';
 import { NewPostSchema } from '@/validations/NewPostSchema';
 import { Separator } from '@/components/ui/separator';
-import { ImagePlus, SmilePlus } from 'lucide-react';
+import { ImagePlus } from 'lucide-react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { createBucket } from '@/lib/createBucket';
@@ -124,8 +124,14 @@ export const NewPostForm = ({ communityName }: Props) => {
 			/>
 
 			{image && (
-				<div className='relative w-full h-96 mt-6'>
-					<Image alt='preview image' src={image} fill />
+				<div className='relative w-full pt-[100%] mt-6'>
+					<Image
+						className='w-full h-full top-0 left-0 object-cover'
+						alt='preview image'
+						src={image}
+						fill
+						objectFit='cover'
+					/>
 					<Button
 						onClick={removeImageFromPostHandler}
 						className='absolute top-2 right-2 z-20'

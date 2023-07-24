@@ -17,10 +17,15 @@ import { Button } from '@/components/ui/button';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
 import { useToast } from '@/components/ui/use-toast';
-import { VoteType } from '@prisma/client';
-
+import { Comment, VoteType } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+import { CommentsCard } from '../postComments/CommentsCard';
+import { ExtenedComment } from '@/types/comment';
 
 interface Props {
+	promise?: Promise<ExtenedComment[]>;
+	detailsPage?: boolean;
+	disableCommentBtn?: boolean;
 	userName: string | null;
 	userImage: string | null;
 	added: Date;
@@ -35,6 +40,9 @@ interface Props {
 }
 
 export const PostCard = ({
+	promise,
+	detailsPage,
+	disableCommentBtn,
 	added,
 	communityName,
 	content,
@@ -48,12 +56,11 @@ export const PostCard = ({
 	postId,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
-
 	const [postLieks, setPostLieks] = useState(likes);
 	const [isMounted, setIsMounted] = useState(false);
 	const [postDislikes, setPostDislikes] = useState(dislikes);
+	const router = useRouter();
 	const { toast } = useToast();
-	
 
 	useEffect(() => {
 		setCurrentVote(initialVote);
@@ -118,68 +125,89 @@ export const PostCard = ({
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-3'>
 						{userName && (
-							<Avatar className='w-14 h-14'>
+							<Avatar className='w-10 h-10 sm:w-14 sm:h-14'>
 								{userImage && <AvatarImage src={userImage} alt={userName} />}
 								<AvatarFallback>{generateUsernameInitials(userName)}</AvatarFallback>
 							</Avatar>
 						)}
 						<div>
-							<CardTitle>{userName}</CardTitle>
+							<CardTitle className='text-base lg:text-lg'>{userName}</CardTitle>
 							<CardDescription>
 								Added <span>{formatTimeToNow(new Date(added))}</span>
 							</CardDescription>
 						</div>
 					</div>
 					<p>
-						in <Link href='/'>{communityName}</Link>
+						in{' '}
+						<Link className='text-xs sm:text-sm md:text-base' href='/'>
+							{communityName}
+						</Link>
 					</p>
 				</div>
 			</CardHeader>
 			<CardContent className='flex flex-col gap-4'>
 				<p>{content}</p>
 				{postImage && (
-					<div className='relative w-full h-72'>
-						<Image fill src={postImage} alt='image of post' />
+					<div className='relative w-full pt-[100%]'>
+						<Image
+							fill
+							objectFit='cover'
+							className='w-full h-full top-0 left-0 object-cover '
+							src={postImage}
+							alt='image of post'
+						/>
 					</div>
 				)}
 			</CardContent>
-			<CardFooter className='flex justify-between items-center'>
-				<div className='flex gap-4 sm:gap-6 items-center'>
-					<div className='flex items-center gap-2'>
-						<Button
-							onClick={() => voteHandler('UP')}
-							className={`hover:bg-transparent   ${
-								currentVote === 'UP' ? 'text-green-600 hover:text-green-600 ' : ''
-							}`}
-							variant={'ghost'}
-							size={'icon'}>
-							<ThumbsUp />
-						</Button>
-						<span>{postLieks}</span>
+			<CardFooter className='flex flex-col w-full '>
+				<div className='flex justify-between items-center w-full'>
+					<div className='flex gap-4 sm:gap-6 items-center'>
+						<div className='flex items-center gap-2'>
+							<Button
+								onClick={() => voteHandler('UP')}
+								className={`hover:bg-transparent   ${
+									currentVote === 'UP' ? 'text-green-600 hover:text-green-600 ' : ''
+								}`}
+								variant={'ghost'}
+								size={'icon'}>
+								<ThumbsUp size={22} />
+							</Button>
+							<span>{postLieks}</span>
+						</div>
+						<div className='flex items-center gap-2'>
+							<Button
+								onClick={() => voteHandler('DOWN')}
+								className={`hover:bg-transparent  ${
+									currentVote === 'DOWN' ? 'text-red-700 hover:text-red-700 ' : ''
+								}`}
+								variant={'ghost'}
+								size={'icon'}>
+								<ThumbsDown size={22} />
+							</Button>
+							<span>{postDislikes}</span>
+						</div>
+						<div className='flex items-center gap-2'>
+							{!disableCommentBtn && (
+								<Button
+									onClick={() => {
+										router.push(`/post/details/${postId}`);
+									}}
+									className='hover:bg-transparent'
+									variant={'ghost'}
+									size={'icon'}>
+									<MessageSquare size={22} />
+								</Button>
+							)}
+							{disableCommentBtn && <MessageSquare size={22} />}
+							<span>{commentsLength}</span>
+						</div>
 					</div>
-					<div className='flex items-center gap-2'>
-						<Button
-							onClick={() => voteHandler('DOWN')}
-							className={`hover:bg-transparent  ${
-								currentVote === 'DOWN' ? 'text-red-700 hover:text-red-700 ' : ''
-							}`}
-							variant={'ghost'}
-							size={'icon'}>
-							<ThumbsDown />
-						</Button>
-						<span>{postDislikes}</span>
-					</div>
-					<div className='flex items-center gap-2'>
-						<Button className='hover:bg-transparent' variant={'ghost'} size={'icon'}>
-							<MessageSquare />
-						</Button>
-						<span>{commentsLength}</span>
-					</div>
-				</div>
 
-				<Button className='hover:bg-transparent' variant={'ghost'} size={'icon'}>
-					<BookmarkPlus />
-				</Button>
+					<Button className='hover:bg-transparent' variant={'ghost'} size={'icon'}>
+						<BookmarkPlus size={22} />
+					</Button>
+				</div>
+				{detailsPage && <CommentsCard postId={postId} promise={promise!} />}
 			</CardFooter>
 		</Card>
 	);

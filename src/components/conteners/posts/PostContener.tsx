@@ -6,6 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { ExtednedPost } from '@/types/post';
 import { Loader2Icon } from 'lucide-react';
+import { votesReduce } from '@/lib/votesReduce';
 
 interface Props {
 	initialPosts: ExtednedPost[];
@@ -58,17 +59,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
 			<ul className='w-full flex flex-col gap-6'>
 				{posts.map((post, i) => {
-					const { UP, DOWN } = post.votes.reduce(
-						(counts, vote) => {
-							if (vote.type === 'UP') {
-								counts.UP++;
-							} else if (vote.type === 'DOWN') {
-								counts.DOWN++;
-							}
-							return counts;
-						},
-						{ UP: 0, DOWN: 0 }
-					);
+					const { UP, DOWN } = votesReduce(post);
 
 					const userVote = post.votes.find((vote) => vote.userId === userId);
 
