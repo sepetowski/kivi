@@ -19,6 +19,7 @@ import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
 import { useToast } from '@/components/ui/use-toast';
 import { VoteType } from '@prisma/client';
 
+
 interface Props {
 	userName: string | null;
 	userImage: string | null;
@@ -52,13 +53,13 @@ export const PostCard = ({
 	const [isMounted, setIsMounted] = useState(false);
 	const [postDislikes, setPostDislikes] = useState(dislikes);
 	const { toast } = useToast();
+	
 
 	useEffect(() => {
 		setCurrentVote(initialVote);
 		setIsMounted(true);
 	}, [initialVote]);
 
-	if (!isMounted) return null;
 	const chnageVoteInDbHnadler = async (voteType: VoteType) => {
 		try {
 			const res = await fetch('/api/post/vote', {
@@ -74,13 +75,13 @@ export const PostCard = ({
 			if (!res.ok) {
 				toast({
 					variant: 'destructive',
-					title: 'Could not save yor vote in server. Please try again.',
+					title: 'Could not save your vote in server. Please try again.',
 				});
 			}
 		} catch (err) {
 			toast({
 				variant: 'destructive',
-				title: 'Could not save yor vote in server. Please try again.',
+				title: 'Could not save your vote in server. Please try again.',
 			});
 		}
 	};
@@ -108,6 +109,8 @@ export const PostCard = ({
 		}
 		chnageVoteInDbHnadler(voteType);
 	};
+
+	if (!isMounted) return null;
 
 	return (
 		<Card>

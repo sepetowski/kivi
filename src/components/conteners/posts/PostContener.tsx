@@ -1,10 +1,11 @@
 'use client';
 import { PostCard } from '@/components/cards/post/PostCard';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { ExtednedPost } from '@/types/post';
+import { Loader2Icon } from 'lucide-react';
 
 interface Props {
 	initialPosts: ExtednedPost[];
@@ -13,13 +14,15 @@ interface Props {
 }
 
 export const PostContener = ({ initialPosts, communityName, userId }: Props) => {
+	console.log(initialPosts);
 	const lastPostRef = useRef<null | HTMLElement>(null);
+
 
 	const { entry, ref } = useIntersection({
 		root: lastPostRef.current,
 		threshold: 1,
 	});
-	const { data, isFetchingNextPage, fetchNextPage } = useInfiniteQuery(
+	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
 		['infinite-query'],
 		async ({ pageParam = 1 }) => {
 			const query =
@@ -27,9 +30,10 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 				(!!communityName ? `&communityName=${communityName}` : '');
 
 			const res = await fetch(query);
-			const data = (await res.json()) as ExtednedPost[];
-			return data;
+			const posts = (await res.json()) as ExtednedPost[];
+			return posts;
 		},
+
 		{
 			getNextPageParam: (_, pages) => {
 				return pages.length + 1;
@@ -38,7 +42,14 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 		}
 	);
 
+	useEffect(() => {
+		if (entry?.isIntersecting) {
+			fetchNextPage();
+		}
+	}, [entry, fetchNextPage]);
+
 	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+
 
 	return (
 		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
@@ -96,6 +107,11 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 					}
 				})}
 			</ul>
+			{isFetchingNextPage && (
+				<li className='flex justify-center mt-8'>
+					<Loader2Icon className='animate-spin' />
+				</li>
+			)}
 		</main>
 	);
 };

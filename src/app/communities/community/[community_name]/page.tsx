@@ -30,7 +30,7 @@ const Community = async ({ params: { community_name } }: Params) => {
 	const monthAndYear = formatDate(communityData.createdAt);
 
 	return (
-		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28'>
+		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6'>
 			<header className='w-full'>
 				<div className='flex  justify-between items-center border rounded-md p-4'>
 					<div className='w-full flex items-center gap-4'>
