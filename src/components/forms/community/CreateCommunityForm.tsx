@@ -52,7 +52,7 @@ export const CreateCommunityForm = () => {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						name: values.name,
+						name: values.name.trim(),
 						description: values.description,
 						picture: url,
 						fileName,

@@ -23,7 +23,7 @@ import { CommentsCard } from '../postComments/CommentsCard';
 import { ExtenedComment } from '@/types/comment';
 
 interface Props {
-	promise?: Promise<ExtenedComment[]>;
+	comments?: ExtenedComment[];
 	detailsPage?: boolean;
 	disableCommentBtn?: boolean;
 	userName: string | null;
@@ -40,7 +40,7 @@ interface Props {
 }
 
 export const PostCard = ({
-	promise,
+	comments,
 	detailsPage,
 	disableCommentBtn,
 	added,
@@ -207,7 +207,7 @@ export const PostCard = ({
 						<BookmarkPlus size={22} />
 					</Button>
 				</div>
-				{detailsPage && <CommentsCard postId={postId} promise={promise!} />}
+				{detailsPage && <CommentsCard postId={postId} comments={comments!} />}
 			</CardFooter>
 		</Card>
 	);

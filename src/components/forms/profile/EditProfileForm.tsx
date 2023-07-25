@@ -41,7 +41,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						username: values.username,
+						username: values.username.trim(),
 						profileDescription: values.profileDescription,
 						orignalUserName: session.data?.user.name,
 					}),
