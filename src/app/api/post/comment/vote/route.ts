@@ -7,9 +7,13 @@ export const POST = async (request: Request) => {
 
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
-	const { postId, voteType }: { postId: string; voteType: 'UP' | 'DOWN' } = await request.json();
+	const {
+		postId,
+		voteType,
+		commentId,
+	}: { postId: string; voteType: 'UP' | 'DOWN'; commentId: string } = await request.json();
 
-	if (!postId || !voteType)
+	if (!postId || !voteType || !commentId)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
 	try {
@@ -23,29 +27,29 @@ export const POST = async (request: Request) => {
 			return new NextResponse('Post not found', { status: 404, statusText: 'Post not found' });
 		}
 
-		const existingVote = await db.vote.findFirst({
+		const existingVote = await db.commentVote.findFirst({
 			where: {
 				userId: session.user.id,
-				postId,
+				commentId,
 			},
 		});
 
 		if (!existingVote) {
-			await db.vote.create({
+			await db.commentVote.create({
 				data: {
 					type: voteType,
 					userId: session.user.id,
-					postId,
+					commentId,
 				},
 			});
 			return new NextResponse('OK', { status: 200 });
 		}
 
 		if (existingVote && existingVote.type === voteType) {
-			await db.vote.delete({
+			await db.commentVote.delete({
 				where: {
-					userId_postId: {
-						postId,
+					userId_commentId: {
+						commentId,
 						userId: session.user.id,
 					},
 				},
@@ -55,10 +59,10 @@ export const POST = async (request: Request) => {
 		}
 
 		if (existingVote && existingVote.type !== voteType) {
-			await db.vote.update({
+			await db.commentVote.update({
 				where: {
-					userId_postId: {
-						postId,
+					userId_commentId: {
+						commentId,
 						userId: session.user.id,
 					},
 				},

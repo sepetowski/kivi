@@ -19,7 +19,7 @@ export const ProfileCommunityCard = ({ image, name }: Props) => {
 	return (
 		<Card
 			onClick={goToCommunitySite}
-			className='w-full  sm:w-[75%] lg:w-80 xl:w-96 h-52 relative rounded-lg overflow-hidden group cursor-pointer'>
+			className='w-full sm:w-[calc((100%/2)-1.5rem)] 3xl:w-[calc((100%/3)-1.5rem)] h-52  relative rounded-lg overflow-hidden group cursor-pointer'>
 			<div className='absolute w-full p-4  bottom-0 left-0 backdrop-blur-md bg-black/50 z-30  group-hover:opacity-0 duration-300 transition-opacity  '>
 				<h3 className='text-white font-medium'>{name}</h3>
 			</div>

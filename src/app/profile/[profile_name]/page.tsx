@@ -6,7 +6,7 @@ import { CommunityAndGameSuspense } from '@/components/skieletons/susepnse/Commu
 import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
-import { getUserCommunities } from '@/lib/getUserCommunities';
+import { getProfileUserCommunities } from '@/lib/getProfileUserCommunities';
 import { getUserGames } from '@/lib/getUserGames';
 import { Communities } from '@/types/communities';
 import { User } from '@/types/user';
@@ -40,8 +40,8 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	const currentPath = searchParams.info ? searchParams.info : 'posts';
 
 	const userData: User = await getProfileInfo(profile_name);
-	const userGames: Promise<Game[]> = getUserGames();
-	const userCommunities: Promise<Communities[]> = getUserCommunities();
+	const userGames: Promise<Game[]> = getUserGames(userData.id);
+	const userCommunities: Promise<Communities[]> =getProfileUserCommunities(userData.id)
 
 	return (
 		<div className='md:px-4 lg:px-8'>

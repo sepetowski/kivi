@@ -67,6 +67,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 						return (
 							<li key={post.id} ref={ref}>
 								<PostCard
+									userId={userId}
 									postId={post.id}
 									added={post.createdAt}
 									communityName={post.community.name}
@@ -85,6 +86,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 						return (
 							<PostCard
 								key={post.id}
+								userId={userId}
 								postId={post.id}
 								added={post.createdAt}
 								communityName={post.community.name}

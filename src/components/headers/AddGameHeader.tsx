@@ -24,8 +24,8 @@ export const AddGameHeader = () => {
 	});
 
 	return (
-		<header>
-			<form onSubmit={formik.handleSubmit} className='flex   gap-2  items-center'>
+		<header >
+			<form onSubmit={formik.handleSubmit} className='flex  gap-2  items-center'>
 				<Input
 					id='search'
 					value={formik.values.search}

@@ -21,6 +21,9 @@ export const GamesContent = async ({ promise, sessionUserPage }: Props) => {
 					sessionUserPage={sessionUserPage}
 				/>
 			))}
+			{!sessionUserPage && games.length === 0 && (
+				<p>This user has not add any game yet to colletion.</p>
+			)}
 		</div>
 	);
 };

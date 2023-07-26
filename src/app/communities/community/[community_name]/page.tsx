@@ -27,7 +27,7 @@ const Community = async ({ params: { community_name } }: Params) => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 	const communityData: ExtednedCommunities = await getCommunity(community_name);
-	const monthAndYear = formatDate(communityData.createdAt);
+	
 
 	return (
 		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6'>

@@ -17,10 +17,10 @@ import { Button } from '@/components/ui/button';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
 import { useToast } from '@/components/ui/use-toast';
-import { Comment, VoteType } from '@prisma/client';
+import { VoteType } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { CommentsCard } from '../postComments/CommentsCard';
 import { ExtenedComment } from '@/types/comment';
+import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCardsContener';
 
 interface Props {
 	comments?: ExtenedComment[];
@@ -37,6 +37,7 @@ interface Props {
 	initialVote?: VoteType | null;
 	commentsLength: number;
 	postId: string;
+	userId:string
 }
 
 export const PostCard = ({
@@ -54,6 +55,7 @@ export const PostCard = ({
 	commentsLength,
 	initialVote,
 	postId,
+	userId
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
@@ -131,7 +133,9 @@ export const PostCard = ({
 							</Avatar>
 						)}
 						<div>
-							<CardTitle className='text-base lg:text-lg'>{userName}</CardTitle>
+							<CardTitle className='text-base lg:text-lg'>
+								<Link href={`/profile/${userName}`}>{userName}</Link>
+							</CardTitle>
 							<CardDescription>
 								Added <span>{formatTimeToNow(new Date(added))}</span>
 							</CardDescription>
@@ -207,7 +211,7 @@ export const PostCard = ({
 						<BookmarkPlus size={22} />
 					</Button>
 				</div>
-				{detailsPage && <CommentsCard postId={postId} comments={comments!} />}
+				{detailsPage && <CommentsCardsContener postId={postId} comments={comments!} userId={userId} />}
 			</CardFooter>
 		</Card>
 	);

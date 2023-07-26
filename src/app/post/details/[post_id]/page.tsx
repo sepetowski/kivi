@@ -19,7 +19,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 
-	const [post,comments]= await  getPostAndComments(post_id)
+	const [post, comments] = await getPostAndComments(post_id);
 
 	const { UP, DOWN } = votesReduce(post);
 
@@ -28,6 +28,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 	return (
 		<main className=' w-full flex flex-col gap-6 max-w-[1000px] mx-auto px-4 lg:px-8  mt-36'>
 			<PostCard
+				userId={session.user.id}
 				comments={comments}
 				detailsPage={true}
 				disableCommentBtn={true}

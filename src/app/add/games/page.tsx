@@ -17,7 +17,7 @@ const NewGame = async ({ searchParams }: Params) => {
 	if (!session) redirect('/sign-in');
 	const page = searchParams.page ? Number(searchParams.page) : 1;
 	const seqrchQuery = searchParams.search ? searchParams.search : '';
-	const games: Games = await getGames(page, seqrchQuery);
+	const games: Games = await getGames(page);
 	const lastPage = Math.ceil(games.count / PAGE_SIZE);
 
 	return (

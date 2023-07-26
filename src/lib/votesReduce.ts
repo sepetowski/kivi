@@ -1,7 +1,8 @@
+import { ExtenedComment } from '@/types/comment';
 import { ExtednedPost } from '@/types/post';
 
-export const votesReduce = (post: ExtednedPost) => {
-	const { UP, DOWN } = post.votes.reduce(
+export const votesReduce = (array: ExtednedPost | ExtenedComment) => {
+	const { UP, DOWN } = array.votes.reduce(
 		(counts, vote) => {
 			if (vote.type === 'UP') {
 				counts.UP++;
