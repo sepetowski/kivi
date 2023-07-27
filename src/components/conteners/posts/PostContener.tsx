@@ -67,6 +67,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 						return (
 							<li key={post.id} ref={ref}>
 								<PostCard
+									creatorId={post.authorId}
 									userId={userId}
 									postId={post.id}
 									added={post.createdAt}
@@ -85,6 +86,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 					} else {
 						return (
 							<PostCard
+								creatorId={post.authorId}
 								key={post.id}
 								userId={userId}
 								postId={post.id}
@@ -109,7 +111,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 				</li>
 			)}
 			{isAllPostsFetched && (
-				<li className='flex justify-center mt-8'>
+				<li className='flex justify-center items-center text-center mt-8'>
 					<p>Thats all for now. You have seen evreyting &#128512;</p>
 				</li>
 			)}

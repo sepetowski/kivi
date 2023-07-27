@@ -12,7 +12,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ThumbsUp, ThumbsDown, MessageSquare, BookmarkPlus } from 'lucide-react';
+import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ThumbsUp, ThumbsDown, MessageSquare, BookmarkPlus, MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
@@ -21,6 +22,7 @@ import { VoteType } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { ExtenedComment } from '@/types/comment';
 import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCardsContener';
+import { PostOptions } from './PostOptions';
 
 interface Props {
 	comments?: ExtenedComment[];
@@ -37,10 +39,12 @@ interface Props {
 	initialVote?: VoteType | null;
 	commentsLength: number;
 	postId: string;
-	userId:string
+	userId: string;
+	creatorId: string;
 }
 
 export const PostCard = ({
+	creatorId,
 	comments,
 	detailsPage,
 	disableCommentBtn,
@@ -55,14 +59,19 @@ export const PostCard = ({
 	commentsLength,
 	initialVote,
 	postId,
-	userId
+	userId,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
 	const [isMounted, setIsMounted] = useState(false);
+	const [isEditting, setIsEditting] = useState(false);
 	const [postDislikes, setPostDislikes] = useState(dislikes);
 	const router = useRouter();
 	const { toast } = useToast();
+
+	const onEdittHandler = () => {
+		setIsEditting((prev) => !prev);
+	};
 
 	useEffect(() => {
 		setCurrentVote(initialVote);
@@ -123,34 +132,41 @@ export const PostCard = ({
 
 	return (
 		<Card>
-			<CardHeader className='p-3 sm:p-4 md:p-6'>
+			<CardHeader>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-3'>
 						{userName && (
-							<Avatar className='w-10 h-10 sm:w-14 sm:h-14'>
+							<Avatar className='w-8 h-8 sm:w-14 sm:h-14'>
 								{userImage && <AvatarImage src={userImage} alt={userName} />}
 								<AvatarFallback>{generateUsernameInitials(userName)}</AvatarFallback>
 							</Avatar>
 						)}
 						<div>
-							<CardTitle className='text-base lg:text-lg'>
+							<CardTitle className='text-sm sm:text-base lg:text-lg'>
 								<Link href={`/profile/${userName}`}>{userName}</Link>
 							</CardTitle>
-							<CardDescription>
-								Added <span>{formatTimeToNow(new Date(added))}</span>
+
+							<CardDescription className='text-xs sm:text-sm lg:text-base'>
+								<span>{formatTimeToNow(new Date(added))} </span>
+								<Link className='' href={`/communities/community/${communityName}`}>
+									in {communityName}
+								</Link>
 							</CardDescription>
 						</div>
 					</div>
-					<p>
-						in{' '}
-						<Link className='text-xs sm:text-sm md:text-base' href='/'>
-							{communityName}
-						</Link>
-					</p>
+
+					{!isEditting && userId === creatorId && (
+						<DropdownMenu>
+							<DropdownMenuTrigger>
+								<MoreVertical size={22} />
+							</DropdownMenuTrigger>
+							<PostOptions postId={postId} onEdit={onEdittHandler} communityName={communityName} />
+						</DropdownMenu>
+					)}
 				</div>
 			</CardHeader>
 			<CardContent className='flex flex-col gap-4'>
-				<p>{content}</p>
+				<p className='text-sm sm:text-base'>{content}</p>
 				{postImage && (
 					<div className='relative w-full pt-[100%]'>
 						<Image
@@ -163,7 +179,7 @@ export const PostCard = ({
 					</div>
 				)}
 			</CardContent>
-			<CardFooter className='flex flex-col w-full p-3 sm:p-4 md:p-6 '>
+			<CardFooter className='flex flex-col w-full  '>
 				<div className='flex justify-between items-center w-full'>
 					<div className='flex gap-4 sm:gap-6 items-center'>
 						<div className='flex items-center gap-2'>
@@ -207,11 +223,16 @@ export const PostCard = ({
 						</div>
 					</div>
 
-					<Button className='hover:bg-transparent' variant={'ghost'} size={'icon'}>
+					<Button
+						className='hover:bg-transparent hover:text-muted-foreground'
+						variant={'ghost'}
+						size={'icon'}>
 						<BookmarkPlus size={22} />
 					</Button>
 				</div>
-				{detailsPage && <CommentsCardsContener postId={postId} comments={comments!} userId={userId} />}
+				{detailsPage && (
+					<CommentsCardsContener postId={postId} comments={comments!} userId={userId} />
+				)}
 			</CardFooter>
 		</Card>
 	);

@@ -3,29 +3,35 @@
 import React, { useState } from 'react';
 import { DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { da } from 'date-fns/locale';
+import { removeFromBucket } from '@/lib/removeFromBucket';
+import { removeBucket } from '@/lib/removeBucket';
 
 interface Props {
-	commentId: string;
+	postId: string;
+	communityName: string;
 	onEdit: () => void;
 }
 
-export const CommentOptions = ({ commentId, onEdit }: Props) => {
+export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 	const { toast } = useToast();
 	const router = useRouter();
+	const params = useParams();
 
-	const deleteCommentHandler = async () => {
+	const deletePostHandler = async () => {
 		toast({
-			title: 'Deleting your comment. Please wait.',
+			title: 'Deleting your post. Please wait.',
 		});
 		try {
-			const res = await fetch('/api/comments/delete', {
+			const res = await fetch('/api/post/delete', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					commentId,
+					postId,
+					communityName,
 				}),
 			});
 			if (!res.ok) {
@@ -35,11 +41,12 @@ export const CommentOptions = ({ commentId, onEdit }: Props) => {
 					description: res.statusText,
 				});
 			} else {
+				const data: { imageName: string | null; bucketName: string | null } = await res.json();
+				if (data.bucketName) await removeBucket(data.bucketName);
+				router.push('/');
 				toast({
 					title: res.statusText,
 				});
-
-				router.refresh();
 			}
 		} catch (err) {
 			toast({
@@ -58,7 +65,7 @@ export const CommentOptions = ({ commentId, onEdit }: Props) => {
 				className='cursor-pointer'>
 				Edit
 			</DropdownMenuItem>
-			<DropdownMenuItem onClick={deleteCommentHandler} className='cursor-pointer text-destructive'>
+			<DropdownMenuItem onClick={deletePostHandler} className='cursor-pointer text-destructive'>
 				Delete
 			</DropdownMenuItem>
 		</DropdownMenuContent>

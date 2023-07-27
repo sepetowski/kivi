@@ -12,8 +12,14 @@ export const POST = async (request: Request) => {
 		image,
 		imageName,
 		communityName,
-	}: { content: string; image: string | null; imageName: string | null; communityName: string } =
-		await request.json();
+		bucketName,
+	}: {
+		content: string;
+		image: string | null;
+		imageName: string | null;
+		communityName: string;
+		bucketName: string | null;
+	} = await request.json();
 
 	if (!content || !communityName)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
@@ -48,6 +54,7 @@ export const POST = async (request: Request) => {
 				content,
 				image,
 				imageName,
+				bucketName,
 				authorId: session.user.id,
 				communityId: community.id,
 			},

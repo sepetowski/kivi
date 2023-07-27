@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useFormik } from 'formik';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
@@ -109,7 +108,7 @@ export const AddNewCommentForm = ({
 					{!isSending && <>Comment</>}
 					{isSending && (
 						<>
-							Adding...
+							Adding
 							<Loader2Icon className='animate-spin ml-2' />
 						</>
 					)}

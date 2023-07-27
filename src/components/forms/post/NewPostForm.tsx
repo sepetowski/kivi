@@ -72,6 +72,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 						image: imageUrl,
 						imageName: imageFileName,
 						communityName,
+						bucketName: imageUrl ? bucketName : null,
 					}),
 				});
 				if (!res.ok) {
@@ -168,7 +169,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 						{!isSending && <>Add Post</>}
 						{isSending && (
 							<>
-								Adding...
+								Adding
 								<Loader2Icon className='animate-spin ml-2' />
 							</>
 						)}

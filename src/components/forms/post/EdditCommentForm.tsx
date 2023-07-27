@@ -1,14 +1,12 @@
 'use client';
-import React, { ChangeEvent,  useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useFormik } from 'formik';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 import * as Yup from 'yup';
-
 
 interface Props {
 	commentId: string;
