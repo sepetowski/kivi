@@ -5,8 +5,8 @@ import { votesReduce } from '@/lib/votesReduce';
 import { redirect } from 'next/navigation';
 
 export const metadata = {
-	title: 'Create new post',
-	description: 'Create post in Kivi app - Social for gamers',
+	title: 'Post details',
+	description: 'Post details in Kivi app - Social for gamers',
 };
 
 interface Params {

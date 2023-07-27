@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent,  useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -7,29 +7,23 @@ import { useFormik } from 'formik';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
-import { User } from '@prisma/client';
 import * as Yup from 'yup';
 
+
 interface Props {
-	postId: string;
-	isCommentReaply?: boolean;
-	author?: User;
-	replyToId?: string;
-	onCloseReaply?: () => void;
+	commentId: string;
+	commentText: string;
+	replayName: string | undefined;
+	onEdit: () => void;
 }
 
-export const AddNewCommentForm = ({
-	postId,
-	replyToId,
-	author,
-	onCloseReaply,
-	isCommentReaply = false,
-}: Props) => {
+export const EdditCommentForm = ({ commentId, commentText, replayName, onEdit }: Props) => {
 	const router = useRouter();
+	const { toast } = useToast();
 	const [isSending, setIsSending] = useState(false);
 
-	const minCommLenght = isCommentReaply && author?.name ? author.name?.length + 5 : 3;
-	const maxCommLenght = isCommentReaply && author?.name ? author.name?.length + 202 : 200;
+	const minCommLenght = replayName ? replayName.length + 4 : 3;
+	const maxCommLenght = replayName ? replayName.length + 202 : 200;
 	const NewCommentSchema = Yup.object().shape({
 		comment: Yup.string()
 			.required('Comment is required')
@@ -38,27 +32,24 @@ export const AddNewCommentForm = ({
 			.trim(),
 	});
 
-	const { toast } = useToast();
-
 	const formik = useFormik({
 		initialValues: {
-			comment: isCommentReaply && author ? `@${author.name} ` : '',
+			comment: replayName ? replayName + commentText : commentText,
 		},
 		validationSchema: NewCommentSchema,
 
-		onSubmit: async (values, { resetForm }) => {
+		onSubmit: async (values) => {
 			setIsSending(true);
 
 			try {
-				const res = await fetch('/api/comments/add', {
-					method: 'PATCH',
+				const res = await fetch('/api/comments/edit', {
+					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						comment: values.comment,
-						reaplyToCommentId: replyToId,
-						postId,
+						commentId,
+						commentText: values.comment,
 					}),
 				});
 				if (!res.ok) {
@@ -72,9 +63,8 @@ export const AddNewCommentForm = ({
 						title: res.statusText,
 					});
 
-					resetForm();
+					onEdit();
 					router.refresh();
-					if (isCommentReaply) onCloseReaply!();
 				}
 			} catch (err) {
 				toast({
@@ -89,15 +79,15 @@ export const AddNewCommentForm = ({
 
 	const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		const inputValue = event.target.value;
-		if (isCommentReaply && inputValue.length < minCommLenght - 2) {
-			formik.resetForm();
+		if (replayName && inputValue.length < minCommLenght - 3) {
+			formik.setFieldValue('comment', replayName + ' ');
 		} else formik.setFieldValue('comment', inputValue);
 	};
 
 	return (
 		<form onSubmit={formik.handleSubmit} className='flex flex-col gap-4 mt-10' action=''>
 			<Textarea
-				placeholder={isCommentReaply && author ? `Reaply to ${author.name}` : 'Add new comment'}
+				placeholder={'Eddit comment'}
 				id='comment'
 				value={formik.values.comment}
 				onChange={(event) => handleInputChange(event)}
@@ -114,16 +104,10 @@ export const AddNewCommentForm = ({
 						</>
 					)}
 				</Button>
-				{!isCommentReaply && (
-					<Button type='button' onClick={() => formik.resetForm()} variant={'secondary'}>
-						Clear
-					</Button>
-				)}
-				{isCommentReaply && (
-					<Button type='button' onClick={() => onCloseReaply!()} variant={'secondary'}>
-						Cancel
-					</Button>
-				)}
+
+				<Button onClick={() => onEdit()} type='button' variant={'secondary'}>
+					Cancel
+				</Button>
 			</div>
 		</form>
 	);

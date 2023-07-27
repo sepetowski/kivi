@@ -29,6 +29,7 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 							<div key={topLevelComment.id} className='flex flex-col'>
 								<div className='mb-2'>
 									<CommentCard
+										userId={userId}
 										comment={topLevelComment}
 										likes={topLevelUp}
 										dislikes={topLevelDown}
@@ -45,9 +46,12 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 										const replyVote = reply.votes.find((vote) => vote.userId === userId);
 
 										return (
-											<div key={reply.id} className='ml-2 py-2 pl-4 border-l-2 border-secondary-foreground'>
+											<div
+												key={reply.id}
+												className='ml-2 py-2 pl-4 border-l-2 border-secondary-foreground'>
 												<CommentCard
 													comment={reply}
+													userId={userId}
 													likes={reaplyUp}
 													dislikes={reaplyDown}
 													initialVote={replyVote?.type}
