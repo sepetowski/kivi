@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/Input';
 import { Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useFormik } from 'formik';
@@ -24,7 +24,7 @@ export const AddGameHeader = () => {
 	});
 
 	return (
-		<header >
+		<header>
 			<form onSubmit={formik.handleSubmit} className='flex  gap-2  items-center'>
 				<Input
 					id='search'

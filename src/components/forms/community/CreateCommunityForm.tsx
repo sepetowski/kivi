@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { NewCommunitySchema } from '@/validations/NewCommunitySchema';
 import { useFormik } from 'formik';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { InputError } from '@/components/forms/InputError';

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getAuthSession } from '@/lib/auth';
 
-export const POST = async (request: Request) => {
+export const PATCH = async (request: Request) => {
 	const session = await getAuthSession();
 
 	if (!session?.user)
@@ -10,10 +10,10 @@ export const POST = async (request: Request) => {
 	const {
 		comment,
 		postId,
-		reaplyToPostId,
+		reaplyToCommentId,
 	}: {
 		comment: string;
-		reaplyToPostId: string | null;
+		reaplyToCommentId: string | null;
 		postId: string | null;
 		communityName: string;
 	} = await request.json();
@@ -36,9 +36,10 @@ export const POST = async (request: Request) => {
 				text: comment,
 				postId,
 				authorId: session.user.id,
-				replyToId: reaplyToPostId,
+				replyToId: reaplyToCommentId,
 			},
 		});
+
 		return new NextResponse('Comment was created.', {
 			status: 200,
 			statusText: 'Comment was created.',

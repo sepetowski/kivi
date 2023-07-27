@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { DeleteCommunity } from './deleteCommunity/DeleteCommunity';
 import { Edit, CheckSquare, XSquare, Divide, Loader2Icon } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/textarea';
 import { CreatedCommunityCardAvatar } from './changePorfileAvatar/CreatedCommunityCardAvatar';
 import { useFormik } from 'formik';

@@ -13,21 +13,16 @@ export const GET = async (request: Request) => {
 		const comments = await db.comment.findMany({
 			where: {
 				postId: postId ? postId : '',
-				replyToId: null, // only fetch top-level comments
+				replyToId: null,
 			},
 			include: {
 				author: true,
 				votes: true,
 				replies: {
-					// first level replies
 					include: {
 						author: true,
 						votes: true,
-					},
-				},
-				post: {
-					select: {
-						createdAt: true,
+						replies: true,
 					},
 				},
 			},

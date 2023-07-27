@@ -26,7 +26,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 	const userVote = post.votes.find((vote) => vote.userId === session.user.id);
 
 	return (
-		<main className=' w-full flex flex-col gap-6 max-w-[1000px] mx-auto px-4 lg:px-8  mt-36'>
+		<main className=' w-full flex flex-col gap-6 max-w-[1000px] mx-auto px-4 lg:px-8  mt-36 pb-6 md:pb-12'>
 			<PostCard
 				userId={session.user.id}
 				comments={comments}

@@ -4,7 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { VoteType } from '@prisma/client';
 import { MessageSquare, ThumbsDown, ThumbsUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 
 interface Props {
 	likes: number;
@@ -12,14 +12,21 @@ interface Props {
 	initialVote?: VoteType | null;
 	postId: string;
 	commentId: string;
+	onReplay: () => void;
 }
 
-export const CommentCardActions = ({ dislikes, likes, initialVote, postId, commentId }: Props) => {
+export const CommentCardActions = ({
+	dislikes,
+	likes,
+	initialVote,
+	postId,
+	commentId,
+	onReplay,
+}: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [commentLieks, setCommentLieks] = useState(likes);
 	const [isMounted, setIsMounted] = useState(false);
 	const [CommentDislikes, setCommentDislikes] = useState(dislikes);
-	const router = useRouter();
 	const { toast } = useToast();
 
 	useEffect(() => {
@@ -107,7 +114,7 @@ export const CommentCardActions = ({ dislikes, likes, initialVote, postId, comme
 				<span>{CommentDislikes}</span>
 			</div>
 
-			<Button className='hover:bg-transparent  ' variant={'ghost'} size={'icon'}>
+			<Button onClick={onReplay} className='p-1' variant={'ghost'} size={'icon'}>
 				<MessageSquare size={22} />
 				<p className='hidden sm:inline ml-2'>Replay</p>
 			</Button>

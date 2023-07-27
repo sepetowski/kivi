@@ -123,7 +123,7 @@ export const PostCard = ({
 
 	return (
 		<Card>
-			<CardHeader>
+			<CardHeader className='p-3 sm:p-4 md:p-6'>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-3'>
 						{userName && (
@@ -163,7 +163,7 @@ export const PostCard = ({
 					</div>
 				)}
 			</CardContent>
-			<CardFooter className='flex flex-col w-full '>
+			<CardFooter className='flex flex-col w-full p-3 sm:p-4 md:p-6 '>
 				<div className='flex justify-between items-center w-full'>
 					<div className='flex gap-4 sm:gap-6 items-center'>
 						<div className='flex items-center gap-2'>

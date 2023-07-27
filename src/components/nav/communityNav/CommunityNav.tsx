@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { ActiveLink } from '@/components/ui/ActiveLink';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
 import { Search, RotateCcw } from 'lucide-react';
 import { useFormik } from 'formik';
