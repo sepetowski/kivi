@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { da } from 'date-fns/locale';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { removeBucket } from '@/lib/removeBucket';
+import { checkIfBucketExist } from '@/lib/checkIfBucketExist';
 
 interface Props {
 	postId: string;
@@ -23,6 +24,8 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 		toast({
 			title: 'Deleting your post. Please wait.',
 		});
+		
+		
 		try {
 			const res = await fetch('/api/post/delete', {
 				method: 'POST',

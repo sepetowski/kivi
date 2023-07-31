@@ -14,7 +14,7 @@ import { getUserReplayName } from '@/lib/getUserReplayName';
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { CommentOptions } from './CommentOptions';
 import { MoreVertical } from 'lucide-react';
-import { EdditCommentForm } from '@/components/forms/post/EdditCommentForm';
+import { EditCommentForm } from '@/components/forms/post/EditCommentForm';
 
 interface Props {
 	comment: ExtenedComment;
@@ -92,7 +92,7 @@ export const CommentCard = ({ comment, postId, dislikes, likes, initialVote, use
 				</p>
 			)}
 			{isEditting && (
-				<EdditCommentForm
+				<EditCommentForm
 					commentId={comment.id}
 					commentText={commentText}
 					replayName={replayName}

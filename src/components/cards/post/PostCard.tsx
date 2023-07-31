@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 import { ExtenedComment } from '@/types/comment';
 import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCardsContener';
 import { PostOptions } from './PostOptions';
+import { EditPostForm } from '@/components/forms/post/EditPostForm';
 
 interface Props {
 	comments?: ExtenedComment[];
@@ -41,6 +42,8 @@ interface Props {
 	postId: string;
 	userId: string;
 	creatorId: string;
+	bucektName: string | null;
+	fileName: string | null;
 }
 
 export const PostCard = ({
@@ -60,6 +63,8 @@ export const PostCard = ({
 	initialVote,
 	postId,
 	userId,
+	bucektName,
+	fileName,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
@@ -166,72 +171,90 @@ export const PostCard = ({
 				</div>
 			</CardHeader>
 			<CardContent className='flex flex-col gap-4'>
-				<p className='text-sm sm:text-base'>{content}</p>
-				{postImage && (
-					<div className='relative w-full pt-[100%]'>
-						<Image
-							fill
-							objectFit='cover'
-							className='w-full h-full top-0 left-0 object-cover '
-							src={postImage}
-							alt='image of post'
-						/>
-					</div>
+				{!isEditting && (
+					<>
+						<p className='text-sm sm:text-base'>{content}</p>
+						{postImage && (
+							<div className='relative w-full pt-[100%]'>
+								<Image
+									fill
+									objectFit='cover'
+									className='w-full h-full top-0 left-0 object-cover '
+									src={postImage}
+									alt='image of post'
+								/>
+							</div>
+						)}
+					</>
+				)}
+				{isEditting && (
+					<EditPostForm
+						postId={postId}
+						initalContent={content}
+						initalImg={postImage}
+						bucketName={bucektName}
+						fileName={fileName}
+				
+					/>
 				)}
 			</CardContent>
 			<CardFooter className='flex flex-col w-full  '>
-				<div className='flex justify-between items-center w-full'>
-					<div className='flex gap-4 sm:gap-6 items-center'>
-						<div className='flex items-center gap-2'>
-							<Button
-								onClick={() => voteHandler('UP')}
-								className={`hover:bg-transparent   ${
-									currentVote === 'UP' ? 'text-green-600 hover:text-green-600 ' : ''
-								}`}
-								variant={'ghost'}
-								size={'icon'}>
-								<ThumbsUp size={22} />
-							</Button>
-							<span>{postLieks}</span>
-						</div>
-						<div className='flex items-center gap-2'>
-							<Button
-								onClick={() => voteHandler('DOWN')}
-								className={`hover:bg-transparent  ${
-									currentVote === 'DOWN' ? 'text-red-700 hover:text-red-700 ' : ''
-								}`}
-								variant={'ghost'}
-								size={'icon'}>
-								<ThumbsDown size={22} />
-							</Button>
-							<span>{postDislikes}</span>
-						</div>
-						<div className='flex items-center gap-2'>
-							{!disableCommentBtn && (
-								<Button
-									onClick={() => {
-										router.push(`/post/details/${postId}`);
-									}}
-									className='hover:bg-transparent'
-									variant={'ghost'}
-									size={'icon'}>
-									<MessageSquare size={22} />
-								</Button>
-							)}
-							{disableCommentBtn && <MessageSquare size={22} />}
-							<span>{commentsLength}</span>
-						</div>
-					</div>
+				{!isEditting && (
+					<>
+						<div className='flex justify-between items-center w-full'>
+							<div className='flex gap-4 sm:gap-6 items-center'>
+								<div className='flex items-center gap-2'>
+									<Button
+										onClick={() => voteHandler('UP')}
+										className={`hover:bg-transparent   ${
+											currentVote === 'UP' ? 'text-green-600 hover:text-green-600 ' : ''
+										}`}
+										variant={'ghost'}
+										size={'icon'}>
+										<ThumbsUp size={22} />
+									</Button>
+									<span>{postLieks}</span>
+								</div>
+								<div className='flex items-center gap-2'>
+									<Button
+										onClick={() => voteHandler('DOWN')}
+										className={`hover:bg-transparent  ${
+											currentVote === 'DOWN' ? 'text-red-700 hover:text-red-700 ' : ''
+										}`}
+										variant={'ghost'}
+										size={'icon'}>
+										<ThumbsDown size={22} />
+									</Button>
+									<span>{postDislikes}</span>
+								</div>
+								<div className='flex items-center gap-2'>
+									{!disableCommentBtn && (
+										<Button
+											onClick={() => {
+												router.push(`/post/details/${postId}`);
+											}}
+											className='hover:bg-transparent'
+											variant={'ghost'}
+											size={'icon'}>
+											<MessageSquare size={22} />
+										</Button>
+									)}
+									{disableCommentBtn && <MessageSquare size={22} />}
+									<span>{commentsLength}</span>
+								</div>
+							</div>
 
-					<Button
-						className='hover:bg-transparent hover:text-muted-foreground'
-						variant={'ghost'}
-						size={'icon'}>
-						<BookmarkPlus size={22} />
-					</Button>
-				</div>
-				{detailsPage && (
-					<CommentsCardsContener postId={postId} comments={comments!} userId={userId} />
+							<Button
+								className='hover:bg-transparent hover:text-muted-foreground'
+								variant={'ghost'}
+								size={'icon'}>
+								<BookmarkPlus size={22} />
+							</Button>
+						</div>
+						{detailsPage && (
+							<CommentsCardsContener postId={postId} comments={comments!} userId={userId} />
+						)}
+					</>
 				)}
 			</CardFooter>
 		</Card>

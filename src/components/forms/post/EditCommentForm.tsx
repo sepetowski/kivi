@@ -15,7 +15,7 @@ interface Props {
 	onEdit: () => void;
 }
 
-export const EdditCommentForm = ({ commentId, commentText, replayName, onEdit }: Props) => {
+export const EditCommentForm = ({ commentId, commentText, replayName, onEdit }: Props) => {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isSending, setIsSending] = useState(false);

@@ -67,6 +67,8 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 						return (
 							<li key={post.id} ref={ref}>
 								<PostCard
+									fileName={post.imageName}
+									bucektName={post.bucketName}
 									creatorId={post.authorId}
 									userId={userId}
 									postId={post.id}
@@ -86,6 +88,8 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 					} else {
 						return (
 							<PostCard
+								fileName={post.imageName}
+								bucektName={post.bucketName}
 								creatorId={post.authorId}
 								key={post.id}
 								userId={userId}
