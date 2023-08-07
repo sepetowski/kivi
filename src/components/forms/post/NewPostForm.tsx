@@ -54,6 +54,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 						description: 'Could not save image. Please try again',
 					});
 
+					setIsSending(false)
 					return;
 				}
 

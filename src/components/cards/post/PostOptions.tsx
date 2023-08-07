@@ -24,8 +24,7 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 		toast({
 			title: 'Deleting your post. Please wait.',
 		});
-		
-		
+
 		try {
 			const res = await fetch('/api/post/delete', {
 				method: 'POST',
@@ -46,7 +45,10 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 			} else {
 				const data: { imageName: string | null; bucketName: string | null } = await res.json();
 				if (data.bucketName) await removeBucket(data.bucketName);
-				router.push('/');
+				if (params.community_name || params.post_id)
+					router.push(`/communities/community/${communityName}`);
+				else router.push('/');
+
 				toast({
 					title: res.statusText,
 				});

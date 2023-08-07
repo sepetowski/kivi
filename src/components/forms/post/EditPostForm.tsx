@@ -14,6 +14,7 @@ import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { createBucket } from '@/lib/createBucket';
 import { v4 as uuidv4 } from 'uuid';
 import { removeFromBucket } from '@/lib/removeFromBucket';
+import { removeBucket } from '@/lib/removeBucket';
 
 interface Props {
 	initalContent: string;
@@ -21,13 +22,20 @@ interface Props {
 	bucketName: string | null;
 	postId: string;
 	fileName: string | null;
+	onCanelEdit: () => void;
 }
 
-export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fileName }: Props) => {
+export const EditPostForm = ({
+	initalContent,
+	initalImg,
+	bucketName,
+	postId,
+	fileName,
+	onCanelEdit,
+}: Props) => {
 	const router = useRouter();
 	const [image, setImage] = useState<null | string>(initalImg);
 	const [isSending, setIsSending] = useState(false);
-	const [isDeleted, setIsDeleted] = useState(false);
 
 	const { toast } = useToast();
 	const formik = useFormik({
@@ -42,28 +50,33 @@ export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fil
 			let imageFileName = null;
 			let imageUrl = null;
 			const newBucketName = uuidv4();
-			const bcName = bucketName ? bucketName : newBucketName;
+			const dbBucketName = bucketName ? bucketName : newBucketName;
 			if (values.picture) {
 				if (!bucketName) await createBucket(newBucketName);
 
-				const { url, fileName: newFileName } = await saveImageInBucket(values.picture, bcName);
+				const { url, fileName: newFileName } = await saveImageInBucket(
+					values.picture,
+					dbBucketName
+				);
 				if (bucketName && fileName) removeFromBucket(bucketName, fileName);
 
-				if (!url || !fileName) {
+				if (!url || !newFileName) {
 					toast({
 						variant: 'destructive',
 						title: 'Oh no! Something went wrong.',
 						description: 'Could not save image. Please try again',
 					});
 
+					setIsSending(false);
 					return;
 				}
 
 				imageFileName = newFileName;
 				imageUrl = url;
 			}
-			if (!values.picture && isDeleted) {
-				if (bucketName && fileName) removeFromBucket(bucketName, fileName);
+			if (!values.picture) {
+				if (bucketName && fileName) await removeBucket(bucketName);
+
 				imageFileName = null;
 				imageUrl = null;
 			}
@@ -78,7 +91,7 @@ export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fil
 						image: imageUrl,
 						imageName: imageFileName,
 						postId,
-						bucketName: imageUrl ? bcName : null,
+						bucketName: imageUrl ? dbBucketName : null,
 					}),
 				});
 				if (!res.ok) {
@@ -87,23 +100,23 @@ export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fil
 						title: 'Oh no! Something went wrong.',
 						description: res.statusText,
 					});
-					if (imageFileName) await removeFromBucket(bcName, imageFileName);
+					if (imageFileName) await removeFromBucket(dbBucketName, imageFileName);
 				} else {
 					toast({
 						title: res.statusText,
 					});
 					resetForm();
 					setImage(null);
-					router.refresh();
 				}
 			} catch (err) {
 				toast({
 					variant: 'destructive',
 					title: 'Oh no! Something went wrong. Please try again',
 				});
-				if (imageFileName) await removeFromBucket(bcName, imageFileName);
+				if (imageFileName) await removeFromBucket(dbBucketName, imageFileName);
 			}
-
+			router.refresh();
+			onCanelEdit();
 			setIsSending(false);
 		},
 	});
@@ -117,7 +130,6 @@ export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fil
 	const removeImageFromPostHandler = () => {
 		formik.setFieldValue('picture', null);
 		setImage(null);
-		setIsDeleted(true);
 	};
 	return (
 		<form onSubmit={formik.handleSubmit} className='w-full'>
@@ -164,7 +176,7 @@ export const EditPostForm = ({ initalContent, initalImg, bucketName, postId, fil
 							</>
 						)}
 					</Button>
-					<Button type='button' variant={'secondary'}>
+					<Button onClick={onCanelEdit} type='button' variant={'secondary'}>
 						Cancel
 					</Button>
 				</div>

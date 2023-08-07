@@ -45,6 +45,7 @@ export const POST = async (request: Request) => {
 				image,
 				imageName,
 				bucketName,
+				wasEdited: true,
 			},
 		});
 

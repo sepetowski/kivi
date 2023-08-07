@@ -137,6 +137,8 @@ model Post {
 
   comments Comment[]
   votes    Vote[]
+
+  wasEdited Boolean @default(false)
 }
 
 model Comment {

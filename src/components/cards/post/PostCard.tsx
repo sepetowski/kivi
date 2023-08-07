@@ -24,6 +24,7 @@ import { ExtenedComment } from '@/types/comment';
 import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCardsContener';
 import { PostOptions } from './PostOptions';
 import { EditPostForm } from '@/components/forms/post/EditPostForm';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
 	comments?: ExtenedComment[];
@@ -44,6 +45,7 @@ interface Props {
 	creatorId: string;
 	bucektName: string | null;
 	fileName: string | null;
+	wasEdited: boolean;
 }
 
 export const PostCard = ({
@@ -65,6 +67,7 @@ export const PostCard = ({
 	userId,
 	bucektName,
 	fileName,
+	wasEdited,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
@@ -76,6 +79,9 @@ export const PostCard = ({
 
 	const onEdittHandler = () => {
 		setIsEditting((prev) => !prev);
+	};
+	const onCancelEdit = () => {
+		setIsEditting(false);
 	};
 
 	useEffect(() => {
@@ -147,10 +153,12 @@ export const PostCard = ({
 							</Avatar>
 						)}
 						<div>
-							<CardTitle className='text-sm sm:text-base lg:text-lg'>
-								<Link href={`/profile/${userName}`}>{userName}</Link>
-							</CardTitle>
-
+							<div className='flex items-center gap-2'>
+								<CardTitle className='text-sm sm:text-base lg:text-lg'>
+									<Link href={`/profile/${userName}`}>{userName}</Link>
+								</CardTitle>
+								{wasEdited && <Badge variant={'secondary'}>Edited</Badge>}
+							</div>
 							<CardDescription className='text-xs sm:text-sm lg:text-base'>
 								<span>{formatTimeToNow(new Date(added))} </span>
 								<Link className='' href={`/communities/community/${communityName}`}>
@@ -194,7 +202,7 @@ export const PostCard = ({
 						initalImg={postImage}
 						bucketName={bucektName}
 						fileName={fileName}
-				
+						onCanelEdit={onCancelEdit}
 					/>
 				)}
 			</CardContent>

@@ -82,6 +82,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 									dislikes={DOWN}
 									initialVote={userVote?.type}
 									commentsLength={post.comments.length}
+									wasEdited={post.wasEdited}
 								/>
 							</li>
 						);
@@ -104,6 +105,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 								dislikes={DOWN}
 								initialVote={userVote?.type}
 								commentsLength={post.comments.length}
+								wasEdited={post.wasEdited}
 							/>
 						);
 					}
