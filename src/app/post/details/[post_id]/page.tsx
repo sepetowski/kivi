@@ -46,6 +46,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 				likes={UP}
 				dislikes={DOWN}
 				initialVote={userVote?.type}
+				imageUrl={post.image}
 				wasEdited={post.wasEdited}
 			/>
 		</main>

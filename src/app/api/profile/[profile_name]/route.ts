@@ -22,7 +22,22 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			include: {
 				followers: true,
 				following: true,
-				post: true,
+				post: {
+					include: {
+						votes: true,
+						author: true,
+						comments: {
+							select: {
+								id: true,
+							},
+						},
+						community: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
 			},
 		});
 

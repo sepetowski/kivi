@@ -1,4 +1,5 @@
 import { CommunitiesProfileCardsContener } from '@/components/conteners/communities/CommunitiesProfileCardsContener';
+import { ProfilePostsContener } from '@/components/conteners/profile/ProfilePostsContener';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
 import { GamesContent } from '@/components/profile/games/GamesContent';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
@@ -41,7 +42,9 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 
 	const userData: User = await getProfileInfo(profile_name);
 	const userGames: Promise<Game[]> = getUserGames(userData.id);
-	const userCommunities: Promise<Communities[]> =getProfileUserCommunities(userData.id)
+	const userCommunities: Promise<Communities[]> = getProfileUserCommunities(userData.id);
+
+	
 
 	return (
 		<div className='md:px-4 lg:px-8'>
@@ -66,6 +69,10 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 						/>
 					</Suspense>
 				)}
+				{currentPath === '' ||
+					(currentPath === 'posts' && (
+						<ProfilePostsContener posts={userData.posts} userId={userData.id} userName={userData.name} />
+					))}
 			</main>
 		</div>
 	);

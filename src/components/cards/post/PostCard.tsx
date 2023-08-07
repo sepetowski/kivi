@@ -46,7 +46,8 @@ interface Props {
 	bucektName: string | null;
 	fileName: string | null;
 	wasEdited: boolean;
-	imageUrl:string|null
+	imageUrl: string | null;
+	horizontal?: boolean;
 }
 
 export const PostCard = ({
@@ -70,6 +71,7 @@ export const PostCard = ({
 	fileName,
 	wasEdited,
 	imageUrl,
+	horizontal,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
@@ -144,7 +146,7 @@ export const PostCard = ({
 	if (!isMounted) return null;
 
 	return (
-		<Card>
+		<Card className={`${horizontal && 'w-full'}`}>
 			<CardHeader>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-3'>
