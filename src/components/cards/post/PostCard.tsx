@@ -46,6 +46,7 @@ interface Props {
 	bucektName: string | null;
 	fileName: string | null;
 	wasEdited: boolean;
+	imageUrl:string|null
 }
 
 export const PostCard = ({
@@ -68,6 +69,7 @@ export const PostCard = ({
 	bucektName,
 	fileName,
 	wasEdited,
+	imageUrl,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
@@ -202,6 +204,7 @@ export const PostCard = ({
 						initalImg={postImage}
 						bucketName={bucektName}
 						fileName={fileName}
+						imageUrl={imageUrl}
 						onCanelEdit={onCancelEdit}
 					/>
 				)}

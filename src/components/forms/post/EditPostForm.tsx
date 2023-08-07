@@ -22,6 +22,7 @@ interface Props {
 	bucketName: string | null;
 	postId: string;
 	fileName: string | null;
+	imageUrl: string | null;
 	onCanelEdit: () => void;
 }
 
@@ -31,11 +32,13 @@ export const EditPostForm = ({
 	bucketName,
 	postId,
 	fileName,
+	imageUrl,
 	onCanelEdit,
 }: Props) => {
 	const router = useRouter();
 	const [image, setImage] = useState<null | string>(initalImg);
 	const [isSending, setIsSending] = useState(false);
+	const [isDeleted, setIsDeleted] = useState(false);
 
 	const { toast } = useToast();
 	const formik = useFormik({
@@ -47,11 +50,12 @@ export const EditPostForm = ({
 
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			let imageFileName = null;
-			let imageUrl = null;
+			let imageFileName = fileName ? fileName : null;
+			let editImageUrl = imageUrl ? imageUrl : null;
 			const newBucketName = uuidv4();
-			const dbBucketName = bucketName ? bucketName : newBucketName;
+			let dbBucketName = bucketName ? bucketName : newBucketName;
 			if (values.picture) {
+				console.log(fileName, imageUrl, bucketName);
 				if (!bucketName) await createBucket(newBucketName);
 
 				const { url, fileName: newFileName } = await saveImageInBucket(
@@ -72,13 +76,15 @@ export const EditPostForm = ({
 				}
 
 				imageFileName = newFileName;
-				imageUrl = url;
+				editImageUrl = url;
 			}
-			if (!values.picture) {
+			if (!values.picture && isDeleted) {
+				console.log(isDeleted);
 				if (bucketName && fileName) await removeBucket(bucketName);
 
 				imageFileName = null;
-				imageUrl = null;
+				editImageUrl = null;
+				dbBucketName = '';
 			}
 			try {
 				const res = await fetch('/api/post/edit', {
@@ -88,10 +94,10 @@ export const EditPostForm = ({
 					},
 					body: JSON.stringify({
 						content: values.content,
-						image: imageUrl,
+						image: editImageUrl,
 						imageName: imageFileName,
 						postId,
-						bucketName: imageUrl ? dbBucketName : null,
+						bucketName: dbBucketName ? dbBucketName : null,
 					}),
 				});
 				if (!res.ok) {
@@ -125,11 +131,13 @@ export const EditPostForm = ({
 		if (e.target.files && e.target.files[0]) {
 			formik.setFieldValue('picture', e.target.files[0]);
 			setImage(URL.createObjectURL(e.target.files[0]));
+			setIsDeleted(false);
 		}
 	};
 	const removeImageFromPostHandler = () => {
 		formik.setFieldValue('picture', null);
 		setImage(null);
+		setIsDeleted(true);
 	};
 	return (
 		<form onSubmit={formik.handleSubmit} className='w-full'>
@@ -167,7 +175,9 @@ export const EditPostForm = ({
 					<Input id='picture' className='hidden' type='file' onChange={onImageChange} />
 				</div>
 				<div className='flex  items-center gap-4 '>
-					<Button disabled={isSending || !(formik.dirty && formik.isValid)} type='submit'>
+					<Button
+						disabled={isSending || !((formik.dirty || isDeleted) && formik.isValid)}
+						type='submit'>
 						{!isSending && <>Save</>}
 						{isSending && (
 							<>

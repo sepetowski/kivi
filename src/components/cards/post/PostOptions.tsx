@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
 import { useParams, useRouter } from 'next/navigation';
-import { da } from 'date-fns/locale';
-import { removeFromBucket } from '@/lib/removeFromBucket';
 import { removeBucket } from '@/lib/removeBucket';
-import { checkIfBucketExist } from '@/lib/checkIfBucketExist';
+
 
 interface Props {
 	postId: string;

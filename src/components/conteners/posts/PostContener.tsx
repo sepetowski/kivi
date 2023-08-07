@@ -83,6 +83,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 									initialVote={userVote?.type}
 									commentsLength={post.comments.length}
 									wasEdited={post.wasEdited}
+									imageUrl={post.image}
 								/>
 							</li>
 						);
@@ -106,6 +107,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 								initialVote={userVote?.type}
 								commentsLength={post.comments.length}
 								wasEdited={post.wasEdited}
+								imageUrl={post.image}
 							/>
 						);
 					}
