@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { InputError } from '@/components/forms/InputError';
 import { useToast } from '@/components/ui/use-toast';
@@ -49,6 +49,7 @@ export const SingInForm = () => {
 						});
 					else if (res && res.ok && !res?.error) {
 						resetForm();
+						router.refresh();
 					} else {
 						toast({
 							variant: 'destructive',

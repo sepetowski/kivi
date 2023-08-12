@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import {
@@ -11,15 +10,17 @@ import {
 	Users2,
 	PlusSquare,
 	SmilePlus,
+	Gamepad2,
 } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+
 import Link from 'next/link';
 import { ActiveLink } from '@/components/ui/ActiveLink';
-import { useSession } from 'next-auth/react';
+import { getAuthSession } from '@/lib/auth';
+import { Separator } from '@/components/ui/separator';
 
-export const LeftSidebar = () => {
-	const session = useSession();
+export const LeftSidebar = async () => {
+	const session = await getAuthSession();
 
 	return (
 		<Sidebar left={false}>
@@ -30,7 +31,7 @@ export const LeftSidebar = () => {
 				</ActiveLink>
 				<ActiveLink
 					className='flex gap-3 cursor-pointer'
-					href={`/profile/${session.data?.user.name}`}>
+					href={`/profile/${session && session.user.name}`}>
 					<User2 />
 					<span className='hidden lg:inline'>Profile</span>
 				</ActiveLink>
@@ -55,6 +56,11 @@ export const LeftSidebar = () => {
 				<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>
 					<Mail />
 					<span className='hidden lg:inline'>Messages</span>
+				</ActiveLink>
+
+				<ActiveLink className='flex gap-3 cursor-pointer' href='/add/games'>
+					<Gamepad2 />
+					<span className='hidden lg:inline'>Games</span>
 				</ActiveLink>
 
 				<ActiveLink className='flex gap-3 cursor-pointer' href='/saved'>

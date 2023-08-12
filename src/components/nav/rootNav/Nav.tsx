@@ -1,17 +1,16 @@
-'use client';
 import React from 'react';
 import { ThemeSwitcher } from '@/components/themeSwitcher/ThemeSwitcher';
 import Link from 'next/link';
 import Image from 'next/image';
 import { UserAccount } from '../user/UserAccount';
 import { SignInOrUpLink } from './SignInOrUpLink';
-import { useSession } from 'next-auth/react';
 import { Bell, Home, Search } from 'lucide-react';
 import { MobileNav } from './MobileNav';
 import { ActiveLink } from '@/components/ui/ActiveLink';
+import { getAuthSession } from '@/lib/auth';
 
-export const Nav = () => {
-	const session = useSession();
+export const Nav = async () => {
+	const session = await getAuthSession();
 
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
@@ -22,18 +21,18 @@ export const Nav = () => {
 				</Link>
 
 				<div className='flex items-center gap-1'>
-					{session.data && (
+					{session && (
 						<UserAccount
-							name={session.data.user.name}
-							email={session.data.user.email}
-							image={session.data.user.image}
+							name={session.user.name}
+							email={session.user.email}
+							image={session.user.image}
 						/>
 					)}
-					{!session.data && <SignInOrUpLink />}
+					{!session && <SignInOrUpLink />}
 					<ThemeSwitcher />
 				</div>
 			</div>
-			{session.status === 'authenticated' && (
+			{session && (
 				<div className='w-full md:hidden  flex justify-around items-center  p-3  bg-secondary'>
 					<ActiveLink href='/'>
 						<Home />
@@ -46,7 +45,7 @@ export const Nav = () => {
 						<Bell />
 					</ActiveLink>
 
-					<MobileNav userName={session.data.user.name} />
+					<MobileNav userName={session.user.name} />
 				</div>
 			)}
 		</nav>

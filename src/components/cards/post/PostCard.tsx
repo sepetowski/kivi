@@ -13,7 +13,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ThumbsUp, ThumbsDown, MessageSquare, BookmarkPlus, MoreVertical } from 'lucide-react';
+import {
+	ThumbsUp,
+	ThumbsDown,
+	MessageSquare,
+	BookmarkPlus,
+	MoreVertical,
+	BookmarkMinus,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
@@ -47,7 +54,9 @@ interface Props {
 	fileName: string | null;
 	wasEdited: boolean;
 	imageUrl: string | null;
-	horizontal?: boolean;
+	profilePage?: boolean;
+	isSavedByUser: boolean;
+	savedPage?: boolean;
 }
 
 export const PostCard = ({
@@ -71,13 +80,16 @@ export const PostCard = ({
 	fileName,
 	wasEdited,
 	imageUrl,
-	horizontal,
+	isSavedByUser,
+	profilePage,
+	savedPage,
 }: Props) => {
 	const [currentVote, setCurrentVote] = useState(initialVote);
 	const [postLieks, setPostLieks] = useState(likes);
 	const [isMounted, setIsMounted] = useState(false);
 	const [isEditting, setIsEditting] = useState(false);
 	const [postDislikes, setPostDislikes] = useState(dislikes);
+	const [isPostSaved, setisPostSaved] = useState(isSavedByUser);
 	const router = useRouter();
 	const { toast } = useToast();
 
@@ -119,6 +131,35 @@ export const PostCard = ({
 		}
 	};
 
+	const tooglePostSaveHandler = async () => {
+		setisPostSaved((prev) => !prev);
+		try {
+			const res = await fetch('/api/post/handle-post-save', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					postId,
+				}),
+			});
+			if (!res.ok) {
+				toast({
+					variant: 'destructive',
+					title: 'Could not save post. Please try again.',
+				});
+				setisPostSaved((prev) => !prev);
+			} else {
+				if (savedPage) router.refresh();
+			}
+		} catch (err) {
+			toast({
+				variant: 'destructive',
+				title: 'Could not save post. Please try again.',
+			});
+		}
+	};
+
 	const voteHandler = (voteType: VoteType) => {
 		if (!currentVote) {
 			setCurrentVote(voteType);
@@ -146,7 +187,7 @@ export const PostCard = ({
 	if (!isMounted) return null;
 
 	return (
-		<Card className={`${horizontal && 'w-full'}`}>
+		<Card className={`${profilePage && 'w-full max-w-4xl'}`}>
 			<CardHeader>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-3'>
@@ -187,11 +228,10 @@ export const PostCard = ({
 					<>
 						<p className='text-sm sm:text-base'>{content}</p>
 						{postImage && (
-							<div className='relative w-full pt-[100%]'>
+							<div className='relative w-full pt-[50%]'>
 								<Image
 									fill
-									objectFit='cover'
-									className='w-full h-full top-0 left-0 object-cover '
+									className='w-full h-full top-0 left-0 object-contain '
 									src={postImage}
 									alt='image of post'
 								/>
@@ -258,10 +298,14 @@ export const PostCard = ({
 							</div>
 
 							<Button
-								className='hover:bg-transparent hover:text-muted-foreground'
+								onClick={tooglePostSaveHandler}
+								className={`hover:bg-transparent hover:text-muted-foreground ${
+									isPostSaved ? 'text-pink-600 dark:text-purple-600' : ''
+								}`}
 								variant={'ghost'}
 								size={'icon'}>
-								<BookmarkPlus size={22} />
+								{!isPostSaved && <BookmarkPlus size={22} />}
+								{isPostSaved && <BookmarkMinus size={22} />}
 							</Button>
 						</div>
 						{detailsPage && (

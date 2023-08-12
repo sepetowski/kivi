@@ -11,8 +11,9 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { Mail, Menu, User2, Users2, Bookmark } from 'lucide-react';
+import { Mail, Menu, User2, Users2, Bookmark, Gamepad2 } from 'lucide-react';
 import { ActiveLink } from '@/components/ui/ActiveLink';
+
 
 interface Props {
 	userName: string | null | undefined;
@@ -52,6 +53,12 @@ export const MobileNav = ({ userName }: Props) => {
 						<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>
 							<Mail />
 							<span>Messages</span>
+						</ActiveLink>
+					</SheetClose>
+					<SheetClose className=' flex items-center gap-4' asChild>
+						<ActiveLink className='flex gap-3 cursor-pointer' href='/add/games'>
+							<Gamepad2 />
+							<span>Games</span>
 						</ActiveLink>
 					</SheetClose>
 					<SheetClose className=' flex items-center gap-4' asChild>

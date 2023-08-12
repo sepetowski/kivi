@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { ImagePlus, Loader2Icon, X } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { saveImageInBucket } from '@/lib/saveImageInBucket';
 import { createBucket } from '@/lib/createBucket';
 import { v4 as uuidv4 } from 'uuid';
@@ -150,13 +150,12 @@ export const EditPostForm = ({
 				className='resize-none outline-none border-none h-28 my-4 '
 			/>
 			{image && (
-				<div className='relative w-full pt-[100%] mt-6'>
+				<div className='relative w-full pt-[50%] mt-6'>
 					<Image
-						className='w-full h-full top-0 left-0 object-cover'
+						className='w-full h-full top-0 left-0 object-contain'
 						alt='preview image'
 						src={image}
 						fill
-						objectFit='cover'
 					/>
 					<Button
 						onClick={removeImageFromPostHandler}

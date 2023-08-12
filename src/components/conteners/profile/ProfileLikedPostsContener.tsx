@@ -5,24 +5,21 @@ import { PostCard } from '@/components/cards/post/PostCard';
 import { getAuthSession } from '@/lib/auth';
 
 interface Props {
-	posts: ExtednedPost[];
+	postsPromise: Promise<ExtednedPost[]>;
 	userId: string;
 	userName: string;
 }
 
-export const ProfilePostsContener = async ({ posts, userId, userName }: Props) => {
+export const ProfileLikedPostsContener = async ({ postsPromise, userId, userName }: Props) => {
 	const session = await getAuthSession();
-
+	const posts = await postsPromise;
+	
 	return (
-		<div className='flex flex-col justify-center items-center gap-6  flex-wrap w-full my-8 '>
+		<div className='flex flex-col justify-center items-center gap-6 flex-wrap w-full my-8 '>
 			{posts.length === 0 && (
 				<>
-					{session && userId === session.user.id && (
-						<p className='self-start'>You have not added any post yet.</p>
-					)}
-					{session && userId !== session.user.id && (
-						<p className='self-start'>{userName} has not added any post yet.</p>
-					)}
+					{session && userId === session.user.id && <p className='self-start'>You have not liked any post yet.</p>}
+					{session && userId !== session.user.id && <p className='self-start'>{userName} has not liked any post yet.</p>}
 				</>
 			)}
 			{posts.length > 0 &&

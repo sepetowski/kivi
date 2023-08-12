@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { InputError } from '@/components/forms/InputError';
 import { ToastAction } from '@/components/ui/toast';
@@ -63,6 +63,7 @@ export const SingUpForm = () => {
 							redirect: false,
 						});
 						resetForm();
+						router.refresh();
 
 						break;
 					}

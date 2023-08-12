@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -54,7 +54,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 						description: 'Could not save image. Please try again',
 					});
 
-					setIsSending(false)
+					setIsSending(false);
 					return;
 				}
 
@@ -126,13 +126,12 @@ export const NewPostForm = ({ communityName }: Props) => {
 			/>
 
 			{image && (
-				<div className='relative w-full pt-[100%] mt-6'>
+				<div className='relative w-full pt-[50%] mt-6'>
 					<Image
-						className='w-full h-full top-0 left-0 object-cover'
+						className='w-full h-full top-0 left-0 object-contain'
 						alt='preview image'
 						src={image}
 						fill
-						objectFit='cover'
 					/>
 					<Button
 						onClick={removeImageFromPostHandler}

@@ -1,4 +1,4 @@
-import { Comment, Post, User, Vote } from '@prisma/client';
+import { Post, User, Vote } from '@prisma/client';
 
 interface CommentId {
 	id: string;
@@ -11,5 +11,5 @@ export interface ExtednedPost extends Post {
 	author: User;
 	comments: CommentId[];
 	community: CommunityName;
+	isSavedByUser: boolean;
 }
-

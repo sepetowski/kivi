@@ -6,7 +6,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { useParams, useRouter } from 'next/navigation';
 import { removeBucket } from '@/lib/removeBucket';
 
-
 interface Props {
 	postId: string;
 	communityName: string;
@@ -17,6 +16,7 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 	const { toast } = useToast();
 	const router = useRouter();
 	const params = useParams();
+
 
 	const deletePostHandler = async () => {
 		toast({
@@ -43,8 +43,10 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 			} else {
 				const data: { imageName: string | null; bucketName: string | null } = await res.json();
 				if (data.bucketName) await removeBucket(data.bucketName);
+
 				if (params.community_name || params.post_id)
 					router.push(`/communities/community/${communityName}`);
+				else if (params.profile_name) router.refresh();
 				else router.push('/');
 
 				toast({

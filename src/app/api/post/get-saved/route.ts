@@ -1,52 +1,42 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { ExtednedPost } from '@/types/post';
 import { NextResponse } from 'next/server';
 
-interface Params {
-	params: {
-		post_id: string;
-	};
-}
-
-export const GET = async (request: Request, { params: { post_id } }: Params) => {
+export const GET = async (request: Request) => {
 	const session = await getAuthSession();
 
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 
 	try {
-		const post = await db.post.findUnique({
-			where: {
-				id: post_id,
+		const posts = await db.post.findMany({
+			orderBy: {
+				createdAt: 'desc',
 			},
 			include: {
+				votes: true,
+				author: true,
 				comments: {
 					select: {
 						id: true,
 					},
 				},
-				author: true,
-				votes: true,
 				community: {
 					select: {
 						name: true,
 					},
 				},
 			},
-		});
-		if (!post) return new NextResponse('Post not found', { status: 404 });
-
-		const savedPost = await db.savedPost.findUnique({
 			where: {
-				userId_postId: {
-					userId: session.user.id,
-					postId: post.id,
+				savedPosts: {
+					some: {
+						userId: session.user.id,
+					},
 				},
 			},
 		});
 
-		return new NextResponse(JSON.stringify({ ...post, isSavedByUser: savedPost ? true : false }), {
+		return new NextResponse(JSON.stringify(posts), {
 			status: 200,
 		});
 	} catch (err) {

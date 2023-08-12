@@ -48,6 +48,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 				initialVote={userVote?.type}
 				imageUrl={post.image}
 				wasEdited={post.wasEdited}
+				isSavedByUser={post.isSavedByUser}
 			/>
 		</main>
 	);

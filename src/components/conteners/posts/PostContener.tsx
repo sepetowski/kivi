@@ -84,6 +84,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 									commentsLength={post.comments.length}
 									wasEdited={post.wasEdited}
 									imageUrl={post.image}
+									isSavedByUser={post.isSavedByUser}
 								/>
 							</li>
 						);
@@ -108,6 +109,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 								commentsLength={post.comments.length}
 								wasEdited={post.wasEdited}
 								imageUrl={post.image}
+								isSavedByUser={post.isSavedByUser}
 							/>
 						);
 					}
