@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { DeleteCommunity } from './deleteCommunity/DeleteCommunity';
-import { Edit, CheckSquare, XSquare, Divide, Loader2Icon } from 'lucide-react';
+import { Edit, CheckSquare, XSquare, Loader2Icon } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/textarea';
 import { CreatedCommunityCardAvatar } from './changePorfileAvatar/CreatedCommunityCardAvatar';
