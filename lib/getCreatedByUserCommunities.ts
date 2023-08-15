@@ -1,6 +1,6 @@
 
 export const getCreatedByUserCommunities = async (userId:string) => {
-	const res = await fetch(`${process.env.FETCH}/api/communities/get-created-by-user-communities?userId=${userId}`, {
+	const res = await fetch(`http://localhost:3000/api/communities/get-created-by-user-communities?userId=${userId}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});

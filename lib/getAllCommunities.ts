@@ -2,7 +2,7 @@
 
 export const getAllCommunities = async (userId: string) => {
 	const res = await fetch(
-		`${process.env.FETCH}/api/communities/get-all-communities?userId=${userId}`,
+		`http://localhost:3000/api/communities/get-all-communities?userId=${userId}`,
 		{
 			method: 'GET',
 			cache: 'no-store',

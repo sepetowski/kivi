@@ -2,7 +2,7 @@
 
 export const getProfileUserLikedPosts = async (userId: string) => {
 	const res = await fetch(
-		`${process.env.FETCH}/api/post/get-liked-posts?userId=${userId}`,
+		`http://localhost:3000/api/post/get-liked-posts?userId=${userId}`,
 		{
 			method: 'GET',
 			cache: 'no-store',
