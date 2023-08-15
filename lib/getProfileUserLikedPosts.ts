@@ -1,11 +1,10 @@
-import { headers } from 'next/dist/client/components/headers';
+
 
 export const getProfileUserLikedPosts = async (userId: string) => {
 	const res = await fetch(
-		`http://localhost:3000/api/post/get-liked-posts?userId=${userId}`,
+		`${process.env.FETCH}/api/post/get-liked-posts?userId=${userId}`,
 		{
 			method: 'GET',
-			headers: headers(),
 			cache: 'no-store',
 		}
 	);

@@ -19,7 +19,7 @@ const PostDetails = async ({ params: { post_id } }: Params) => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 
-	const [post, comments] = await getPostAndComments(post_id);
+	const [post, comments] = await getPostAndComments(post_id,session.user.id);
 
 	const { UP, DOWN } = votesReduce(post);
 

@@ -30,7 +30,9 @@ interface Params {
 }
 
 export async function generateMetadata({ params: { profile_name } }: Params): Promise<Metadata> {
-	const userData: User = await getProfileInfo(profile_name);
+	const session = await getAuthSession();
+
+	const userData: User = await getProfileInfo(profile_name, session ? session.user.name! : '');
 
 	return {
 		title: userData.name,
@@ -44,7 +46,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 
 	const currentPath = searchParams.info ? searchParams.info : 'posts';
 
-	const userData: User = await getProfileInfo(profile_name);
+	const userData: User = await getProfileInfo(profile_name, session.user.name!);
 	const userGames: Promise<Game[]> = getUserGames(userData.id);
 	const userCommunities: Promise<Communities[]> = getProfileUserCommunities(userData.id);
 	const userLikedPosts: Promise<ExtednedPost[]> = getProfileUserLikedPosts(userData.id);
@@ -81,7 +83,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 						/>
 					))}
 				{currentPath === 'likes' && (
-					<Suspense fallback={<PostsSuspense/>}>
+					<Suspense fallback={<PostsSuspense />}>
 						<ProfileLikedPostsContener
 							postsPromise={userLikedPosts}
 							userId={userData.id}

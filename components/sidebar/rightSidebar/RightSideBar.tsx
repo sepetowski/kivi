@@ -5,9 +5,11 @@ import { getUserCommunities } from '@/lib/getUserCommunities';
 import { Communities } from '@/types/communities';
 import { CommunityItem } from '@/components/sidebar/rightSidebar/CommunityItem';
 import Link from 'next/link';
+import { getAuthSession } from '@/lib/auth';
 
 export const RightSidebar = async () => {
-	const communities = (await getUserCommunities()) as Communities[];
+	const session=await getAuthSession()
+	const communities = (await getUserCommunities(session ? session.user.id:"")) as Communities[];
 	return (
 		<Sidebar left={true}>
 			<div className='mt-24 w-full h-5/6 flex flex-col items-center lg:items-start p-4 lg:p-6 gap-6 lg:gap-10 text-sm '>

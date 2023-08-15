@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/lib/auth';
+
 import { db } from '@/lib/db';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
@@ -10,10 +10,7 @@ interface Params {
 }
 
 export const GET = async (request: Request, { params: { community_name } }: Params) => {
-	const session = await getAuthSession();
-
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+	
 
 	try {
 		const community = await db.community.findUnique({

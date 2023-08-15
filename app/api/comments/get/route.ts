@@ -5,9 +5,6 @@ import { NextResponse } from 'next/server';
 export const GET = async (request: Request) => {
 	const url = new URL(request.url);
 	const postId = url.searchParams.get('postId');
-	const session = await getAuthSession();
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 
 	try {
 		const comments = await db.comment.findMany({

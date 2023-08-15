@@ -1,9 +1,7 @@
-import { headers } from 'next/dist/client/components/headers';
 
-export const getCreatedByUserCommunities = async () => {
-	const res = await fetch(`http://localhost:3000/api/communities/get-created-by-user-communities`, {
+export const getCreatedByUserCommunities = async (userId:string) => {
+	const res = await fetch(`${process.env.FETCH}/api/communities/get-created-by-user-communities?userId=${userId}`, {
 		method: 'GET',
-		headers: headers(),
 		cache: 'no-store',
 	});
 

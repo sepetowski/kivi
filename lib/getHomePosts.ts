@@ -1,9 +1,9 @@
-import { headers } from 'next/dist/client/components/headers';
 
-export const getHomePosts = async () => {
-	const res = await fetch('http://localhost:3000/api/post/home-posts', {
+
+export const getHomePosts = async (userId:string) => {
+	const res = await fetch(`${process.env.FETCH}/api/post/home-posts?userId=${userId}`, {
 		method: 'GET',
-		headers: headers(),
+
 		cache: 'no-store',
 	});
 

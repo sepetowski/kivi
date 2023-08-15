@@ -1,16 +1,12 @@
-import { getAuthSession } from '@/lib/auth';
+
 import { db } from '@/lib/db';
-import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request: Request) => {
-	const session = await getAuthSession();
+	
 	const url = new URL(request.url);
-
 	const userId = url.searchParams.get('userId');
 
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 
 	try {
 		const posts = await db.post.findMany({

@@ -4,7 +4,6 @@ import { Community } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CommunitiesCreatedCardsContener } from '@/components/conteners/communities/CommunitiesCreatedCardsContener';
-import { CreatedCommunityCardSkieleton } from '@/components/skieletons/cards/CreatedCommunityCardSkieleton';
 
 export const metadata = {
 	title: 'Created Communities',
@@ -15,7 +14,7 @@ const Created = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 
-	const communities: Community[] = await getCreatedByUserCommunities();
+	const communities: Community[] = await getCreatedByUserCommunities(session.user.id);
 
 	return (
 		<div className='w-full mx-auto max-w-5xl mt-8 sm:mt-14'>

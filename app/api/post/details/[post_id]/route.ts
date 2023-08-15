@@ -1,6 +1,4 @@
-import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { ExtednedPost } from '@/types/post';
 import { NextResponse } from 'next/server';
 
 interface Params {
@@ -10,10 +8,8 @@ interface Params {
 }
 
 export const GET = async (request: Request, { params: { post_id } }: Params) => {
-	const session = await getAuthSession();
-
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+	const url = new URL(request.url);
+	const userId = url.searchParams.get('userId');
 
 	try {
 		const post = await db.post.findUnique({
@@ -40,7 +36,7 @@ export const GET = async (request: Request, { params: { post_id } }: Params) => 
 		const savedPost = await db.savedPost.findUnique({
 			where: {
 				userId_postId: {
-					userId: session.user.id,
+					userId: userId ? userId : '',
 					postId: post.id,
 				},
 			},

@@ -1,18 +1,17 @@
-import { getAuthSession } from '@/lib/auth';
+
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request: Request) => {
-	const session = await getAuthSession();
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+	const url = new URL(request.url);
 
+	const userId = url.searchParams.get('userId');
 	try {
 		const communities = await db.community.findMany();
 
 		const subscriptions = await db.subscription.findMany({
 			where: {
-				userId: session.user.id,
+				userId: userId ? userId : '',
 			},
 		});
 

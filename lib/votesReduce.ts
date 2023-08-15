@@ -1,6 +1,5 @@
 import { ExtenedComment } from '@/types/comment';
 import { ExtednedPost } from '@/types/post';
-import { Post } from '@prisma/client';
 
 export const votesReduce = (array: ExtednedPost | ExtenedComment ) => {
 	const { UP, DOWN } = array.votes.reduce(

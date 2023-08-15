@@ -1,9 +1,9 @@
-import { headers } from 'next/dist/client/components/headers';
 
-export const getSavedPosts = async () => {
-	const res = await fetch(`http://localhost:3000/api/post/get-saved`, {
+
+export const getSavedPosts = async (userId:string) => {
+	const res = await fetch(`${process.env.FETCH}/api/post/get-saved?userId=${userId}`, {
 		method: 'GET',
-		headers: headers(),
+
 		cache: 'no-store',
 	});
 

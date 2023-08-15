@@ -1,16 +1,14 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getAuthSession } from '@/lib/auth';
 
 export const GET = async (request: Request) => {
-	const session = await getAuthSession();
+	const url = new URL(request.url);
 
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
+	const userId = url.searchParams.get('userId');
 	try {
 		const communities = await db.community.findMany({
 			where: {
-				creatorId: session.user.id,
+				creatorId: userId ? userId : '',
 			},
 		});
 

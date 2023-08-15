@@ -1,4 +1,3 @@
-import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
@@ -9,11 +8,8 @@ interface Params {
 }
 
 export const GET = async (request: Request, { params: { profile_name } }: Params) => {
-	const session = await getAuthSession();
-
-	if (!session?.user)
-		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
-
+	const url = new URL(request.url);
+	const userName = url.searchParams.get('userName');
 	try {
 		const user = await db.user.findUnique({
 			where: {
@@ -55,7 +51,7 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			backgroundImage: user.backgroundImage,
 		};
 
-		if (session?.user?.name === profile_name)
+		if (userName === profile_name)
 			return new NextResponse(JSON.stringify({ ...userInfo, sessionUserPage: true }), {
 				status: 200,
 			});

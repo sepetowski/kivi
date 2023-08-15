@@ -13,7 +13,7 @@ const Saved = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 
-	const posts: ExtednedPost[] = await getSavedPosts();
+	const posts: ExtednedPost[] = await getSavedPosts(session.user.id);
 
 	return (
 		<main className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6  max-w-[800px] mx-auto '>

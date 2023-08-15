@@ -4,7 +4,6 @@ import { getAllCommunities } from '@/lib/getAllCommunities';
 import { BrowseCommunity } from '@/types/communities';
 import { redirect } from 'next/navigation';
 
-
 export const metadata = {
 	title: 'Browse Communities',
 	description: 'Serach for any Community in Kivi app - Social for gamers',
@@ -13,7 +12,7 @@ export const metadata = {
 const Browse = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
-	const communities: BrowseCommunity[] = await getAllCommunities();
+	const communities: BrowseCommunity[] = await getAllCommunities(session.user.id);
 
 	return <CommunitiesBrowseCardsContener communities={communities} />;
 };
