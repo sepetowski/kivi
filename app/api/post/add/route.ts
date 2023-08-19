@@ -44,9 +44,9 @@ export const POST = async (request: Request) => {
 			},
 		});
 		if (!subscription)
-			return new NextResponse('You arne not in this community. Please join first', {
+			return new NextResponse('You are not in this community. Please join first', {
 				status: 409,
-				statusText: 'You arne not in this community. Please join first',
+				statusText: 'You are not in this community. Please join first',
 			});
 
 		await db.post.create({

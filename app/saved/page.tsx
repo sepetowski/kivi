@@ -1,4 +1,5 @@
 import { SavedPostsContener } from '@/components/conteners/posts/SavedPostsContener';
+import { BookmarksHeader } from '@/components/headers/BookmarksHeader';
 import { getAuthSession } from '@/lib/auth';
 import { getSavedPosts } from '@/lib/getSavedPosts';
 import { ExtednedPost } from '@/types/post';
@@ -17,6 +18,7 @@ const Saved = async () => {
 
 	return (
 		<main className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6  max-w-[800px] mx-auto '>
+			{posts && posts.length > 0 && <BookmarksHeader />}
 			<SavedPostsContener posts={posts} userId={session.user.id} />
 		</main>
 	);

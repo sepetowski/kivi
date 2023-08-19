@@ -1,4 +1,3 @@
-
 import { db } from '@/lib/db';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
@@ -10,9 +9,17 @@ interface Params {
 }
 
 export const GET = async (request: Request, { params: { community_name } }: Params) => {
-	
+	const url = new URL(request.url);
 
+	const userId = url.searchParams.get('userId');
+	
 	try {
+		const subscriptions = await db.subscription.findMany({
+			where: {
+				userId: userId ? userId : '',
+			},
+		});
+
 		const community = await db.community.findUnique({
 			where: {
 				name: community_name,
@@ -42,9 +49,14 @@ export const GET = async (request: Request, { params: { community_name } }: Para
 				subscription: true,
 			},
 		});
-
 		if (!community) return new NextResponse('Community not found', { status: 404 });
-		return new NextResponse(JSON.stringify(community), {
+
+		const userJoined =
+			subscriptions.length > 0
+				? !!subscriptions.find((subscription) => subscription.communityId === community.id)
+				: false;
+
+		return new NextResponse(JSON.stringify({ ...community, userJoined }), {
 			status: 200,
 		});
 	} catch (err) {

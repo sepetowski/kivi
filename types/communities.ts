@@ -17,3 +17,6 @@ export interface BrowseCommunity extends Community {
 export interface ExtednedCommunities extends Community {
 	posts: ExtednedPost[];
 }
+export interface ExtednedCommunitiyPage extends ExtednedCommunities {
+	userJoined: boolean;
+}

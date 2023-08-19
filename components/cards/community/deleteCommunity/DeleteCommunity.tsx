@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { COMMUNITY_AVATARS } from '@/lib/bucektsNames';
 import { Loader2Icon } from 'lucide-react';
@@ -28,6 +28,7 @@ export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 	const { toast } = useToast();
 	const router = useRouter();
 	const [isSending, setIsSending] = useState(false);
+	
 
 	const deleteCommunityHandler = async () => {
 		setIsSending(true);
@@ -54,7 +55,7 @@ export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 				const data: { fileName: string } = await res.json();
 				await removeFromBucket(COMMUNITY_AVATARS, data.fileName);
 
-				router.refresh();
+				 router.refresh();
 			}
 		} catch (err) {
 			toast({

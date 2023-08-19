@@ -55,6 +55,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 
 	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
+
 	return (
 		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
 			<ul className='w-full flex flex-col gap-6'>
