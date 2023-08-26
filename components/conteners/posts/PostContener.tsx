@@ -1,12 +1,13 @@
 'use client';
 import { PostCard } from '@/components/cards/post/PostCard';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { use, useContext, useEffect, useRef, useState } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { ExtednedPost } from '@/types/post';
 import { Loader2Icon } from 'lucide-react';
 import { votesReduce } from '@/lib/votesReduce';
+import { RefreshPostsContext } from '@/contex/refetchPosts';
 
 interface Props {
 	initialPosts: ExtednedPost[];
@@ -17,6 +18,9 @@ interface Props {
 export const PostContener = ({ initialPosts, communityName, userId }: Props) => {
 	const lastPostRef = useRef<null | HTMLElement>(null);
 	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
+	const [fetchedPosts, setFetchedPosts] = useState(initialPosts);
+	const ctx = useContext(RefreshPostsContext);
+
 
 	const { entry, ref } = useIntersection({
 		root: lastPostRef.current,
@@ -53,18 +57,26 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 		setIsAllPostsFetched(allDataFetched);
 	}, [data, isFetchingNextPage]);
 
-	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
-
+	useEffect(() => {
+		const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+		if (ctx?.deletedPostId) {
+			const indexOfDeletedFromInitialposts = posts.findIndex(
+				(post) => post.id === ctx?.deletedPostId
+			);
+			if (indexOfDeletedFromInitialposts !== -1) posts.splice(indexOfDeletedFromInitialposts, 1);
+		}
+		setFetchedPosts(posts);
+	}, [data?.pages, ctx?.deletedPostId, initialPosts]);
 
 	return (
 		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
 			<ul className='w-full flex flex-col gap-6'>
-				{posts.map((post, i) => {
+				{fetchedPosts.map((post, i) => {
 					const { UP, DOWN } = votesReduce(post);
 
 					const userVote = post.votes.find((vote) => vote.userId === userId);
 
-					if (i === posts.length - 1) {
+					if (i === fetchedPosts.length - 1) {
 						return (
 							<li key={post.id} ref={ref}>
 								<PostCard

@@ -91,6 +91,7 @@ export const PostCard = ({
 	const [postDislikes, setPostDislikes] = useState(dislikes);
 	const [isPostSaved, setisPostSaved] = useState(isSavedByUser);
 	const router = useRouter();
+
 	const { toast } = useToast();
 
 	const onEdittHandler = () => {
@@ -117,11 +118,13 @@ export const PostCard = ({
 					voteType,
 				}),
 			});
+
 			if (!res.ok) {
 				toast({
 					variant: 'destructive',
 					title: 'Could not save your vote in server. Please try again.',
 				});
+				return;
 			}
 		} catch (err) {
 			toast({

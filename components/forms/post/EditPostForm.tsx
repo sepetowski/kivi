@@ -113,6 +113,7 @@ export const EditPostForm = ({
 					});
 					resetForm();
 					setImage(null);
+					router.refresh();
 				}
 			} catch (err) {
 				toast({
@@ -121,7 +122,6 @@ export const EditPostForm = ({
 				});
 				if (imageFileName) await removeFromBucket(dbBucketName, imageFileName);
 			}
-			router.refresh();
 			onCanelEdit();
 			setIsSending(false);
 		},

@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
 import { QueryProvider } from '@/components/providers/QueryProvider';
+import { RefreshPostsProvider } from '@/contex/refetchPosts';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,13 +26,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 				<QueryProvider>
 					<AuthProvider>
 						<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-							<Nav />
-							<div className='flex justify-between w-full max-w-[2000px] mx-auto relative'>
-								<LeftSidebar />
-								<div className='w-full '>{children}</div>
-								<RightSidebar />
-							</div>
-							<Toaster />
+							<RefreshPostsProvider>
+								<Nav />
+								<div className='flex justify-between w-full max-w-[2000px] mx-auto relative'>
+									<LeftSidebar />
+									<div className='w-full '>{children}</div>
+									<RightSidebar />
+								</div>
+								<Toaster />
+							</RefreshPostsProvider>
 						</ThemeProvider>
 					</AuthProvider>
 				</QueryProvider>
