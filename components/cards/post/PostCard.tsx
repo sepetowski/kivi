@@ -32,6 +32,7 @@ import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCard
 import { PostOptions } from './PostOptions';
 import { EditPostForm } from '@/components/forms/post/EditPostForm';
 import { Badge } from '@/components/ui/badge';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	comments?: ExtenedComment[];
@@ -91,7 +92,7 @@ export const PostCard = ({
 	const [postDislikes, setPostDislikes] = useState(dislikes);
 	const [isPostSaved, setisPostSaved] = useState(isSavedByUser);
 	const router = useRouter();
-
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
 	const onEdittHandler = () => {
@@ -118,7 +119,6 @@ export const PostCard = ({
 					voteType,
 				}),
 			});
-
 			if (!res.ok) {
 				toast({
 					variant: 'destructive',
@@ -126,6 +126,8 @@ export const PostCard = ({
 				});
 				return;
 			}
+			router.refresh();
+			queryClient.invalidateQueries();
 		} catch (err) {
 			toast({
 				variant: 'destructive',
@@ -155,6 +157,8 @@ export const PostCard = ({
 			} else {
 				if (savedPage) router.refresh();
 			}
+			router.refresh();
+			queryClient.invalidateQueries();
 		} catch (err) {
 			toast({
 				variant: 'destructive',

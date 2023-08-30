@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 import * as Yup from 'yup';
-
+import { useQueryClient } from '@tanstack/react-query';
 interface Props {
 	commentId: string;
 	commentText: string;
@@ -19,6 +19,7 @@ export const EditCommentForm = ({ commentId, commentText, replayName, onEdit }: 
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isSending, setIsSending] = useState(false);
+	const queryClient = useQueryClient();
 
 	const minCommLenght = replayName ? replayName.length + 4 : 3;
 	const maxCommLenght = replayName ? replayName.length + 202 : 200;
@@ -61,6 +62,7 @@ export const EditCommentForm = ({ commentId, commentText, replayName, onEdit }: 
 						title: res.statusText,
 					});
 
+					queryClient.invalidateQueries();
 					onEdit();
 					router.refresh();
 				}

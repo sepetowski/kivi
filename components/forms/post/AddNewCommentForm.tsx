@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 import { User } from '@prisma/client';
 import * as Yup from 'yup';
-
+import { useQueryClient } from '@tanstack/react-query';
 interface Props {
 	postId: string;
 	isCommentReaply?: boolean;
@@ -26,6 +26,7 @@ export const AddNewCommentForm = ({
 }: Props) => {
 	const router = useRouter();
 	const [isSending, setIsSending] = useState(false);
+	const queryClient = useQueryClient();
 
 	const minCommLenght = isCommentReaply && author?.name ? author.name?.length + 5 : 3;
 	const maxCommLenght = isCommentReaply && author?.name ? author.name?.length + 202 : 200;
@@ -70,7 +71,7 @@ export const AddNewCommentForm = ({
 					toast({
 						title: res.statusText,
 					});
-
+					queryClient.invalidateQueries();
 					resetForm();
 					router.refresh();
 					if (isCommentReaply) onCloseReaply!();

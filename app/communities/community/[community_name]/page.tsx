@@ -31,7 +31,7 @@ const Community = async ({ params: { community_name } }: Params) => {
 	const communityData: ExtednedCommunitiyPage = await getCommunity(community_name, session.user.id);
 
 	return (
-		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6'>
+		<div className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6 mb-16'>
 			<CommunityHeader
 				userId={session.user.id}
 				communityData={communityData}

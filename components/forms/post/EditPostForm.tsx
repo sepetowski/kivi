@@ -1,5 +1,5 @@
 'use client';
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
 import { NewPostSchema } from '@/validations/NewPostSchema';
@@ -14,7 +14,7 @@ import { createBucket } from '@/lib/createBucket';
 import { v4 as uuidv4 } from 'uuid';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { removeBucket } from '@/lib/removeBucket';
-import {useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	initalContent: string;
@@ -78,7 +78,6 @@ export const EditPostForm = ({
 				editImageUrl = url;
 			}
 			if (!values.picture && isDeleted) {
-				console.log(isDeleted);
 				if (bucketName && fileName) await removeBucket(bucketName);
 
 				imageFileName = null;
@@ -110,7 +109,6 @@ export const EditPostForm = ({
 					toast({
 						title: res.statusText,
 					});
-					queryClient.invalidateQueries();
 					resetForm();
 					setImage(null);
 				}
@@ -123,6 +121,7 @@ export const EditPostForm = ({
 			}
 			onCanelEdit();
 			setIsSending(false);
+			queryClient.invalidateQueries();
 		},
 	});
 

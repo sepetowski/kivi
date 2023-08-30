@@ -1,5 +1,4 @@
-import { Community, Follows, Game, Post, Subscription, Vote } from '@prisma/client';
-import { ExtednedPost } from './post';
+import { Community, Follows, Game,  Subscription } from '@prisma/client';
 
 
 
@@ -11,12 +10,11 @@ export interface User {
 	createdAt: Date;
 	image: string;
 	sessionUserPage: boolean;
-	posts: ExtednedPost[];
 	profileDescription: string;
 	createdCommunities: Community[];
 	subscription: Subscription[];
 	games: Game[];
-
+	totalPostCount: number;
 	followers: Follows[];
 	following: Follows[];
 	backgroundImage: string | null;

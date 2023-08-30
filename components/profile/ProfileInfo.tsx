@@ -55,7 +55,7 @@ export const ProfileInfo = ({ session, userData }: Props) => {
 			</div>
 
 			<FollowsInfo
-				postsNumber={userData.posts.length}
+				postsNumber={userData.totalPostCount}
 				followersNumber={userData.followers.length}
 				followingNumber={userData.following.length}
 			/>

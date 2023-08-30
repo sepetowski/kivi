@@ -1,4 +1,5 @@
 import { CommunitiesProfileCardsContener } from '@/components/conteners/communities/CommunitiesProfileCardsContener';
+import { PostContener } from '@/components/conteners/posts/PostContener';
 import { ProfileLikedPostsContener } from '@/components/conteners/profile/ProfileLikedPostsContener';
 import { ProfilePostsContener } from '@/components/conteners/profile/ProfilePostsContener';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
@@ -76,8 +77,9 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 				)}
 				{currentPath === '' ||
 					(currentPath === 'posts' && (
-						<ProfilePostsContener
-							posts={userData.posts}
+						<PostContener
+							initialPosts={[]}
+							profilePage={true}
 							userId={userData.id}
 							userName={userData.name}
 						/>

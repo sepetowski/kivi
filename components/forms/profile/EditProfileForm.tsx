@@ -6,9 +6,8 @@ import { InputError } from '@/components/forms/InputError';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useFormik } from 'formik';
-import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { ProfileEditSchema } from '@/validations/ProfileEditSchema';
 import { SheetClose, SheetFooter } from '@/components/ui/sheet';
 
@@ -21,7 +20,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 	const { toast } = useToast();
 	const router = useRouter();
 	const session = useSession();
-	const [isSending, setIsSending] = useState(false);
+	const [_, setIsSending] = useState(false);
 	const formik = useFormik({
 		initialValues: {
 			username,

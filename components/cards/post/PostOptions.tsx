@@ -19,6 +19,7 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 	const path = usePathname();
 	const queryClient = useQueryClient();
 
+
 	const deletePostHandler = async () => {
 		toast({
 			title: 'Deleting your post. Please wait.',
@@ -46,8 +47,9 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 				if (data.bucketName) await removeBucket(data.bucketName);
 
 				queryClient.invalidateQueries();
-				if (params.community_name) router.push(`/communities/community/${communityName}`);
-				else if (params.profile_name || path === '/saved') router.refresh();
+				if (params.post_id) router.back();
+				else if (params.profile_name || path === '/saved' || params.community_name)
+					router.refresh();
 				else router.push('/');
 
 				toast({

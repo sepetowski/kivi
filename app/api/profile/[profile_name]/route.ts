@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
 
 interface Params {
@@ -18,26 +19,16 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			include: {
 				followers: true,
 				following: true,
-				post: {
-					include: {
-						votes: true,
-						author: true,
-						comments: {
-							select: {
-								id: true,
-							},
-						},
-						community: {
-							select: {
-								name: true,
-							},
-						},
-					},
-				},
 			},
 		});
 
 		if (!user) return new NextResponse('User not found', { status: 404 });
+
+		const totalPostCount = await db.post.count({
+			where: {
+				authorId: user.id,
+			},
+		});
 
 		const userInfo = {
 			id: user.id,
@@ -47,8 +38,8 @@ export const GET = async (request: Request, { params: { profile_name } }: Params
 			profileDescription: user.profileDescription,
 			following: user.following,
 			followers: user.followers,
-			posts: user.post,
 			backgroundImage: user.backgroundImage,
+			totalPostCount,
 		};
 
 		if (userName === profile_name)

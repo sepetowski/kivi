@@ -19,6 +19,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { createBucket } from '@/lib/createBucket';
 import { v4 as uuidv4 } from 'uuid';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	communityName: string;
@@ -28,7 +29,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 	const router = useRouter();
 	const [image, setImage] = useState<null | string>(null);
 	const [isSending, setIsSending] = useState(false);
-
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const formik = useFormik({
 		initialValues: {
@@ -87,6 +88,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 					toast({
 						title: res.statusText,
 					});
+					queryClient.invalidateQueries();
 					resetForm();
 					setImage(null);
 					router.refresh();

@@ -1,65 +1,40 @@
 'use client';
 import { PostCard } from '@/components/cards/post/PostCard';
-import React, { useEffect, useRef, useState } from 'react';
-import { useIntersection } from '@mantine/hooks';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
+import React from 'react';
 import { ExtednedPost } from '@/types/post';
 import { Loader2Icon } from 'lucide-react';
 import { votesReduce } from '@/lib/votesReduce';
-
+import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 
 interface Props {
 	initialPosts: ExtednedPost[];
-	communityName?: string;
 	userId: string;
+	communityName?: string;
+	userName?: string;
+	profilePage?: boolean;
 }
 
-export const PostContener = ({ initialPosts, communityName, userId }: Props) => {
-	const lastPostRef = useRef<null | HTMLElement>(null);
-	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
+export const PostContener = ({
+	initialPosts,
+	communityName,
+	userId,
+	userName,
+	profilePage,
+}: Props) => {
 
-
-	const { entry, ref } = useIntersection({
-		root: lastPostRef.current,
-		threshold: 1,
-	});
-	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-		['infinite-query', communityName],
-		async ({ pageParam = 1 }) => {
-			const query =
-				`/api/post/posts?limit=${PAGINATION_RESULTS}&page=${pageParam}` +
-				(!!communityName ? `&communityName=${communityName}` : '');
-
-			const res = await fetch(query);
-			const posts = (await res.json()) as ExtednedPost[];
-			return posts;
-		},
-
-		{
-			getNextPageParam: (_, pages) => {
-				return pages.length + 1;
-			},
-			initialData: { pages: [initialPosts], pageParams: [1] },
-		}
+	const { ref, isAllPostsFetched, posts, isFetchingNextPage } = useInfinityScroll(
+		initialPosts,
+		'/api/post/posts',
+		['infinite-query', communityName ? communityName : '', userName ? userName : ''],
+		communityName,
+		userName
 	);
 
-	useEffect(() => {
-		if (entry?.isIntersecting) {
-			fetchNextPage();
-		}
-	}, [entry, fetchNextPage]);
 
-	useEffect(() => {
-		const allDataFetched = !isFetchingNextPage && data && data.pages.length > 0 ? true : false;
-		setIsAllPostsFetched(allDataFetched);
-	}, [data, isFetchingNextPage]);
-
-	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
 	return (
-		<main className=' w-full  mt-16  max-w-[800px] mx-auto'>
-			<ul className='w-full flex flex-col gap-6'>
+		<div className={`${!profilePage ? '`w-full max-w-[800px] mx-auto' : ''}`}>
+			<ul className={`w-full flex flex-col gap-6 ${profilePage && 'pt-6'}`}>
 				{posts.map((post, i) => {
 					const { UP, DOWN } = votesReduce(post);
 
@@ -87,16 +62,17 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 									wasEdited={post.wasEdited}
 									imageUrl={post.image}
 									isSavedByUser={post.isSavedByUser}
+									profilePage={profilePage}
 								/>
 							</li>
 						);
 					} else {
 						return (
 							<PostCard
+								key={post.id}
 								fileName={post.imageName}
 								bucektName={post.bucketName}
 								creatorId={post.authorId}
-								key={post.id}
 								userId={userId}
 								postId={post.id}
 								added={post.createdAt}
@@ -112,6 +88,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 								wasEdited={post.wasEdited}
 								imageUrl={post.image}
 								isSavedByUser={post.isSavedByUser}
+								profilePage={profilePage}
 							/>
 						);
 					}
@@ -127,6 +104,6 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 					<p>Thats all for now. You have seen evreyting &#128512;</p>
 				</li>
 			)}
-		</main>
+		</div>
 	);
 };

@@ -9,6 +9,8 @@ export const GET = async (request: Request) => {
 	const limit = url.searchParams.get('limit');
 	const page = url.searchParams.get('page');
 	const communityName = url.searchParams.get('communityName');
+	const userName = url.searchParams.get('userName');
+	
 
 	const session = await getAuthSession();
 
@@ -22,6 +24,13 @@ export const GET = async (request: Request) => {
 			whereClause = {
 				community: {
 					name: communityName,
+				},
+			};
+		}
+		if (userName) {
+			whereClause = {
+				author: {
+					name: userName,
 				},
 			};
 		}
@@ -48,13 +57,12 @@ export const GET = async (request: Request) => {
 			where: whereClause,
 		});
 
-		const postsWithSaveStatus: ExtednedPost[] = posts.map(post => ({
+		const postsWithSaveStatus: ExtednedPost[] = posts.map((post) => ({
 			...post,
-			isSavedByUser: false, 
-		  }));
-		  
+			isSavedByUser: false,
+		}));
 
-		for (const post  of postsWithSaveStatus) {
+		for (const post of postsWithSaveStatus) {
 			const savedPost = await db.savedPost.findUnique({
 				where: {
 					userId_postId: {
@@ -64,7 +72,7 @@ export const GET = async (request: Request) => {
 				},
 			});
 
-			post.isSavedByUser = !!savedPost ;
+			post.isSavedByUser = !!savedPost;
 		}
 		return new NextResponse(JSON.stringify(postsWithSaveStatus), {
 			status: 200,
