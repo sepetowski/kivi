@@ -1,10 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
 import { NewPostSchema } from '@/validations/NewPostSchema';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/navigation';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { ImagePlus, Loader2Icon, X } from 'lucide-react';
@@ -15,6 +14,7 @@ import { createBucket } from '@/lib/createBucket';
 import { v4 as uuidv4 } from 'uuid';
 import { removeFromBucket } from '@/lib/removeFromBucket';
 import { removeBucket } from '@/lib/removeBucket';
+import {useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	initalContent: string;
@@ -35,10 +35,10 @@ export const EditPostForm = ({
 	imageUrl,
 	onCanelEdit,
 }: Props) => {
-	const router = useRouter();
 	const [image, setImage] = useState<null | string>(initalImg);
 	const [isSending, setIsSending] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
+	const queryClient = useQueryClient();
 
 	const { toast } = useToast();
 	const formik = useFormik({
@@ -55,7 +55,6 @@ export const EditPostForm = ({
 			const newBucketName = uuidv4();
 			let dbBucketName = bucketName ? bucketName : newBucketName;
 			if (values.picture) {
-				console.log(fileName, imageUrl, bucketName);
 				if (!bucketName) await createBucket(newBucketName);
 
 				const { url, fileName: newFileName } = await saveImageInBucket(
@@ -111,9 +110,9 @@ export const EditPostForm = ({
 					toast({
 						title: res.statusText,
 					});
+					queryClient.invalidateQueries();
 					resetForm();
 					setImage(null);
-					router.refresh();
 				}
 			} catch (err) {
 				toast({

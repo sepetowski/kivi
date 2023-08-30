@@ -24,7 +24,7 @@ export const LeftSidebar = async () => {
 
 	return (
 		<Sidebar left={false}>
-			<div className='mt-24 w-full h-5/6 flex flex-col items-center lg:items-start p-4 lg:p-6 gap-6 lg:gap-10 xl:text-xl overflow-y-auto font-medium'>
+			<div className='mt-24 w-full h-5/6 flex flex-col items-center lg:items-start p-4 lg:p-6 gap-6 lg:gap-10 xl:text-xl overflow-y-auto font-medium scrollbar-thin scrollbar-thumb-secondary scrollbar-thumb-rounded-md scrollbar-track-background  '>
 				<ActiveLink className='flex gap-3 cursor-pointer' href='/'>
 					<Home />
 					<span className='hidden lg:inline'>Home</span>

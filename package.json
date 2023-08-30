@@ -67,6 +67,7 @@
 	},
 	"devDependencies": {
 		"encoding": "^0.1.13",
-		"prisma": "^5.0.0"
+		"prisma": "^5.0.0",
+		"tailwind-scrollbar": "^3.0.5"
 	}
 }
