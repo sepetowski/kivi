@@ -1,13 +1,13 @@
 'use client';
 import { PostCard } from '@/components/cards/post/PostCard';
-import React, { use, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { ExtednedPost } from '@/types/post';
 import { Loader2Icon } from 'lucide-react';
 import { votesReduce } from '@/lib/votesReduce';
-import { RefreshPostsContext } from '@/contex/refetchPosts';
+import { SyncClientPostsContext } from '@/contex/syncClientPosts';
 
 interface Props {
 	initialPosts: ExtednedPost[];
@@ -19,8 +19,7 @@ export const PostContener = ({ initialPosts, communityName, userId }: Props) => 
 	const lastPostRef = useRef<null | HTMLElement>(null);
 	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
 	const [fetchedPosts, setFetchedPosts] = useState(initialPosts);
-	const ctx = useContext(RefreshPostsContext);
-
+	const ctx = useContext(SyncClientPostsContext);
 
 	const { entry, ref } = useIntersection({
 		root: lastPostRef.current,

@@ -5,7 +5,7 @@ import { DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-
 import { useToast } from '@/components/ui/use-toast';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { removeBucket } from '@/lib/removeBucket';
-import { RefreshPostsContext } from '@/contex/refetchPosts';
+import { SyncClientPostsContext } from '@/contex/syncClientPosts';
 
 interface Props {
 	postId: string;
@@ -18,7 +18,7 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 	const router = useRouter();
 	const params = useParams();
 	const path = usePathname();
-	const ctx = useContext(RefreshPostsContext);
+	const ctx = useContext(SyncClientPostsContext);
 
 	const deletePostHandler = async () => {
 		toast({
