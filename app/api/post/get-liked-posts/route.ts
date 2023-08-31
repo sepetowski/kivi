@@ -1,12 +1,10 @@
-
 import { db } from '@/lib/db';
+import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request: Request) => {
-	
 	const url = new URL(request.url);
 	const userId = url.searchParams.get('userId');
-
 
 	try {
 		const posts = await db.post.findMany({
@@ -35,7 +33,7 @@ export const GET = async (request: Request) => {
 					},
 				},
 			},
-	
+			take: PAGINATION_RESULTS,
 		});
 
 		return new NextResponse(JSON.stringify(posts), {

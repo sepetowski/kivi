@@ -1,7 +1,6 @@
 import { CommunitiesProfileCardsContener } from '@/components/conteners/communities/CommunitiesProfileCardsContener';
 import { PostContener } from '@/components/conteners/posts/PostContener';
 import { ProfileLikedPostsContener } from '@/components/conteners/profile/ProfileLikedPostsContener';
-import { ProfilePostsContener } from '@/components/conteners/profile/ProfilePostsContener';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
 import { GamesContent } from '@/components/profile/games/GamesContent';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
@@ -61,7 +60,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 			/>
 			<ProfileInfo userData={userData} session={session} />
 			<Separator />
-			<main className='px-4 lg:px-8 w-full'>
+			<main className='px-4 lg:px-8 w-full pb-6'>
 				{currentPath === 'games' && (
 					<Suspense fallback={<CommunityAndGameSuspense />}>
 						<GamesContent promise={userGames} sessionUserPage={userData.sessionUserPage} />
@@ -79,7 +78,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 					(currentPath === 'posts' && (
 						<PostContener
 							initialPosts={[]}
-							profilePage={true}
+							profilePage
 							userId={userData.id}
 							userName={userData.name}
 						/>

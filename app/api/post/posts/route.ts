@@ -10,10 +10,10 @@ export const GET = async (request: Request) => {
 	const page = url.searchParams.get('page');
 	const communityName = url.searchParams.get('communityName');
 	const userName = url.searchParams.get('userName');
-	
+	const userId = url.searchParams.get('userId');
+	const userLikes = url.searchParams.get('userLikes');
 
 	const session = await getAuthSession();
-
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 
@@ -34,6 +34,18 @@ export const GET = async (request: Request) => {
 				},
 			};
 		}
+		if (userId &&userLikes) {
+
+			whereClause = {
+				votes: {
+					some: {
+						userId: userId,
+						type: 'UP',
+					},
+				},
+			};
+		}
+
 		const posts = await db.post.findMany({
 			take: parseInt(limit ? limit : ''),
 			skip: (parseInt(page ? page : '') - 1) * parseInt(limit ? limit : ''),

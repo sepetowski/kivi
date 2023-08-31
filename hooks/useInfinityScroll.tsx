@@ -10,8 +10,10 @@ export const useInfinityScroll = (
 	initialPosts: ExtednedPost[],
 	api: string,
 	dependencies: string[],
-	communityName?: string | null,
-	userName?: string | null
+	communityName?: string,
+	userName?: string,
+	userId?: string,
+	userLikes?: boolean
 ) => {
 	const lastPostRef = useRef<null | HTMLElement>(null);
 	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
@@ -20,13 +22,19 @@ export const useInfinityScroll = (
 		root: lastPostRef.current,
 		threshold: 1,
 	});
+
+	const filteredDependencies = dependencies.filter((el) => el !== '');
+	
+
 	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-		dependencies,
+		filteredDependencies,
 		async ({ pageParam = 1 }) => {
 			const query =
 				`${api}?limit=${PAGINATION_RESULTS}&page=${pageParam}` +
 				(!!communityName ? `&communityName=${communityName}` : '') +
-				(!!userName ? `&userName=${userName}` : '');
+				(!!userName ? `&userName=${userName}` : '') +
+				(!!userId ? `&userId=${userId}` : '') +
+				(userLikes ? `&userLikes=userLikes` : '');
 
 			const res = await fetch(query);
 			const posts = (await res.json()) as ExtednedPost[];

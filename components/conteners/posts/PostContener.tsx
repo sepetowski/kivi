@@ -12,6 +12,7 @@ interface Props {
 	communityName?: string;
 	userName?: string;
 	profilePage?: boolean;
+	userLikes?: boolean;
 }
 
 export const PostContener = ({
@@ -20,17 +21,23 @@ export const PostContener = ({
 	userId,
 	userName,
 	profilePage,
+	userLikes,
 }: Props) => {
-
 	const { ref, isAllPostsFetched, posts, isFetchingNextPage } = useInfinityScroll(
 		initialPosts,
 		'/api/post/posts',
-		['infinite-query', communityName ? communityName : '', userName ? userName : ''],
+		[
+			'infinite-query',
+			communityName ? communityName : '',
+			userName ? userName : '',
+			userId ? userId : '',
+			userLikes ? 'userLikes' : '',
+		],
 		communityName,
-		userName
+		userName,
+		userId,
+		userLikes
 	);
-
-
 
 	return (
 		<div className={`${!profilePage ? '`w-full max-w-[800px] mx-auto' : ''}`}>
@@ -99,7 +106,7 @@ export const PostContener = ({
 					<Loader2Icon className='animate-spin' />
 				</li>
 			)}
-			{isAllPostsFetched && (
+			{!profilePage && isAllPostsFetched && (
 				<li className='flex justify-center items-center text-center mt-8'>
 					<p>Thats all for now. You have seen evreyting &#128512;</p>
 				</li>
