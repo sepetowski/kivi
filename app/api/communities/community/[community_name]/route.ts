@@ -1,5 +1,7 @@
 import { db } from '@/lib/db';
 import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
+import {  ExtednedCommunitiyPage } from '@/types/communities';
+import { ExtednedPost } from '@/types/post';
 import { NextResponse } from 'next/server';
 
 interface Params {
@@ -12,7 +14,7 @@ export const GET = async (request: Request, { params: { community_name } }: Para
 	const url = new URL(request.url);
 
 	const userId = url.searchParams.get('userId');
-	
+
 	try {
 		const subscriptions = await db.subscription.findMany({
 			where: {
@@ -56,7 +58,31 @@ export const GET = async (request: Request, { params: { community_name } }: Para
 				? !!subscriptions.find((subscription) => subscription.communityId === community.id)
 				: false;
 
-		return new NextResponse(JSON.stringify({ ...community, userJoined }), {
+		const postsWithSaveStatus: ExtednedPost[] = community.posts.map((post) => ({
+			...post,
+			isSavedByUser: false,
+		}));
+
+		for (const post of postsWithSaveStatus) {
+			const savedPost = await db.savedPost.findUnique({
+				where: {
+					userId_postId: {
+						userId: userId ? userId : '',
+						postId: post.id,
+					},
+				},
+			});
+
+			post.isSavedByUser = !!savedPost;
+		}
+
+		const updaetedCommunity: ExtednedCommunitiyPage = {
+			...community,
+			posts: [...postsWithSaveStatus],
+			userJoined,
+		};
+
+		return new NextResponse(JSON.stringify(updaetedCommunity), {
 			status: 200,
 		});
 	} catch (err) {
