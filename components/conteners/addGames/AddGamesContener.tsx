@@ -1,6 +1,6 @@
+import React from 'react';
 import { SelectGameCard } from '@/components/cards/game/SelectGameCard';
 import { Game } from '@/types/game';
-import React from 'react';
 
 interface Props {
 	games: Game[];

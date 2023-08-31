@@ -60,12 +60,14 @@ export const SelectGameCard = ({ image_background, name }: Props) => {
 			<div className='opacity-0 group-hover:opacity-100 absolute top-0 left-0 w-full h-full z-20 backdrop-blur-sm flex justify-center items-center transition-opacity duration-300 p-4 '>
 				<PlusSquare color='white' size={80} />
 			</div>
-			<Image
-				className='object-cover group-hover:scale-110 transition-transform duration-300'
-				src={image_background}
-				fill
-				alt={`${name} picture`}
-			/>
+			{image_background && (
+				<Image
+					className='object-cover group-hover:scale-110 transition-transform duration-300'
+					src={image_background}
+					fill
+					alt={`${name} picture`}
+				/>
+			)}
 		</Card>
 	);
 };

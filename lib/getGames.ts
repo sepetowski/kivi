@@ -3,6 +3,7 @@ import { Games } from '@/types/games';
 export const PAGE_SIZE = 30;
 
 export const getGames = async (page = 1, search = '') => {
+	console.log(search);
 	const res = await fetch(
 		`https://api.rawg.io/api/games?key=${process.env.GAMES_API_KEY}&page=${page}&page_size=${PAGE_SIZE}&search=${search}`,
 		{
