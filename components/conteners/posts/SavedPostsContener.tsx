@@ -1,9 +1,8 @@
 import React from 'react';
-import { PostCard } from '@/components/cards/post/PostCard';
-import { votesReduce } from '@/lib/votesReduce';
 import { ExtednedPost } from '@/types/post';
 import { Frown } from 'lucide-react';
 import Image from 'next/image';
+import { PostContener } from './PostContener';
 interface Props {
 	posts: ExtednedPost[];
 	userId: string;
@@ -25,36 +24,7 @@ export const SavedPostsContener = ({ posts, userId }: Props) => {
 			)}
 			{posts.length > 0 && (
 				<div className='w-full flex flex-col gap-6 '>
-					{posts.length > 0 &&
-						posts.map((post) => {
-							const { UP, DOWN } = votesReduce(post);
-							const userVote = post.votes.find((vote) => vote.userId === userId);
-							return (
-								<PostCard
-									fileName={post.imageName}
-									bucektName={post.bucketName}
-									creatorId={post.authorId}
-									key={post.id}
-									userId={userId}
-									postId={post.id}
-									added={post.createdAt}
-									communityName={post.community.name}
-									content={post.content}
-									userName={post.author.name}
-									userImage={post.author.image}
-									postImage={post.image}
-									likes={UP}
-									dislikes={DOWN}
-									initialVote={userVote?.type}
-									commentsLength={post.comments.length}
-									wasEdited={post.wasEdited}
-									imageUrl={post.image}
-									profilePage={true}
-									isSavedByUser={true}
-									savedPage={true}
-								/>
-							);
-						})}
+					<PostContener initialPosts={posts} userId={userId} profilePage userSaved />
 				</div>
 			)}
 		</>

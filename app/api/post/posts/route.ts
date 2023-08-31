@@ -12,6 +12,7 @@ export const GET = async (request: Request) => {
 	const userName = url.searchParams.get('userName');
 	const userId = url.searchParams.get('userId');
 	const userLikes = url.searchParams.get('userLikes');
+	const userSaved = url.searchParams.get('userSaved');
 
 	const session = await getAuthSession();
 	if (!session?.user)
@@ -34,13 +35,21 @@ export const GET = async (request: Request) => {
 				},
 			};
 		}
-		if (userId &&userLikes) {
-
+		if (userId && userLikes) {
 			whereClause = {
 				votes: {
 					some: {
 						userId: userId,
 						type: 'UP',
+					},
+				},
+			};
+		}
+		if (userId && userSaved) {
+			whereClause = {
+				savedPosts: {
+					some: {
+						userId: userId ,
 					},
 				},
 			};

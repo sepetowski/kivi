@@ -10,10 +10,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const BookmarksHeader = () => {
 	const { toast } = useToast();
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const [isSending, setIsSending] = useState(false);
 
 	const deleteAllSavedPosts = async () => {
@@ -40,6 +42,7 @@ export const BookmarksHeader = () => {
 					title: res.statusText,
 				});
 				router.refresh();
+				queryClient.invalidateQueries();
 			}
 		} catch (err) {
 			toast({

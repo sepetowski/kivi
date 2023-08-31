@@ -37,11 +37,13 @@ const Community = async ({ params: { community_name } }: Params) => {
 				communityData={communityData}
 				communityName={community_name}
 			/>
-			<PostContener
-				initialPosts={communityData.posts}
-				communityName={community_name}
-				userId={session.user.id}
-			/>
+			<div className='mt-12 mx-auto max-w-[800px]'>
+				<PostContener
+					initialPosts={communityData.posts}
+					communityName={community_name}
+					userId={session.user.id}
+				/>
+			</div>
 		</div>
 	);
 };

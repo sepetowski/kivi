@@ -27,12 +27,7 @@ export const GET = async (request: Request) => {
 				},
 			},
 			where: {
-				votes: {
-					some: {
-						userId: userId ? userId : '',
-						type: 'UP',
-					},
-				},
+				authorId: userId ? userId : '',
 			},
 			take: PAGINATION_RESULTS,
 		});

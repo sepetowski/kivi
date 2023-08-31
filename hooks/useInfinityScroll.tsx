@@ -13,7 +13,8 @@ export const useInfinityScroll = (
 	communityName?: string,
 	userName?: string,
 	userId?: string,
-	userLikes?: boolean
+	userLikes?: boolean,
+	userSaved?: boolean
 ) => {
 	const lastPostRef = useRef<null | HTMLElement>(null);
 	const [isAllPostsFetched, setIsAllPostsFetched] = useState(false);
@@ -24,7 +25,6 @@ export const useInfinityScroll = (
 	});
 
 	const filteredDependencies = dependencies.filter((el) => el !== '');
-	
 
 	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
 		filteredDependencies,
@@ -34,6 +34,7 @@ export const useInfinityScroll = (
 				(!!communityName ? `&communityName=${communityName}` : '') +
 				(!!userName ? `&userName=${userName}` : '') +
 				(!!userId ? `&userId=${userId}` : '') +
+				(userSaved ? `&userSaved=userSaved` : '') +
 				(userLikes ? `&userLikes=userLikes` : '');
 
 			const res = await fetch(query);

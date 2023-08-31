@@ -9,26 +9,44 @@ interface Props {
 	postsPromise: Promise<ExtednedPost[]>;
 	userId: string;
 	userName: string;
+	paragrphs: [string, string];
+	userLieks?: boolean;
 }
 
-export const ProfileLikedPostsContener = async ({ postsPromise, userId, userName }: Props) => {
+export const ProfilePosts = async ({
+	postsPromise,
+	userId,
+	userName,
+	paragrphs,
+	userLieks,
+}: Props) => {
 	const session = await getAuthSession();
 	const posts = await postsPromise;
 
 	return (
-		<div className='w-full'>
+		<div className=' mt-6 '>
 			{posts.length === 0 && (
 				<>
-					{session && userId === session.user.id && (
-						<p className='self-start'>You have not liked any post yet.</p>
-					)}
+					{session && userId === session.user.id && <p className='self-start'>{paragrphs[0]}</p>}
 					{session && userId !== session.user.id && (
-						<p className='self-start'>{userName} has not liked any post yet.</p>
+						<p className='self-start'>
+							{userName}
+							{''}
+							{paragrphs[1]}
+						</p>
 					)}
 				</>
 			)}
 			{posts.length > 0 && (
-				<PostContener initialPosts={posts} userId={userId} profilePage userLikes />
+				<div className='max-w-[800px] mx-auto'>
+					<PostContener
+						initialPosts={posts}
+						userId={userId}
+						userName={userName}
+						profilePage
+						userLikes={userLieks}
+					/>
+				</div>
 			)}
 		</div>
 	);

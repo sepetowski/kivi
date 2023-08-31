@@ -1,4 +1,6 @@
 import { db } from '@/lib/db';
+import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
+import { ExtednedPost } from '@/types/post';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request: Request) => {
@@ -31,9 +33,28 @@ export const GET = async (request: Request) => {
 					},
 				},
 			},
+			take: PAGINATION_RESULTS,
 		});
 
-		return new NextResponse(JSON.stringify(posts), {
+		const postsWithSaveStatus: ExtednedPost[] = posts.map((post) => ({
+			...post,
+			isSavedByUser: false,
+		}));
+
+		for (const post of postsWithSaveStatus) {
+			const savedPost = await db.savedPost.findUnique({
+				where: {
+					userId_postId: {
+						userId: userId ? userId : '',
+						postId: post.id,
+					},
+				},
+			});
+
+			post.isSavedByUser = !!savedPost;
+		}
+
+		return new NextResponse(JSON.stringify(postsWithSaveStatus), {
 			status: 200,
 		});
 	} catch (err) {

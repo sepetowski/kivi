@@ -13,6 +13,7 @@ interface Props {
 	userName?: string;
 	profilePage?: boolean;
 	userLikes?: boolean;
+	userSaved?: boolean;
 }
 
 export const PostContener = ({
@@ -22,6 +23,7 @@ export const PostContener = ({
 	userName,
 	profilePage,
 	userLikes,
+	userSaved,
 }: Props) => {
 	const { ref, isAllPostsFetched, posts, isFetchingNextPage } = useInfinityScroll(
 		initialPosts,
@@ -32,15 +34,17 @@ export const PostContener = ({
 			userName ? userName : '',
 			userId ? userId : '',
 			userLikes ? 'userLikes' : '',
+			userSaved ? 'userSaved' : '',
 		],
 		communityName,
 		userName,
 		userId,
-		userLikes
+		userLikes,
+		userSaved
 	);
 
 	return (
-		<div className={`${!profilePage ? '`w-full max-w-[800px] mx-auto' : ''}`}>
+		<>
 			<ul className={`w-full flex flex-col gap-6 ${profilePage && 'pt-6'}`}>
 				{posts.map((post, i) => {
 					const { UP, DOWN } = votesReduce(post);
@@ -111,6 +115,6 @@ export const PostContener = ({
 					<p>Thats all for now. You have seen evreyting &#128512;</p>
 				</li>
 			)}
-		</div>
+		</>
 	);
 };

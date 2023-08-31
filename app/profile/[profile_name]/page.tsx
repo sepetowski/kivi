@@ -1,6 +1,5 @@
 import { CommunitiesProfileCardsContener } from '@/components/conteners/communities/CommunitiesProfileCardsContener';
-import { PostContener } from '@/components/conteners/posts/PostContener';
-import { ProfileLikedPostsContener } from '@/components/conteners/profile/ProfileLikedPostsContener';
+import { ProfilePosts } from '@/components/conteners/profile/ProfilePosts';
 import { ProfileBanner } from '@/components/profile/banner/ProfileBanner';
 import { GamesContent } from '@/components/profile/games/GamesContent';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
@@ -9,6 +8,7 @@ import { PostsSuspense } from '@/components/skieletons/susepnse/PostsSuspense';
 import { Separator } from '@/components/ui/separator';
 import { getAuthSession } from '@/lib/auth';
 import { getProfileInfo } from '@/lib/getProfileInfo';
+import { getProfilePosts } from '@/lib/getProfilePosts';
 import { getProfileUserCommunities } from '@/lib/getProfileUserCommunities';
 import { getProfileUserLikedPosts } from '@/lib/getProfileUserLikedPosts';
 import { getUserGames } from '@/lib/getUserGames';
@@ -47,9 +47,12 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	const currentPath = searchParams.info ? searchParams.info : 'posts';
 
 	const userData: User = await getProfileInfo(profile_name, session.user.name!);
+	const inititalPosts: Promise<ExtednedPost[]> = getProfilePosts(userData.id);
 	const userGames: Promise<Game[]> = getUserGames(userData.id);
 	const userCommunities: Promise<Communities[]> = getProfileUserCommunities(userData.id);
 	const userLikedPosts: Promise<ExtednedPost[]> = getProfileUserLikedPosts(userData.id);
+
+	console.log(inititalPosts);
 
 	return (
 		<div className='md:px-4 lg:px-8 '>
@@ -74,21 +77,26 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 						/>
 					</Suspense>
 				)}
+
 				{currentPath === '' ||
 					(currentPath === 'posts' && (
-						<PostContener
-							initialPosts={[]}
-							profilePage
-							userId={userData.id}
-							userName={userData.name}
-						/>
+						<Suspense fallback={<PostsSuspense />}>
+							<ProfilePosts
+								postsPromise={inititalPosts}
+								userId={userData.id}
+								userName={userData.name}
+								paragrphs={['You have not added any post yet.', 'has not added any post yet.']}
+							/>
+						</Suspense>
 					))}
 				{currentPath === 'likes' && (
 					<Suspense fallback={<PostsSuspense />}>
-						<ProfileLikedPostsContener
+						<ProfilePosts
 							postsPromise={userLikedPosts}
 							userId={userData.id}
 							userName={userData.name}
+							paragrphs={['You have not liked any post yet.', 'has not liked any post yet.']}
+							userLieks
 						/>
 					</Suspense>
 				)}
