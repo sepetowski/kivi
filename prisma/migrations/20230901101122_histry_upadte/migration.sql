@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "UserSearchHistory" ADD COLUMN     "serachDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

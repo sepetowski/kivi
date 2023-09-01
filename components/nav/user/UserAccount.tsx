@@ -32,7 +32,7 @@ export const UserAccount = ({ name, email, image }: Props) => {
 	};
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger className='rounded-full'>
 				<ProfileAvatar image={image} name={name} />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-64' align='end' sideOffset={10}>

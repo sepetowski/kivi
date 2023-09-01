@@ -14,13 +14,13 @@ export const Nav = async () => {
 
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
-			<div className='w-full max-w-[1800px] mx-auto flex justify-between items-center  p-3 md:pl-6 md:pr-6 '>
+			<div className='w-full max-w-[1800px] mx-auto flex justify-between items-center  p-3 md:px-6 md:py-4  '>
 				<Link className='flex items-center gap-2' href='/'>
 					<Image src='/kiviLogo.svg' width={50} height={50} alt='Kivi logo' priority />
 					<h1 className='font-medium text-xl sm:text-2xl'>Kivi</h1>
 				</Link>
 
-				<div className='flex items-center gap-1'>
+				<div className='flex items-center gap-4'>
 					{session && (
 						<UserAccount
 							name={session.user.name}

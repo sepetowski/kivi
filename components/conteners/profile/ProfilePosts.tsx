@@ -31,7 +31,7 @@ export const ProfilePosts = async ({
 					{session && userId !== session.user.id && (
 						<p className='self-start'>
 							{userName}
-							{''}
+							{' '}
 							{paragrphs[1]}
 						</p>
 					)}

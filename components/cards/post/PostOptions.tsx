@@ -3,7 +3,7 @@
 import React from 'react';
 import { DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter} from 'next/navigation';
 import { removeBucket } from '@/lib/removeBucket';
 import { useQueryClient } from '@tanstack/react-query';
 interface Props {
@@ -47,9 +47,8 @@ export const PostOptions = ({ postId, communityName, onEdit }: Props) => {
 				if (data.bucketName) await removeBucket(data.bucketName);
 
 				queryClient.invalidateQueries();
-				if (params.post_id) router.back();
-				else if (params.profile_name || path === '/saved' || params.community_name)
-					router.refresh();
+
+				if (params.profile_name || path === '/saved' || params.community_name) router.refresh();
 				else router.push('/');
 
 				toast({

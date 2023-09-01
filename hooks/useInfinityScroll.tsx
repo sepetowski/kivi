@@ -26,7 +26,7 @@ export const useInfinityScroll = (
 
 	const filteredDependencies = dependencies.filter((el) => el !== '');
 
-	const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+	const { data, fetchNextPage, isFetchingNextPage} = useInfiniteQuery(
 		filteredDependencies,
 		async ({ pageParam = 1 }) => {
 			const query =
@@ -61,6 +61,8 @@ export const useInfinityScroll = (
 		const allDataFetched = !isFetchingNextPage && data && data.pages.length > 0 ? true : false;
 		setIsAllPostsFetched(allDataFetched);
 	}, [data, isFetchingNextPage]);
+
+	
 
 	const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 

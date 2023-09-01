@@ -52,8 +52,6 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	const userCommunities: Promise<Communities[]> = getProfileUserCommunities(userData.id);
 	const userLikedPosts: Promise<ExtednedPost[]> = getProfileUserLikedPosts(userData.id);
 
-	console.log(inititalPosts);
-
 	return (
 		<div className='md:px-4 lg:px-8 '>
 			<ProfileBanner

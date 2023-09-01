@@ -70,8 +70,17 @@ model User {
   games              Game[]
   savedPosts         SavedPost[]
 
-  followers Follows[] @relation("following")
-  following Follows[] @relation("follower")
+  followers         Follows[]           @relation("following")
+  following         Follows[]           @relation("follower")
+  userSearchHistory UserSearchHistory[]
+}
+
+model UserSearchHistory {
+  id             String   @id @default(cuid())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  serachedUserId String
+  serachDate     DateTime @default(now())
 }
 
 model Follows {
@@ -134,14 +143,14 @@ model Subscription {
 model Post {
   id String @id @default(cuid())
 
-  content       String
-  image         String?
-  imageName     String?
-  bucketName    String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  community     Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
-  communityId   String
+  content     String
+  image       String?
+  imageName   String?
+  bucketName  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  communityId String
 
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
