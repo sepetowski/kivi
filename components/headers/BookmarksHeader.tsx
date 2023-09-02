@@ -11,6 +11,18 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 export const BookmarksHeader = () => {
 	const { toast } = useToast();
@@ -62,12 +74,27 @@ export const BookmarksHeader = () => {
 					<MoreVertical size={22} />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuItem
-						disabled={isSending}
-						onClick={deleteAllSavedPosts}
-						className='cursor-pointer text-destructive'>
-						Delete all
-					</DropdownMenuItem>
+					<AlertDialog>
+						<AlertDialogTrigger asChild className='flex justify-center items-center'>
+							<Button
+								className='text-destructive  w-full text-left p-2 flex justify-start'
+								disabled={isSending}
+								variant='ghost'
+								size={'icon'}>
+								Delete all
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+								<AlertDialogDescription>This will delete your saved posts.</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogAction onClick={deleteAllSavedPosts}>Continue</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</header>
