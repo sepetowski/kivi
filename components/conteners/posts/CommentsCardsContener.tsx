@@ -19,6 +19,13 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 			<div className='flex flex-col gap-4'>
 				{comments
 					.filter((comment) => !comment.replyToId)
+					.sort((a, b) => {
+						const commentCountComparison = b.votes.length - a.votes.length;
+						if (commentCountComparison === 0) {
+							return +new Date(b.createdAt) - +new Date(a.createdAt);
+						}
+						return commentCountComparison;
+					})
 					.map((topLevelComment) => {
 						const { UP: topLevelUp, DOWN: topLevelDown } = votesReduce(topLevelComment);
 						const topLevelCommentVote = topLevelComment.votes.find(
@@ -29,6 +36,7 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 							<div key={topLevelComment.id} className='flex flex-col'>
 								<div className='mb-2'>
 									<CommentCard
+										id={topLevelComment.id}
 										userId={userId}
 										comment={topLevelComment}
 										likes={topLevelUp}
@@ -39,7 +47,13 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 								</div>
 
 								{topLevelComment.replies
-									.sort((a, b) => b.votes.length - a.votes.length)
+									.sort((a, b) => {
+										const commentCountComparison = b.votes.length - a.votes.length;
+										if (commentCountComparison === 0) {
+											return +new Date(b.createdAt) - +new Date(a.createdAt);
+										}
+										return commentCountComparison;
+									})
 									.map((reply) => {
 										const { UP: reaplyUp, DOWN: reaplyDown } = votesReduce(reply);
 
@@ -50,6 +64,7 @@ export const CommentsCardsContener = ({ postId, comments, userId }: Props) => {
 												key={reply.id}
 												className='ml-2 py-2 pl-4 border-l-2 border-secondary-foreground'>
 												<CommentCard
+													id={reply.id}
 													comment={reply}
 													userId={userId}
 													likes={reaplyUp}

@@ -49,7 +49,7 @@ export const GET = async (request: Request) => {
 			whereClause = {
 				savedPosts: {
 					some: {
-						userId: userId ,
+						userId: userId,
 					},
 				},
 			};
@@ -68,6 +68,7 @@ export const GET = async (request: Request) => {
 					select: {
 						id: true,
 					},
+				
 				},
 				community: {
 					select: {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CommentCardActions } from './CommentCardActions';
 import Link from 'next/link';
@@ -15,8 +15,10 @@ import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu
 import { CommentOptions } from './CommentOptions';
 import { MoreVertical } from 'lucide-react';
 import { EditCommentForm } from '@/components/forms/post/EditCommentForm';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
+	id: string;
 	comment: ExtenedComment;
 	likes: number;
 	dislikes: number;
@@ -25,9 +27,18 @@ interface Props {
 	userId: string;
 }
 
-export const CommentCard = ({ comment, postId, dislikes, likes, initialVote, userId }: Props) => {
+export const CommentCard = ({
+	comment,
+	postId,
+	dislikes,
+	likes,
+	initialVote,
+	userId,
+	id,
+}: Props) => {
 	const [isReplaying, setIsReplaying] = useState(false);
 	const [isEditting, setIsEditting] = useState(false);
+	const serachParams = useSearchParams();
 	const commentRef = useRef<HTMLDivElement>(null);
 	const replayName = getUserReplayName(comment.text);
 
@@ -49,10 +60,20 @@ export const CommentCard = ({ comment, postId, dislikes, likes, initialVote, use
 		setIsReplaying(false);
 	};
 
-
+	useEffect(() => {
+		const commentId = serachParams.get('commentId');
+		if (!commentId || !commentRef) return;
+		const commentElement = commentRef.current;
+		if (!commentElement) return;
+		commentElement.scrollIntoView({ behavior: 'smooth' });
+	}, [serachParams, commentRef]);
 
 	return (
-		<div ref={commentRef} className='w-full p-2 sm:p-4 rounded-md border'>
+		<div
+			ref={commentRef}
+			className={`w-full p-2 sm:p-4 rounded-md border ${
+				id === serachParams.get('commentId') && ' dark:border-purple-600 border-pink-600'
+			}`}>
 			<div className='flex items-center gap-2'>
 				<div className='flex items-center justify-between w-full'>
 					<div className='flex items-center gap-2'>
