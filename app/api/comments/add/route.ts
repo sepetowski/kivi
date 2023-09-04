@@ -11,11 +11,13 @@ export const PATCH = async (request: Request) => {
 		comment,
 		postId,
 		reaplyToCommentId,
+		reaplyAuthorId,
 	}: {
 		comment: string;
 		reaplyToCommentId: string | null;
 		postId: string | null;
 		communityName: string;
+		reaplyAuthorId: string | undefined;
 	} = await request.json();
 
 	if (!comment || !postId)
@@ -31,7 +33,7 @@ export const PATCH = async (request: Request) => {
 		if (!post)
 			return new NextResponse('Post not found.', { status: 404, statusText: 'Post not found.' });
 
-		await db.comment.create({
+		const createdComment = await db.comment.create({
 			data: {
 				text: comment,
 				postId,
@@ -39,6 +41,31 @@ export const PATCH = async (request: Request) => {
 				replyToId: reaplyToCommentId,
 			},
 		});
+
+		if (!reaplyToCommentId && post.authorId !== session.user.id)
+			await db.notifications.create({
+				data: {
+					userId: post.authorId,
+					acctionMadeByUserId: session.user.id,
+					notifyType: 'NEW_COMMENT',
+					postsId: post.id,
+					commentId: createdComment.id,
+					content: comment,
+				},
+			});
+
+		if (reaplyToCommentId && reaplyAuthorId && reaplyAuthorId !== session.user.id) {
+			await db.notifications.create({
+				data: {
+					userId: reaplyAuthorId,
+					acctionMadeByUserId: session.user.id,
+					notifyType: 'NEW_REPALY',
+					postsId: post.id,
+					commentId: createdComment.id,
+					content: comment,
+				},
+			});
+		}
 
 		return new NextResponse('Comment was created.', {
 			status: 200,

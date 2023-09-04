@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
 import { QueryProvider } from '@/components/providers/QueryProvider';
+import { NotifyToast } from '@/components/notify/NotifyToast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,6 +33,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 								<div className='w-full '>{children}</div>
 								<RightSidebar />
 							</div>
+							<NotifyToast />
 							<Toaster />
 						</ThemeProvider>
 					</AuthProvider>

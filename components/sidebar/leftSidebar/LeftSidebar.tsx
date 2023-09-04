@@ -18,9 +18,14 @@ import Link from 'next/link';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 import { getAuthSession } from '@/lib/auth';
 import { Separator } from '@/components/ui/separator';
+import { getUnseenNotifactions } from '@/lib/getUnseenNotifactions';
+import { Notifications } from '@prisma/client';
 
 export const LeftSidebar = async () => {
 	const session = await getAuthSession();
+
+	let notifications: Notifications[] = [];
+	if (session) notifications = await getUnseenNotifactions(session.user.id);
 
 	return (
 		<Sidebar left={false}>
@@ -48,9 +53,15 @@ export const LeftSidebar = async () => {
 					<span className='hidden lg:inline'>Communities</span>
 				</ActiveLink>
 
-				<ActiveLink className='flex gap-3 cursor-pointer' href='/notifications'>
+				<ActiveLink className='flex gap-3 cursor-pointer relative' href='/notifications'>
+					{notifications.length > 0 && (
+						<div className='absolute left-[-7px] top-[-12px] rounded-full  w-6 h-6 flex justify-center items-center bg-primary text-secondary text-sm  shadow-sm'>
+							<p>{notifications.length}</p>
+						</div>
+					)}
+
 					<Bell />
-					<span className='hidden lg:inline'>Notification</span>
+					<span className='hidden lg:inline'>Notifications</span>
 				</ActiveLink>
 
 				<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>

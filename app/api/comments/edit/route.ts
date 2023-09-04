@@ -39,6 +39,15 @@ export const POST = async (request: Request) => {
 			},
 		});
 
+		await db.notifications.updateMany({
+			where: {
+				commentId,
+			}, 
+			data: {
+				content: commentText,
+			},
+		});
+
 		return new NextResponse('Comment was updated.', {
 			status: 200,
 			statusText: 'Comment was updated.',

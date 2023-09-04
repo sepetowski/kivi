@@ -27,6 +27,14 @@ export const POST = async (request: Request) => {
 			},
 		});
 
+		await db.notifications.create({
+			data: {
+				acctionMadeByUserId: session.user.id,
+				notifyType: 'NEW_FOLLOW',
+				userId: followingUserId,
+			},
+		});
+
 		return new NextResponse('You are now following this user', {
 			status: 200,
 		});

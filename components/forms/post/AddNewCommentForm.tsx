@@ -59,6 +59,7 @@ export const AddNewCommentForm = ({
 						comment: values.comment,
 						reaplyToCommentId: replyToId,
 						postId,
+						reaplyAuthorId: author?.id,
 					}),
 				});
 				if (!res.ok) {

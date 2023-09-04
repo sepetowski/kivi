@@ -38,6 +38,18 @@ export const POST = async (request: Request) => {
 					postId,
 				},
 			});
+
+			if (post.authorId !== session.user.id)
+				await db.notifications.create({
+					data: {
+						userId: post.authorId,
+						acctionMadeByUserId: session.user.id,
+						notifyType: voteType === 'UP' ? 'NEW_POST_LIKE' : 'NEW_POST_DISS_LIKE',
+						postsId: post.id,
+						content: post.content,
+					},
+				});
+
 			return new NextResponse('OK', { status: 200 });
 		}
 
@@ -51,6 +63,22 @@ export const POST = async (request: Request) => {
 				},
 			});
 
+			if (post.authorId !== session.user.id) {
+				const notify = await db.notifications.findFirst({
+					where: {
+						userId: post.authorId,
+						acctionMadeByUserId: session.user.id,
+						postsId: post.id,
+					},
+				});
+
+				if (notify)
+					await db.notifications.delete({
+						where: {
+							id: notify.id,
+						},
+					});
+			}
 			return new NextResponse('OK', { status: 200 });
 		}
 
@@ -66,6 +94,26 @@ export const POST = async (request: Request) => {
 					type: voteType,
 				},
 			});
+
+			if (post.authorId !== session.user.id) {
+				const notify = await db.notifications.findFirst({
+					where: {
+						userId: post.authorId,
+						acctionMadeByUserId: session.user.id,
+						postsId: post.id,
+					},
+				});
+
+				if (notify)
+					await db.notifications.update({
+						where: {
+							id: notify.id,
+						},
+						data: {
+							notifyType: voteType === 'UP' ? 'NEW_POST_LIKE' : 'NEW_POST_DISS_LIKE',
+						},
+					});
+			}
 			return new NextResponse('OK', { status: 200 });
 		}
 	} catch (err) {

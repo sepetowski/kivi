@@ -7,42 +7,25 @@ export const POST = async (request: Request) => {
 
 	if (!session?.user)
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
-	const {
-		commentId,
-	}: {
-		commentId: string;
-	} = await request.json();
-
-	if (!commentId)
-		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
 	try {
-		const comment = await db.comment.findUnique({
+		await db.notifications.updateMany({
 			where: {
-				id: commentId,
+				userId: session.user.id,
 			},
-		});
-		if (!comment)
-			return new NextResponse('Comment not found', {
-				status: 404,
-				statusText: 'Comment not found',
-			});
-
-		await db.comment.delete({
-			where: {
-				id: commentId,
+			data: {
+				unseen: true,
 			},
 		});
 
-		await db.notifications.deleteMany({
+		const upadtedNotifications = db.notifications.findMany({
 			where: {
-				commentId: commentId,
+				userId: session.user.id,
 			},
 		});
 
-		return new NextResponse('Comment was deleted.', {
+		return new NextResponse(JSON.stringify(upadtedNotifications), {
 			status: 200,
-			statusText: 'Comment was deleted.',
 		});
 	} catch (err) {
 		let errMsg = 'Database Error';

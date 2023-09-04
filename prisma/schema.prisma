@@ -73,6 +73,7 @@ model User {
   followers         Follows[]           @relation("following")
   following         Follows[]           @relation("follower")
   userSearchHistory UserSearchHistory[]
+  notifications     Notifications[]
 }
 
 model UserSearchHistory {
@@ -81,6 +82,32 @@ model UserSearchHistory {
   userId         String
   serachedUserId String
   serachDate     DateTime @default(now())
+}
+
+model Notifications {
+  id          String     @id @default(cuid())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  unseen      Boolean    @default(false)
+  toasted     Boolean    @default(false)
+  cliked      Boolean    @default(false)
+  notifyType  NotfiyType
+  createdDate DateTime   @default(now())
+  content     String?
+
+  acctionMadeByUserId String
+  postsId             String?
+  commentId           String?
+}
+
+enum NotfiyType {
+  NEW_FOLLOW
+  NEW_POST_LIKE
+  NEW_POST_DISS_LIKE
+  NEW_COMMENT_LIKE
+  NEW_COMMENT_DISS_LIKE
+  NEW_COMMENT
+  NEW_REPALY
 }
 
 model Follows {

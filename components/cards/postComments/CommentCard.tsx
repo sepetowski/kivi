@@ -49,13 +49,20 @@ export const CommentCard = ({ comment, postId, dislikes, likes, initialVote, use
 		setIsReplaying(false);
 	};
 
+
+
 	return (
 		<div ref={commentRef} className='w-full p-2 sm:p-4 rounded-md border'>
 			<div className='flex items-center gap-2'>
 				<div className='flex items-center justify-between w-full'>
 					<div className='flex items-center gap-2'>
 						<Avatar className='w-8 h-8'>
-							{comment.author.image && <AvatarImage src={comment.author.image} alt={`${comment.author.name} profile image`} />}
+							{comment.author.image && (
+								<AvatarImage
+									src={comment.author.image}
+									alt={`${comment.author.name} profile image`}
+								/>
+							)}
 							{comment.author.name && (
 								<AvatarFallback>{generateUsernameInitials(comment.author.name)}</AvatarFallback>
 							)}

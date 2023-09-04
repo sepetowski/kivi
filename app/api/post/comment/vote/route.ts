@@ -26,6 +26,18 @@ export const POST = async (request: Request) => {
 		if (!post) {
 			return new NextResponse('Post not found', { status: 404, statusText: 'Post not found' });
 		}
+		const comment = await db.comment.findUnique({
+			where: {
+				id: commentId,
+			},
+		});
+
+		if (!comment) {
+			return new NextResponse('Comment not found', {
+				status: 404,
+				statusText: 'Comment not found',
+			});
+		}
 
 		const existingVote = await db.commentVote.findFirst({
 			where: {
@@ -42,6 +54,18 @@ export const POST = async (request: Request) => {
 					commentId,
 				},
 			});
+
+			if (comment.authorId !== session.user.id)
+				await db.notifications.create({
+					data: {
+						userId: comment.authorId,
+						acctionMadeByUserId: session.user.id,
+						notifyType: voteType === 'UP' ? 'NEW_COMMENT_LIKE' : 'NEW_COMMENT_DISS_LIKE',
+						commentId: comment.id,
+						postsId: post.id,
+					},
+				});
+
 			return new NextResponse('OK', { status: 200 });
 		}
 
@@ -54,6 +78,25 @@ export const POST = async (request: Request) => {
 					},
 				},
 			});
+
+			if (comment.authorId !== session.user.id) {
+				const notify = await db.notifications.findFirst({
+					where: {
+						userId: comment.authorId,
+						acctionMadeByUserId: session.user.id,
+						commentId: comment.id,
+						postsId: post.id,
+						content: comment.text,
+					},
+				});
+
+				if (notify)
+					await db.notifications.delete({
+						where: {
+							id: notify.id,
+						},
+					});
+			}
 
 			return new NextResponse('OK', { status: 200 });
 		}
@@ -70,6 +113,28 @@ export const POST = async (request: Request) => {
 					type: voteType,
 				},
 			});
+
+			if (comment.authorId !== session.user.id) {
+				const notify = await db.notifications.findFirst({
+					where: {
+						userId: comment.authorId,
+						acctionMadeByUserId: session.user.id,
+						commentId: commentId,
+						postsId: post.id,
+					},
+				});
+
+				if (notify)
+					await db.notifications.update({
+						where: {
+							id: notify.id,
+						},
+						data: {
+							notifyType: voteType === 'UP' ? 'NEW_COMMENT_LIKE' : 'NEW_COMMENT_DISS_LIKE',
+						},
+					});
+			}
+
 			return new NextResponse('OK', { status: 200 });
 		}
 	} catch (err) {

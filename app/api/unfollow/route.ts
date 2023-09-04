@@ -29,6 +29,21 @@ export const POST = async (request: Request) => {
 			},
 		});
 
+		const notification = await db.notifications.findFirst({
+			where: {
+				acctionMadeByUserId: session.user.id,
+				notifyType: 'NEW_FOLLOW',
+				userId: followingUserId,
+			},
+		});
+
+		if (notification)
+			await db.notifications.delete({
+				where: {
+					id: notification.id,
+				},
+			});
+
 		return new NextResponse('You are no longer following this user', {
 			status: 200,
 		});

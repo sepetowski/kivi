@@ -46,6 +46,12 @@ export const POST = async (request: Request) => {
 			data: { postCount: { decrement: 1 } },
 		});
 
+		await db.notifications.deleteMany({
+			where: {
+				postsId: post.id,
+			},
+		});
+
 		return new NextResponse(
 			JSON.stringify({ imageName: post.imageName, bucketName: post.bucketName }),
 			{
