@@ -8,9 +8,13 @@ import { Bell, Home, Search } from 'lucide-react';
 import { MobileNav } from './MobileNav';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 import { getAuthSession } from '@/lib/auth';
+import { getUnseenNotifactions } from '@/lib/getUnseenNotifactions';
 
 export const Nav = async () => {
 	const session = await getAuthSession();
+
+	let notifications = [];
+	if (session) notifications = await getUnseenNotifactions(session.user.id);
 
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
@@ -41,7 +45,13 @@ export const Nav = async () => {
 					<ActiveLink href='/explore'>
 						<Search />
 					</ActiveLink>
-					<ActiveLink href='/notifications'>
+					<ActiveLink href='/notifications' className='relative'>
+						{notifications.length > 0 && (
+							<div className='absolute left-[-7px] top-[-7px] rounded-full  w-5 h-5 flex justify-center items-center bg-primary text-secondary text-xs  shadow-sm'>
+								{notifications.length <= 9 && <p>{notifications.length}</p>}
+								{notifications.length > 9 && <p>+9</p>}
+							</div>
+						)}
 						<Bell />
 					</ActiveLink>
 

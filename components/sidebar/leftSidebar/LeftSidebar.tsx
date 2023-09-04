@@ -56,7 +56,8 @@ export const LeftSidebar = async () => {
 				<ActiveLink className='flex gap-3 cursor-pointer relative' href='/notifications'>
 					{notifications.length > 0 && (
 						<div className='absolute left-[-7px] top-[-12px] rounded-full  w-6 h-6 flex justify-center items-center bg-primary text-secondary text-sm  shadow-sm'>
-							<p>{notifications.length}</p>
+							{notifications.length <= 9 && <p>{notifications.length}</p>}
+							{notifications.length > 9 && <p>+9</p>}
 						</div>
 					)}
 

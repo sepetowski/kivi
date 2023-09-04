@@ -17,9 +17,10 @@ import { ActiveLink } from '@/components/ui/ActiveLink';
 
 interface Props {
 	userName: string | null | undefined;
+
 }
 
-export const MobileNav = ({ userName }: Props) => {
+export const MobileNav = ({ userName}: Props) => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
