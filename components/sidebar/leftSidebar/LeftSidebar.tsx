@@ -65,7 +65,10 @@ export const LeftSidebar = async () => {
 					<span className='hidden lg:inline'>Notifications</span>
 				</ActiveLink>
 
-				<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>
+				<ActiveLink
+					className='flex gap-3 cursor-pointer'
+					href='/messages'
+					include='/messages/m/'>
 					<Mail />
 					<span className='hidden lg:inline'>Messages</span>
 				</ActiveLink>
