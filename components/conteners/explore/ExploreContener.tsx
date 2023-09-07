@@ -22,7 +22,7 @@ export const ExploreContener = ({ userSearchHistroy }: Props) => {
 		debounceRequest,
 		setInputValue,
 		setIsTyping,
-	} = useSearchUser();
+	} = useSearchUser<SearchingUser>({ api: '/api/explore/search', queryKey: 'search-users-query' });
 
 	return (
 		<>

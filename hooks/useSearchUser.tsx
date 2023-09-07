@@ -3,7 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import debounce from 'lodash.debounce';
 import { useCallback, useState } from 'react';
 
-export const useSearchUser = () => {
+interface Props<T> {
+	api: string;
+	queryKey: string;
+	userId?: string;
+}
+
+export function useSearchUser<T>({ api, queryKey, userId }: Props<T>) {
 	const [inputValue, setInputValue] = useState('');
 	const [isTyping, setIsTyping] = useState(false);
 
@@ -15,14 +21,14 @@ export const useSearchUser = () => {
 	} = useQuery({
 		queryFn: async () => {
 			if (!inputValue.trim()) return [];
-			const res = await fetch(`/api/explore/search?query=${inputValue}`);
+			const res = await fetch(`${api}?query=${inputValue}` + (!!userId ? `&userId=${userId}` : ''));
 
 			if (!res.ok) return [];
 
 			const data = await res.json();
-			return data as SearchingUser[];
+			return data as T[];
 		},
-		queryKey: ['search-query'],
+		queryKey: [{ queryKey }],
 		enabled: false,
 	});
 
@@ -46,4 +52,4 @@ export const useSearchUser = () => {
 		inputValue,
 		setIsTyping,
 	};
-};
+}

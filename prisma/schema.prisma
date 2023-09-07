@@ -74,6 +74,30 @@ model User {
   following         Follows[]           @relation("follower")
   userSearchHistory UserSearchHistory[]
   notifications     Notifications[]
+
+  conversations Conversation[]
+  messages      Message[]
+}
+
+model Conversation {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  lastMessageAt DateTime @default(now())
+
+  messages Message[]
+  users    User[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  message   String
+  createdAt DateTime @default(now())
+
+  seen           Boolean      @default(false)
+  conversation   Conversation @relation(onDelete: Cascade, fields: [conversationId], references: [id])
+  sender         User         @relation(onDelete: Cascade, fields: [userId], references: [id])
+  conversationId String
+  userId         String
 }
 
 model UserSearchHistory {

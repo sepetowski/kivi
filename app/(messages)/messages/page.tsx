@@ -1,9 +1,6 @@
-import { getAuthSession } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 
 const MessagesPage = async () => {
-	const session = await getAuthSession();
-	if (!session) redirect('/sign-in');
+	
 
 	return (
 		<div className='hidden md:flex w-full h-full justify-center items-center  p-4 lg:p-6'>
