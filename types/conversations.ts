@@ -1,8 +1,8 @@
 import { Conversation, Message } from '@prisma/client';
 
 export interface ConversationUser {
-	image: string;
-	name: string;
+	image: string | null | undefined;
+	name: string | null | undefined;
 	id: string;
 }
 
@@ -16,7 +16,15 @@ export interface ExtendenConfersation extends Conversation {
 }
 
 export interface ConversationSearchResult extends ConversationUser {
-	conversations: {
+	conversationId: string | null;
+}
+
+export interface ConversationPageData extends Conversation {
+	users: ConversationUser[];
+}
+
+export interface ExtenedMessage extends Message {
+	sender: {
 		id: string;
 	};
 }

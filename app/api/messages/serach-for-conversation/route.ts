@@ -1,5 +1,16 @@
 import { db } from '@/lib/db';
+import { User } from '@prisma/client';
 import { NextResponse } from 'next/server';
+
+interface Conversation {
+	id: string;
+	createdAt: string;
+	lastMessageAt: string;
+}
+
+interface ExtenedUser extends User {
+	conversations: Conversation[];
+}
 
 export const GET = async (request: Request) => {
 	const url = new URL(request.url);
@@ -41,18 +52,49 @@ export const GET = async (request: Request) => {
 			},
 		});
 
-		console.log(users);
+		let sameUser: ExtenedUser | null = null;
+		for (const user of users) {
+			if (user.id === userId) {
+				const fetchedUser = await db.user.findUnique({
+					where: {
+						id: user.id,
+					},
+					include: {
+						conversations: {
+							where: {
+								users: {
+									every: {
+										id: user.id,
+									},
+								},
+							},
+							select: {
+								id: true,
+							},
+						},
+					},
+				});
+
+				sameUser = fetchedUser as ExtenedUser | null;
+			}
+		}
 
 		const retunredUsers = users.map((user) => {
+			if (sameUser && sameUser.id === user.id) {
+				return {
+					id: sameUser.id,
+					name: sameUser.name,
+					image: sameUser.image,
+					conversationId: sameUser.conversations.length>0 ? sameUser.conversations[0].id : null,
+				};
+			}
 			return {
 				id: user.id,
 				name: user.name,
 				image: user.image,
-				conversations: user.conversations,
+				conversationId: user.conversations.length>0 ? user.conversations[0].id : null,
 			};
 		});
-
-		console.log(retunredUsers);
 
 		return new NextResponse(JSON.stringify(retunredUsers), {
 			status: 200,

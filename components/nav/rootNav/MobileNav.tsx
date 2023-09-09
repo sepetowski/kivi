@@ -51,7 +51,7 @@ export const MobileNav = ({ userName}: Props) => {
 					</SheetClose>
 
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<ActiveLink className='flex gap-3 cursor-pointer' href='/messeges'>
+						<ActiveLink className='flex gap-3 cursor-pointer' href='/messages'>
 							<Mail />
 							<span>Messages</span>
 						</ActiveLink>

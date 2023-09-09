@@ -1,19 +1,42 @@
-import React from 'react';
+'use client';
+import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
+import { ExtenedMessage } from '@/types/conversations';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 interface Props {
-	mine?: boolean;
+	message: ExtenedMessage;
+	activeUserId: string;
+	lastMessageId: string;
 }
 
-export const Message = ({ mine }: Props) => {
+export const Message = ({ message, activeUserId, lastMessageId }: Props) => {
+	const { createdAt, id, message: text, seen, sender } = message;
+	const messageRef = useRef<HTMLDivElement | null>(null);
+
+	const isActiveUserSendMasseage = useMemo(() => {
+		return sender.id === activeUserId;
+	}, [sender.id, activeUserId]);
+
 	return (
 		<div
-			className={`p-2 rounded-md w-2/3 max-w-lg shadow-sm  ${
-				mine ? 'self-end bg-purple-600 text-white' : 'bg-muted '
-			}`}>
-			<p className='text-sm md:text-base'>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi laboriosam architecto,
-				deserunt praesentium recusandae iure sequi omnis possimus necessitatibus nihil.
+			ref={messageRef}
+			className={` w-fit max-w-[60%] flex flex-col   ${isActiveUserSendMasseage && 'self-end '}`}>
+			<p
+				className={`text-xs text-muted-foreground  mb-1 inline-block ${
+					isActiveUserSendMasseage && 'self-end'
+				}`}>
+				{formatTimeToNow(new Date(createdAt))}
 			</p>
+			<div
+				className={` text-white p-2  rounded-md shadow-sm flex justify-center   ${
+					isActiveUserSendMasseage ? 'bg-purple-600 ' : 'dark:bg-muted bg-neutral-500'
+				}`}>
+				<p className='text-sm md:text-base '>{text}</p>
+			</div>
+
+			{isActiveUserSendMasseage && lastMessageId === id && (
+				<p className='text-xs text-muted-foreground self-end mt-0.5'>{seen ? 'Seen' : 'Send'}</p>
+			)}
 		</div>
 	);
 };

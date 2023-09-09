@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { useRouter } from 'next/navigation';
@@ -13,15 +13,15 @@ interface Props {
 	lastMessage: ConversationMessage;
 }
 
-export const ConverstaionsTabAccount = ({
+export const ConversationsTabAccount = ({
 	users,
 	activeUserId,
 	lastMessage: { sender, seen, message, createdAt, conversationId },
 }: Props) => {
 	const router = useRouter();
-
 	const conversationWithUser = useMemo(() => {
-		return users.filter((user) => user.id !== activeUserId).at(0);
+		if (users.length > 1) return users.filter((user) => user.id !== activeUserId).at(0);
+		else return users[0];
 	}, [activeUserId, users]);
 
 	const isLastMasgeMadeByActiveUser = useMemo(() => {
@@ -55,17 +55,20 @@ export const ConverstaionsTabAccount = ({
 					<p>{conversationWithUser?.name}</p>
 
 					<p className={`text-xs text-muted-foreground  `}>
-						<span className={`${!isLastMasgeMadeByActiveUser && !seen && 'text-white font-bold'} `}>
+						<span
+							className={`${
+								!isLastMasgeMadeByActiveUser && users.length > 1 && !seen && 'dark:text-white text-black font-bold'
+							} `}>
 							{makeShortMessage(message)}
 						</span>
 						<span className='ml-1'>&#x2022; {formatTimeToNow(new Date(createdAt))}</span>
 					</p>
 				</div>
 			</div>
-			{isLastMasgeMadeByActiveUser && !seen && (
+			{isLastMasgeMadeByActiveUser && users.length > 1 && !seen && (
 				<div className=' w-2.5 h-2.5  rounded-full border border-primary'></div>
 			)}
-			{isLastMasgeMadeByActiveUser && seen && (
+			{isLastMasgeMadeByActiveUser && users.length > 1 && seen && (
 				<Avatar className='w-3 h-3 bg-accent'>
 					{conversationWithUser?.image && (
 						<AvatarImage

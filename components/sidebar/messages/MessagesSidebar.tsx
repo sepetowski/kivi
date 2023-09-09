@@ -1,29 +1,66 @@
 'use client';
-import { ConversationsTab } from '@/components/conteners/messages/ConversationsTab';
+import { ConversationsTab } from '@/components/conteners/messages/conversationTab/ConversationsTab';
+import { SearchConversationTab } from '@/components/conteners/messages/searchTab/SearchConversationTab';
 import { SerachBar } from '@/components/ui/SerachBar';
 import { useSearchUser } from '@/hooks/useSearchUser';
+import { pusherClient } from '@/lib/pusher';
 import { ConversationSearchResult, ExtendenConfersation } from '@/types/conversations';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
+import { find } from 'lodash';
 interface Props {
 	userId: string;
+	userEmial: string;
+	initialConversations: ExtendenConfersation[];
 }
 
-export const MessagesSidebar = ({ userId }: Props) => {
+export const MessagesSidebar = ({ userId, userEmial, initialConversations }: Props) => {
 	const params = useParams();
 	const [isConversationsTab, setIsConversationsTab] = useState(true);
+	const [conversations, setConversations] = useState(initialConversations);
 
-	const { data: conversations } = useQuery({
-		queryFn: async () => {
-			const res = await fetch(`/api/messages/get-conversations?userId=${userId}`);
-			if (!res.ok) return [];
-			const conversations = await res.json();
-			return conversations as ExtendenConfersation[];
-		},
-		queryKey: ['conversations'],
-	});
+	const router = useRouter();
+
+	useEffect(() => {
+		pusherClient.subscribe(userEmial);
+
+		const updateHandler = (conversation: ExtendenConfersation) => {
+			console.log('Sidebar UAPDTE :', conversation);
+			setConversations((current) =>
+				current.map((currentConversation) => {
+					if (currentConversation.id === conversation.id) {
+						return {
+							...currentConversation,
+							messages: conversation.messages,
+						};
+					}
+
+					return currentConversation;
+				})
+			);
+			console.log(conversations);
+		};
+
+		const newHandler = (conversation: ExtendenConfersation) => {
+			setConversations((current) => {
+				if (find(current, { id: conversation.id })) {
+					return current;
+				}
+
+				return [conversation, ...current];
+			});
+		};
+
+		pusherClient.bind('conversation:update', updateHandler);
+		pusherClient.bind('conversation:new', newHandler);
+
+		return () => {
+			pusherClient.unsubscribe(userEmial);
+			pusherClient.unbind('conversation:update', updateHandler);
+			pusherClient.unbind('conversation:new', newHandler);
+		};
+	}, [userEmial, router]);
 
 	const {
 		inputValue,
@@ -53,8 +90,8 @@ export const MessagesSidebar = ({ userId }: Props) => {
 
 	return (
 		<aside
-			className={`w-full h-full md:w-96 lg:w-[29rem] lx:w-[32rem] border overflow-hidden  flex-col ${
-				params.conversation_id ? 'hidden md:flex' : 'flex'
+			className={`w-full h-full lg:w-[29rem] lx:w-[32rem] border overflow-hidden  flex-col ${
+				params.conversation_id ? 'hidden lg:flex' : 'flex'
 			}`}>
 			<div className='p-4 lg:p-6 mt-32 md:mt-24 '>
 				<h3 className=' lg:text-center text-xl font-bold mb-4 '>Your conversations</h3>
@@ -72,7 +109,13 @@ export const MessagesSidebar = ({ userId }: Props) => {
 			{isConversationsTab && (
 				<ConversationsTab conversations={conversations} activeUserId={userId} />
 			)}
-			{!isConversationsTab && <div></div>}
+			{!isConversationsTab && (
+				<SearchConversationTab
+					isFetched={isFetched}
+					results={searchResults}
+					isFetching={isFetching}
+				/>
+			)}
 		</aside>
 	);
 };
