@@ -1,67 +1,64 @@
 import { AvaibleThemes } from '@prisma/client';
 
-export const colorStrenght = 600;
-const focusStrenght = 300;
-
 export const themes = [
 	{
 		type: AvaibleThemes.BLUE,
-		color: `bg-blue-${colorStrenght}`,
-		focus: `focus:bg-blue-${focusStrenght}`,
+		color: 'bg-blue-600',
+		focus: 'focus:bg-blue-300',
 	},
 	{
 		type: AvaibleThemes.CYAN,
-		color: `bg-cyan-${colorStrenght}`,
-		focus: `focus:bg-cyan-${focusStrenght}`,
+		color: 'bg-cyan-600',
+		focus: 'focus:bg-cyan-300',
 	},
 	{
 		type: AvaibleThemes.EMERALD,
-		color: `bg-emerald-${colorStrenght}`,
-		focus: `focus:bg-emerald-${focusStrenght}`,
+		color: 'bg-emerald-600',
+		focus: 'focus:bg-emerald-300',
 	},
 	{
 		type: AvaibleThemes.GREEN,
-		color: `bg-green-${colorStrenght}`,
-		focus: `focus:bg-green-${focusStrenght}`,
+		color: 'bg-green-600',
+		focus: 'focus:bg-green-300',
 	},
 	{
 		type: AvaibleThemes.INDIGO,
-		color: `bg-indigo-${colorStrenght}`,
-		focus: `focus:bg-indigo-${focusStrenght}`,
+		color: 'bg-indigo-600',
+		focus: 'focus:bg-indigo-300',
 	},
 	{
 		type: AvaibleThemes.LIME,
-		color: `bg-lime-${colorStrenght}`,
-		focus: `focus:bg-lime-${focusStrenght}`,
+		color: 'bg-lime-600',
+		focus: 'focus:bg-lime-300',
 	},
 	{
 		type: AvaibleThemes.FUCHSIA,
-		color: `bg-fuchsia-${colorStrenght}`,
-		focus: `focus:bg-fuchsia-${focusStrenght}`,
+		color: 'bg-fuchsia-600',
+		focus: 'focus:bg-fuchsia-300',
 	},
 	{
 		type: AvaibleThemes.ORANGE,
-		color: `bg-orange-${colorStrenght}`,
-		focus: `focus:bg-orange-${focusStrenght}`,
+		color: 'bg-orange-600',
+		focus: 'focus:bg-orange-300',
 	},
 	{
 		type: AvaibleThemes.PINK,
-		color: `bg-pink-${colorStrenght}`,
-		focus: `focus:bg-pink-${focusStrenght}`,
+		color: 'bg-pink-600',
+		focus: 'focus:bg-pink-300',
 	},
 	{
 		type: AvaibleThemes.PURPLE,
-		color: `bg-purple-${colorStrenght}`,
-		focus: `focus:bg-purple-${focusStrenght}`,
+		color: 'bg-purple-600',
+		focus: 'focus:bg-purple-300',
 	},
 	{
 		type: AvaibleThemes.RED,
-		color: `bg-red-${colorStrenght}`,
-		focus: `focus:bg-red-${focusStrenght}`,
+		color: 'bg-red-600',
+		focus: 'focus:bg-red-300',
 	},
 	{
 		type: AvaibleThemes.YELLOW,
-		color: `bg-yellow-${colorStrenght}`,
-		focus: `focus:bg-yellow-${focusStrenght}`,
+		color: 'bg-yellow-600',
+		focus: 'focus:bg-yellow-300',
 	},
 ];

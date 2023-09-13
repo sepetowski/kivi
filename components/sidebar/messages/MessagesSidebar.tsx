@@ -26,7 +26,6 @@ export const MessagesSidebar = ({ userId, userEmial, initialConversations }: Pro
 		pusherClient.subscribe(userEmial);
 
 		const updateHandler = (conversation: ExtendenConfersation) => {
-			console.log('Sidebar UAPDTE :', conversation);
 			setConversations((current) =>
 				current.map((currentConversation) => {
 					if (currentConversation.id === conversation.id) {
@@ -39,7 +38,6 @@ export const MessagesSidebar = ({ userId, userEmial, initialConversations }: Pro
 					return currentConversation;
 				})
 			);
-			console.log(conversations);
 		};
 
 		const newHandler = (conversation: ExtendenConfersation) => {
@@ -76,7 +74,6 @@ export const MessagesSidebar = ({ userId, userEmial, initialConversations }: Pro
 		queryKey: 'serach-conversations-query',
 		userId,
 	});
-
 
 	useEffect(() => {
 		if (!inputValue) {

@@ -14,13 +14,11 @@ import {
 import { Mail, Menu, User2, Users2, Bookmark, Gamepad2 } from 'lucide-react';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 
-
 interface Props {
 	userName: string | null | undefined;
-
 }
 
-export const MobileNav = ({ userName}: Props) => {
+export const MobileNav = ({ userName }: Props) => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -79,7 +77,7 @@ export const MobileNav = ({ userName}: Props) => {
 
 					<SheetClose asChild>
 						<Link
-							href='/communitiy/create'
+							href='communities/create'
 							className={buttonVariants({
 								variant: 'secondary',
 							})}>

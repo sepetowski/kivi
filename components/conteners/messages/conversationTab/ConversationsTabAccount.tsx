@@ -11,21 +11,19 @@ interface Props {
 	users: ConversationUser[];
 	activeUserId: string;
 	lastMessage: ConversationMessage;
-	showAvatar: boolean;
 }
 
 export const ConversationsTabAccount = ({
 	users,
 	activeUserId,
 	lastMessage: { sender, seen, message, createdAt, conversationId },
-	showAvatar,
 }: Props) => {
 	const router = useRouter();
 	const conversationWithUser = useMemo(() => {
-		if (users.length > 1 && showAvatar)
+		if (users.length > 1)
 			return users.filter((user) => user.id !== activeUserId).at(0);
 		else return users[0];
-	}, [activeUserId, users, showAvatar]);
+	}, [activeUserId, users]);
 
 	const isLastMasgeMadeByActiveUser = useMemo(() => {
 		return activeUserId === sender.id;

@@ -80,6 +80,8 @@ export const POST = async (request: Request) => {
 					select: {
 						id: true,
 						email: true,
+						image: true,
+						name: true,
 					},
 				},
 			},

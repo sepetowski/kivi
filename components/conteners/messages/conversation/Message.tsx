@@ -2,9 +2,9 @@
 import { useThemeConversation } from '@/contex/ChnageConversationTheme';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
 import { ExtenedMessage } from '@/types/conversations';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { AvaibleThemes } from '@prisma/client';
-import { colorStrenght } from '@/lib/themes';
+
 interface Props {
 	message: ExtenedMessage;
 	activeUserId: string;
@@ -23,42 +23,42 @@ export const Message = ({ message, activeUserId, lastMessageId }: Props) => {
 	const activeThemeVaraint = useMemo(() => {
 		switch (activeTheme) {
 			case AvaibleThemes.PURPLE:
-				return `bg-purple-${colorStrenght}`;
+				return 'bg-purple-600';
 
 			case AvaibleThemes.GREEN:
-				return `bg-green-${colorStrenght}`;
+				return 'bg-green-600';
 
 			case AvaibleThemes.RED:
-				return `bg-red-${colorStrenght}`;
+				return 'bg-red-600';
 
 			case AvaibleThemes.BLUE:
-				return `bg-blue-${colorStrenght}`;
+				return 'bg-blue-600';
 
 			case AvaibleThemes.CYAN:
-				return `bg-cyan-${colorStrenght}`;
+				return 'bg-cyan-600';
 
 			case AvaibleThemes.EMERALD:
-				return `bg-emerald-${colorStrenght}`;
+				return 'bg-emerald-600';
 
 			case AvaibleThemes.INDIGO:
-				return `bg-indigo-${colorStrenght}`;
+				return 'bg-indigo-600';
 
 			case AvaibleThemes.LIME:
-				return `bg-lime-${colorStrenght}`;
+				return 'bg-lime-600';
 
 			case AvaibleThemes.ORANGE:
-				return `bg-orange-${colorStrenght}`;
+				return 'bg-orange-600';
 			case AvaibleThemes.FUCHSIA:
-				return `bg-fuchsia-${colorStrenght}`;
+				return 'bg-fuchsia-600';
 
 			case AvaibleThemes.PINK:
-				return `bg-pink-${colorStrenght}`;
+				return 'bg-pink-600';
 
 			case AvaibleThemes.YELLOW:
-				return `bg-yellow-${colorStrenght}`;
+				return 'bg-yellow-600';
 
 			default:
-				return `bg-purple-${colorStrenght}`;
+				return 'bg-purple-600';
 		}
 	}, [activeTheme]);
 

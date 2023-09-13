@@ -48,7 +48,14 @@ export const POST = async (request: Request) => {
 				},
 			},
 			include: {
-				users: true,
+				users: {
+					select: {
+						id: true,
+						email: true,
+						image: true,
+						name: true,
+					},
+				},
 				messages: {
 					include: {
 						sender: true,
@@ -63,6 +70,7 @@ export const POST = async (request: Request) => {
 			pusherServer.trigger(user.email!, 'conversation:update', {
 				id: conversationId,
 				messages: [newMessage],
+				users: [updatedConversation.users],
 			});
 		});
 
