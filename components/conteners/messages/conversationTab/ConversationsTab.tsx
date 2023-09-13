@@ -21,6 +21,7 @@ export const ConversationsTab = ({ conversations, activeUserId }: Props) => {
 								users={conversation.users}
 								activeUserId={activeUserId}
 								lastMessage={lastMessage}
+								showAvatar={!!lastMessage}
 							/>
 						);
 					else return null;

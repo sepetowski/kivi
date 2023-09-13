@@ -1,4 +1,5 @@
 import { MessagesSidebar } from '@/components/sidebar/messages/MessagesSidebar';
+import { ThemeConversationProvider } from '@/contex/ChnageConversationTheme';
 import { getAuthSession } from '@/lib/auth';
 import { getInitialConversations } from '@/lib/getInitialConversations';
 import { ExtendenConfersation } from '@/types/conversations';
@@ -18,10 +19,16 @@ const MessagesLayout = async ({ children }: { children: React.ReactNode }) => {
 	);
 
 	return (
-		<main className='flex items-center h-screen w-full'>
-			<MessagesSidebar userId={session.user.id} initialConversations={initialConversations} userEmial={session.user.email!} />
-			{children}
-		</main>
+		<ThemeConversationProvider>
+			<main className='flex items-center h-screen w-full'>
+				<MessagesSidebar
+					userId={session.user.id}
+					initialConversations={initialConversations}
+					userEmial={session.user.email!}
+				/>
+				{children}
+			</main>
+		</ThemeConversationProvider>
 	);
 };
 export default MessagesLayout;

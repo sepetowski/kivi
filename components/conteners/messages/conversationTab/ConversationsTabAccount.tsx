@@ -11,18 +11,21 @@ interface Props {
 	users: ConversationUser[];
 	activeUserId: string;
 	lastMessage: ConversationMessage;
+	showAvatar: boolean;
 }
 
 export const ConversationsTabAccount = ({
 	users,
 	activeUserId,
 	lastMessage: { sender, seen, message, createdAt, conversationId },
+	showAvatar,
 }: Props) => {
 	const router = useRouter();
 	const conversationWithUser = useMemo(() => {
-		if (users.length > 1) return users.filter((user) => user.id !== activeUserId).at(0);
+		if (users.length > 1 && showAvatar)
+			return users.filter((user) => user.id !== activeUserId).at(0);
 		else return users[0];
-	}, [activeUserId, users]);
+	}, [activeUserId, users, showAvatar]);
 
 	const isLastMasgeMadeByActiveUser = useMemo(() => {
 		return activeUserId === sender.id;
@@ -57,7 +60,10 @@ export const ConversationsTabAccount = ({
 					<p className={`text-xs text-muted-foreground  `}>
 						<span
 							className={`${
-								!isLastMasgeMadeByActiveUser && users.length > 1 && !seen && 'dark:text-white text-black font-bold'
+								!isLastMasgeMadeByActiveUser &&
+								users.length > 1 &&
+								!seen &&
+								'dark:text-white text-black font-bold'
 							} `}>
 							{makeShortMessage(message)}
 						</span>

@@ -77,7 +77,6 @@ export const MessagesSidebar = ({ userId, userEmial, initialConversations }: Pro
 		userId,
 	});
 
-	console.log(searchResults);
 
 	useEffect(() => {
 		if (!inputValue) {

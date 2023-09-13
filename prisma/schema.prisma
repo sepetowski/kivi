@@ -80,12 +80,27 @@ model User {
 }
 
 model Conversation {
-  id            String   @id @default(cuid())
-  createdAt     DateTime @default(now())
-  lastMessageAt DateTime @default(now())
+  id            String        @id @default(cuid())
+  createdAt     DateTime      @default(now())
+  lastMessageAt DateTime      @default(now())
+  currentTheme  AvaibleThemes @default(PURPLE)
+  messages      Message[]
+  users         User[]
+}
 
-  messages Message[]
-  users    User[]
+enum AvaibleThemes {
+  PURPLE
+  RED
+  GREEN
+  BLUE
+  PINK
+  YELLOW
+  ORANGE
+  CYAN
+  FUCHSIA
+  LIME
+  EMERALD
+  INDIGO
 }
 
 model Message {

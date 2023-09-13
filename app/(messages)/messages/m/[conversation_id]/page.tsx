@@ -28,11 +28,12 @@ const ConversationPage = async ({ params: { conversation_id } }: Params) => {
 
 	return (
 		<div className='w-full h-full flex flex-col'>
-			<Header userInfo={chatingWitUserData()} />
+			<Header userInfo={chatingWitUserData()} conversationId={conversation_id} />
 			<Contener
 				initialMessages={initialMessages}
 				activeUserId={session?.user.id!}
 				conversationId={conversation_id}
+				initialTheme={conversationData.currentTheme}
 			/>
 			<Footer conversationId={conversation_id} />
 		</div>
