@@ -16,7 +16,7 @@ export const SearchConversationsTabAccount = ({ conversationId, image, name, use
 	const router = useRouter();
 	const { toast } = useToast();
 
-	console.log(userId);
+	
 
 	const createNewConversation = async () => {
 		try {
