@@ -117,7 +117,7 @@ model Message {
 
 model UserSearchHistory {
   id             String   @id @default(cuid())
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   serachedUserId String
   serachDate     DateTime @default(now())
@@ -125,7 +125,7 @@ model UserSearchHistory {
 
 model Notifications {
   id          String     @id @default(cuid())
-  user        User       @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   unseen      Boolean    @default(false)
   toasted     Boolean    @default(false)
@@ -169,9 +169,9 @@ model SavedPost {
 }
 
 model Game {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
   gameName String
-  image    String
+  image    String?
 
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String?

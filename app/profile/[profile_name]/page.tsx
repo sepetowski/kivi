@@ -45,6 +45,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	if (!session) redirect('/sign-in');
 
 	const currentPath = searchParams.info ? searchParams.info : 'posts';
+	console.log(session.user.name);
 
 	const userData: User = await getProfileInfo(profile_name, session.user.name!);
 	const inititalPosts: Promise<ExtednedPost[]> = getProfilePosts(userData.id);

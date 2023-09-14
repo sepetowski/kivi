@@ -1,5 +1,4 @@
 import { db } from '@/lib/db';
-import { PAGINATION_RESULTS } from '@/lib/pagineresutls';
 import { NextResponse } from 'next/server';
 
 interface Params {

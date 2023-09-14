@@ -66,7 +66,7 @@ export const BookmarksHeader = () => {
 	};
 
 	return (
-		<header className='w-full    flex justify-between items-center p-6 bg-black bg-opacity-60 mb-6 border rounded-md'>
+		<header className='w-full    flex justify-between items-center p-6 bg-background bg-opacity-60 mb-6 border rounded-md'>
 			<h3 className='md:text-xl font-bold'>Saved</h3>
 
 			<DropdownMenu>

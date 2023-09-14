@@ -9,7 +9,7 @@ export const POST = async (request: Request) => {
 		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 	const { gameName, image }: { gameName: string; image: string } = await request.json();
 
-	if (!gameName || !image)
+	if (!gameName)
 		return new NextResponse('Missing Fields.', { status: 400, statusText: 'Missing Fields.' });
 
 	try {

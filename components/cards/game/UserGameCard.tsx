@@ -69,12 +69,14 @@ export const UserGameCard = ({ image_background, name, sessionUserPage, id }: Pr
 				</div>
 			)}
 
-			<Image
-				className='object-cover group-hover:scale-110 transition-transform duration-300'
-				src={image_background}
-				fill
-				alt={`${name} picture`}
-			/>
+			{image_background && (
+				<Image
+					className='object-cover group-hover:scale-110 transition-transform duration-300'
+					src={image_background}
+					fill
+					alt={`${name} picture`}
+				/>
+			)}
 		</Card>
 	);
 };

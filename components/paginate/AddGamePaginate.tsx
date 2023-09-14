@@ -51,26 +51,33 @@ export const AddGamePaginate = ({ lastPage, currentPage, search }: Props) => {
 	};
 
 	return (
-		<footer className='w-full p-6  mb-8 md:mb-12 flex justify-center items-center gap-2'>
-			<Button disabled={currentPagiantePage === 1} onClick={prevPageHanlder} variant={'secondary'}>
-				Prev
-			</Button>
+		<footer className='w-full p-6  my-8 md:my-12 flex justify-center items-center gap-2'>
+			{pagianteBtns.length > 1 && (
+				<>
+					<Button
+						disabled={currentPagiantePage === 1}
+						onClick={prevPageHanlder}
+						variant={'secondary'}>
+						Prev
+					</Button>
 
-			{pagianteBtns.map((btn) => (
-				<Button
-					onClick={() => paginateHanlder(btn)}
-					key={btn}
-					variant={btn === currentPage ? 'default' : 'outline'}>
-					{btn}
-				</Button>
-			))}
+					{pagianteBtns.map((btn) => (
+						<Button
+							onClick={() => paginateHanlder(btn)}
+							key={btn}
+							variant={btn === currentPage ? 'default' : 'outline'}>
+							{btn}
+						</Button>
+					))}
 
-			<Button
-				disabled={currentPagiantePage === lastAvaiblePage}
-				onClick={nextPageHanlder}
-				variant={'secondary'}>
-				Next
-			</Button>
+					<Button
+						disabled={currentPagiantePage === lastAvaiblePage}
+						onClick={nextPageHanlder}
+						variant={'secondary'}>
+						Next
+					</Button>
+				</>
+			)}
 		</footer>
 	);
 };

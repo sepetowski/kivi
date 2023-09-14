@@ -15,7 +15,7 @@ export const POST = async (request: Request) => {
 	try {
 		const user = await db.user.findUnique({
 			where: {
-				name: orignalUserName,
+				name: orignalUserName.toLowerCase(),
 			},
 		});
 
@@ -33,7 +33,7 @@ export const POST = async (request: Request) => {
 		if (username !== name && profileDescription === originalProfileDescription) {
 			const isNotAvaible = await db.user.findUnique({
 				where: {
-					name: username,
+					name: username.toLowerCase(),
 				},
 			});
 			if (isNotAvaible)
@@ -44,10 +44,10 @@ export const POST = async (request: Request) => {
 
 			await db.user.update({
 				where: {
-					name: orignalUserName,
+					name: orignalUserName.toLowerCase(),
 				},
 				data: {
-					name: username,
+					name: username.toLowerCase(),
 				},
 			});
 
@@ -60,7 +60,7 @@ export const POST = async (request: Request) => {
 		if (username === name && profileDescription !== originalProfileDescription) {
 			await db.user.update({
 				where: {
-					name: orignalUserName,
+					name: orignalUserName.toLowerCase(),
 				},
 				data: {
 					profileDescription,
@@ -75,7 +75,7 @@ export const POST = async (request: Request) => {
 		if (username !== name && profileDescription !== originalProfileDescription) {
 			const isNotAvaible = await db.user.findUnique({
 				where: {
-					name: username,
+					name: username.toLowerCase(),
 				},
 			});
 			if (isNotAvaible)
@@ -86,10 +86,10 @@ export const POST = async (request: Request) => {
 
 			await db.user.update({
 				where: {
-					name: orignalUserName,
+					name: orignalUserName.toLowerCase(),
 				},
 				data: {
-					name: username,
+					name: username.toLowerCase(),
 					profileDescription,
 				},
 			});

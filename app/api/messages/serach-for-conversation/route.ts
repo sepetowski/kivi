@@ -33,7 +33,7 @@ export const GET = async (request: Request) => {
 		const users = await db.user.findMany({
 			where: {
 				name: {
-					contains: query,
+					contains: query.toLowerCase(),
 				},
 			},
 			include: {

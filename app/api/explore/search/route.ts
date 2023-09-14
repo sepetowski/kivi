@@ -15,25 +15,23 @@ export const GET = async (request: Request) => {
 		const users = await db.user.findMany({
 			where: {
 				name: {
-					contains: query,
+					contains: query.toLowerCase(),
 				},
 			},
 			include: {
 				userSearchHistory: {
 					select: {
-						serachedUserId:true
-						
+						serachedUserId: true,
 					},
 				},
 			},
 		});
-		
 
 		const returnedUsers = users.map((user, i) => {
 			return {
 				id: user.id,
 				name: user.name,
-				desc: user.name,
+				desc: user.profileDescription,
 				image: user.image,
 				resultId: user.userSearchHistory[0]?.serachedUserId,
 			};

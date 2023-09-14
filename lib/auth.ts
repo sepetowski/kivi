@@ -20,10 +20,26 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+			async profile(profile) {
+				return {
+					id: profile.sub,
+					name: profile.name.toLowerCase(),
+					email: profile.email,
+					image: profile.picture,
+				};
+			},
 		}),
 		GithubProvider({
 			clientId: process.env.GITHUB_CLIENT_ID!,
 			clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+			async profile(profile) {
+				return {
+					id: profile.id,
+					name: profile.name.toLowerCase(),
+					email: profile.email,
+					image: profile.avatar_url,
+				};
+			},
 		}),
 		CredentialsProvider({
 			name: 'credentials',
@@ -59,10 +75,10 @@ export const authOptions: NextAuthOptions = {
 		async session({ session, token }) {
 			if (token) {
 				session.user.id = token.sub!;
-				session.user.name = token.name;
+				session.user.name = token.name?.toLowerCase();
 				session.user.email = token.email;
 				session.user.image = token.picture;
-				session.user.username = token.username;
+				session.user.username = token.username?.toLowerCase();
 			}
 			const user = await db.user.findUnique({
 				where: {
@@ -71,7 +87,7 @@ export const authOptions: NextAuthOptions = {
 			});
 			if (user) {
 				session.user.image = user.image;
-				session.user.name = user.name;
+				session.user.name = user.name?.toLowerCase();
 			}
 
 			return session;

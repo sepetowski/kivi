@@ -1,1 +1,1 @@
-export const PAGINATION_RESULTS = 2;
+export const PAGINATION_RESULTS = 20;

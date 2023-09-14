@@ -23,7 +23,7 @@ const NewGame = async ({ searchParams }: Params) => {
 
 	return (
 		<>
-			<AddGamesContener games={games.results} />
+			<AddGamesContener games={games.results} query={seqrchQuery as string} />
 			<AddGamePaginate lastPage={lastPage} currentPage={page} search={seqrchQuery as string} />
 		</>
 	);

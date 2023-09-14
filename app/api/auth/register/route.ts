@@ -2,16 +2,16 @@ import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 
-
 export async function POST(request: Request) {
-	const { name, email, password } = await request.json();
+	const { name, email, password }: { name: string; email: string; password: string } =
+		await request.json();
 
 	if (!name || !email || !password) {
 		return new NextResponse('Missing Fields.', { status: 400 });
 	}
 	const userName = await db.user.findUnique({
 		where: {
-			name,
+			name: name.toLowerCase(),
 		},
 	});
 
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 	try {
 		const newUser = await db.user.create({
 			data: {
-				name,
+				name: name.toLowerCase(),
 				email,
 				hashedPassword,
 			},
