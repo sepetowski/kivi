@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface Props {
-	image_background: string;
+	image_background: string | null;
 	name: string;
 	sessionUserPage: boolean;
 	id: string;
