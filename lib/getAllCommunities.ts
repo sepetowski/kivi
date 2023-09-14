@@ -2,7 +2,7 @@
 
 export const getAllCommunities = async (userId: string) => {
 	const res = await fetch(
-		`http://localhost:3000/api/communities/get-all-communities?userId=${userId}`,
+		`https://kivi-app.vercel.app/api/communities/get-all-communities?userId=${userId}`,
 		{
 			method: 'GET',
 			cache: 'no-store',

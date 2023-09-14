@@ -1,7 +1,7 @@
 
 
 export const getSavedPosts = async (userId:string) => {
-	const res = await fetch(`http://localhost:3000/api/post/get-saved?userId=${userId}`, {
+	const res = await fetch(`https://kivi-app.vercel.app/api/post/get-saved?userId=${userId}`, {
 		method: 'GET',
 
 		cache: 'no-store',

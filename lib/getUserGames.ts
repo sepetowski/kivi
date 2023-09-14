@@ -1,6 +1,6 @@
 
 export const getUserGames = async (userId: string) => {
-	const res = await fetch(`http://localhost:3000/api/get-user-games?userId=${userId}`, {
+	const res = await fetch(`https://kivi-app.vercel.app/api/get-user-games?userId=${userId}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});

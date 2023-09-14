@@ -1,5 +1,5 @@
 export const getAllNotifications = async (userId: string) => {
-	const res = await fetch(`http://localhost:3000/api/notifications/get?userId=${userId}`, {
+	const res = await fetch(`https://kivi-app.vercel.app/api/notifications/get?userId=${userId}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});
