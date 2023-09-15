@@ -1,7 +1,8 @@
+import { domain } from "./domain";
 
 
-export const getInitialConversations = async ( userId: string) => {
-	const res = await fetch(`https://kivi-app.vercel.app/api/messages/get-conversations?userId=${userId}`, {
+export const getInitialConversations = async (userId: string) => {
+	const res = await fetch(`${domain}/api/messages/get-conversations?userId=${userId}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});
@@ -12,5 +13,3 @@ export const getInitialConversations = async ( userId: string) => {
 
 	return res.json();
 };
-
-

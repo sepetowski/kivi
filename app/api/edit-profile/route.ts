@@ -95,7 +95,7 @@ export const POST = async (request: Request) => {
 			});
 
 			return new NextResponse('Your profile data was changed.', {
-				status: 201,
+				status: 202,
 				statusText: 'Your profile data was changed.',
 			});
 		}

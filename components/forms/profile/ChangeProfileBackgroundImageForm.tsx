@@ -90,7 +90,7 @@ export const ChangeProfileBackgroundImageForm = ({ userId, backgroundImage, onSa
 					await removeFromBucket(userId, fileName);
 				} else {
 					toast({
-						title: res.statusText,
+						title: 'Background image updated!',
 					});
 
 					const { previousFileName }: { previousFileName: string | null } = await res.json();

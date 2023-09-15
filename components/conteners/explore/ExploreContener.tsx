@@ -1,10 +1,8 @@
 'use client';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { SerachBar } from '../../ui/SerachBar';
 import { ResultsContener } from './ResultsContener';
 import { ExtenedSerachHistory } from '@/types/searchHistory';
-import { useQuery } from '@tanstack/react-query';
-import debounce from 'lodash.debounce';
 import { SearchingUser } from '@/types/searchingUser';
 import { useSearchUser } from '@/hooks/useSearchUser';
 

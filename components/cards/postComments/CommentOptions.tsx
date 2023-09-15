@@ -36,7 +36,7 @@ export const CommentOptions = ({ commentId, onEdit }: Props) => {
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: "Your comment was deleted",
 				});
 
 				router.refresh();

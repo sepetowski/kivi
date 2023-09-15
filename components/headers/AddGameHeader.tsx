@@ -10,7 +10,6 @@ import { useFormik } from 'formik';
 export const AddGameHeader = () => {
 	const params = useSearchParams();
 	const router = useRouter();
-	const page = params.get('page');
 	const search = params.get('search');
 
 	const formik = useFormik({

@@ -50,7 +50,7 @@ export const DeleteCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: "Community was deleted",
 				});
 				const data: { fileName: string } = await res.json();
 				await removeFromBucket(COMMUNITY_AVATARS, data.fileName);

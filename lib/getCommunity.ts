@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation';
+import { domain } from "./domain";
+
 
 export const getCommunity = async (community_name: string, userId: string) => {
 	const res = await fetch(
-		`https://kivi-app.vercel.app/api/communities/community/${community_name}?userId=${userId}`,
+		`${domain}/api/communities/community/${community_name}?userId=${userId}`,
 		{
 			method: 'GET',
 

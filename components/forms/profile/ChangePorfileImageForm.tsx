@@ -91,7 +91,7 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 					await removeFromBucket(userId, fileName);
 				} else {
 					toast({
-						title: res.statusText,
+						title: 'Profile picture updated!',
 					});
 					await session.update();
 

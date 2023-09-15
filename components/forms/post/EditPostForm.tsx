@@ -107,7 +107,7 @@ export const EditPostForm = ({
 					if (imageFileName) await removeFromBucket(dbBucketName, imageFileName);
 				} else {
 					toast({
-						title: res.statusText,
+						title: "Post was updated",
 					});
 					resetForm();
 					setImage(null);

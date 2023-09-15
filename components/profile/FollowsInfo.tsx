@@ -1,4 +1,5 @@
 import React from 'react';
+import { FollowInfo } from './FollowInfo';
 
 interface Props {
 	postsNumber: number;
@@ -9,26 +10,9 @@ interface Props {
 export const FollowsInfo = ({ followersNumber, followingNumber, postsNumber }: Props) => {
 	return (
 		<div className='w-full flex justify-start  items-center space-x-3 text-sm mt-4'>
-			<div className='flex gap-1 items-center'>
-				<p className='font-medium'>{postsNumber}</p>
-				<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-					posts
-				</p>
-			</div>
-
-			<div className='flex gap-1 items-center'>
-				<p className='font-medium'>{followersNumber}</p>
-				<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-					followers
-				</p>
-			</div>
-
-			<div className='flex gap-1 items-center'>
-				<p className='font-medium'>{followingNumber}</p>
-				<p className='text-xs sm:text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-					following
-				</p>
-			</div>
+			<FollowInfo text='posts' number={postsNumber} />
+			<FollowInfo text='followers' number={followersNumber} />
+			<FollowInfo text='following' number={followingNumber} />
 		</div>
 	);
 };

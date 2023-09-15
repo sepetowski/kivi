@@ -11,7 +11,7 @@ const Create = async () => {
 	const session = await getAuthSession();
 	if (!session) redirect('/sign-in');
 	return (
-		<main className=' w-full  max-w-[1000px] mx-auto px-4 lg:px-8  mt-36'>
+		<main className=' w-full  max-w-[1000px] mx-auto px-4 lg:px-8  mt-36 pb-12'>
 			<CreateCommunityCard />
 		</main>
 	);

@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
+import { domain } from "./domain";
+
 
 export const getConversation = async (conversation_id: string, userId: string) => {
 	const res = await fetch(
-		`https://kivi-app.vercel.app/api/messages/get-conversation/${conversation_id}?userId=${userId}`,
+		`${domain}/api/messages/get-conversation/${conversation_id}?userId=${userId}`,
 		{
 			method: 'GET',
 			cache: 'no-store',

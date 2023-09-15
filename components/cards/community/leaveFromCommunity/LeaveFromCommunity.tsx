@@ -35,7 +35,7 @@ export const LeaveFromCommunity = ({ isCreatorOfCommunity, userJoined, id }: Pro
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: "Left from community",
 				});
 
 				router.refresh();

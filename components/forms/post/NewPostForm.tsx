@@ -86,7 +86,7 @@ export const NewPostForm = ({ communityName }: Props) => {
 					if (imageFileName) await removeFromBucket(bucketName, imageFileName);
 				} else {
 					toast({
-						title: res.statusText,
+						title: 'Added new post!',
 					});
 					queryClient.invalidateQueries();
 					resetForm();

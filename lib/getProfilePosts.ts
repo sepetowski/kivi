@@ -1,5 +1,8 @@
+import { domain } from "./domain";
+
+
 export const getProfilePosts = async (userId: string) => {
-	const res = await fetch(`https://kivi-app.vercel.app/api/post/profile-posts?userId=${userId}`, {
+	const res = await fetch(`${domain}/api/post/profile-posts?userId=${userId}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});

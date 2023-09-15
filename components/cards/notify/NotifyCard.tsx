@@ -54,7 +54,7 @@ export const NotifyCard = ({
 			setIsCliked(true);
 			resetAllAsRead();
 		}
-	}, [wasSetAllAsRead,resetAllAsRead]);
+	}, [wasSetAllAsRead, resetAllAsRead]);
 
 	const { mutate: updateCliked } = useMutation({
 		mutationFn: async () => {
@@ -133,8 +133,6 @@ export const NotifyCard = ({
 			text = 'has replied to your comment ';
 			route = `/post/details/${postId}?commentId=${commentId}`;
 			break;
-		default:
-			text = 'Nieznany typ powiadomienia.';
 	}
 
 	const notifyClickHnadler = () => {

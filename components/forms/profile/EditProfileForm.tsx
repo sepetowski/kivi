@@ -53,13 +53,25 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 					});
 				else {
 					if (res.status === 201) {
+						toast({
+							title: 'Username was changed.',
+						});
 						await session.update();
 						router.push(`/profile/${values.username}`);
 					}
-					toast({
-						title: res.statusText,
-					});
-					if (res.status === 200) router.refresh();
+					if (res.status === 200) {
+						toast({
+							title: 'Profile description was changed',
+						});
+						router.refresh();
+					}
+					if (res.status === 202) {
+						toast({
+							title: 'Your profile data was changed.',
+						});
+						await session.update();
+						router.push(`/profile/${values.username}`);
+					}
 				}
 			} catch (err) {
 				toast({

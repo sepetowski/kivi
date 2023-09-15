@@ -38,7 +38,7 @@ export const SelectGameCard = ({ image_background, name }: Props) => {
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: `Added ${name} to your account!`,
 				});
 				router.refresh();
 			}

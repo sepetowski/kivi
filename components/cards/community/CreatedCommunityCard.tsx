@@ -59,7 +59,7 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 					});
 				} else {
 					toast({
-						title: res.statusText,
+						title: "Community name was updated!",
 					});
 					setIsNameEditting(false);
 					router.refresh();
@@ -99,7 +99,7 @@ export const CreatedCommunityCard = ({ name, description, id, members, posts, im
 					});
 				} else {
 					toast({
-						title: res.statusText,
+						title: "Community description was updated!",
 					});
 					setIsDescriptionEditting(false);
 					router.refresh();

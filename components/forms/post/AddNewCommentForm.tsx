@@ -70,7 +70,7 @@ export const AddNewCommentForm = ({
 					});
 				} else {
 					toast({
-						title: res.statusText,
+						title: 'Comment was created.',
 					});
 					queryClient.invalidateQueries();
 					resetForm();

@@ -42,7 +42,7 @@ export const UserGameCard = ({ image_background, name, sessionUserPage, id }: Pr
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: `Deleted ${name} from your account`,
 				});
 				router.refresh();
 			}

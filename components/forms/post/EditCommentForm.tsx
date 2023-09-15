@@ -59,7 +59,7 @@ export const EditCommentForm = ({ commentId, commentText, replayName, onEdit }: 
 					});
 				} else {
 					toast({
-						title: res.statusText,
+						title: "Comment was updated.",
 					});
 
 					queryClient.invalidateQueries();

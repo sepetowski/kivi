@@ -1,7 +1,8 @@
+import { domain } from "./domain";
 
 
 export const getComments = async (post_id: string) => {
-	const res = await fetch(`https://kivi-app.vercel.app/api/comments/get?postId=${post_id}`, {
+	const res = await fetch(`${domain}/api/comments/get?postId=${post_id}`, {
 		method: 'GET',
 		cache: 'no-store',
 	});

@@ -77,7 +77,7 @@ export const MobileNav = ({ userName }: Props) => {
 
 					<SheetClose asChild>
 						<Link
-							href='communities/create'
+							href='/communities/create'
 							className={buttonVariants({
 								variant: 'secondary',
 							})}>

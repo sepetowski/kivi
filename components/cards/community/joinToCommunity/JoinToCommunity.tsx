@@ -35,7 +35,7 @@ export const JoinToCommunity = ({ isCreatorOfCommunity, userJoined, id }: Props)
 				});
 			} else {
 				toast({
-					title: res.statusText,
+					title: "Joined to community!",
 				});
 
 				router.refresh();
