@@ -127,6 +127,7 @@ export const CreateCommunityForm = () => {
 					<Label htmlFor='picture'>Picture</Label>
 
 					<button
+						type='button'
 						className='flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
 						onClick={() => {
 							inputRef.current?.click();
@@ -146,13 +147,11 @@ export const CreateCommunityForm = () => {
 						<p>Maximum size of image is 5MB.</p>
 					</div>
 
-					
-						{image && (
-							<div className='self-center sm:self-start w-24 h-24 md:w-32 md:h-32 rounded-full relative '>
-								<Image className=' rounded-full' alt='preview image' src={image} fill />
-							</div>
-						)}
-				
+					{image && (
+						<div className='self-center sm:self-start w-24 h-24 md:w-32 md:h-32 rounded-full relative '>
+							<Image className=' rounded-full object-cover' alt='preview image' src={image} fill />
+						</div>
+					)}
 
 					<InputError error={formik.errors.picture} isInputTouched={formik.touched.picture} />
 				</div>

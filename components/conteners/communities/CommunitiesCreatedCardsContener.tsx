@@ -40,14 +40,14 @@ export const CommunitiesCreatedCardsContener = ({ communities }: Props) => {
 
 	if (!isMounted && query)
 		return (
-			<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
+			<div className='flex justify-center flex-wrap my-8 md:my-12 gap-4 w-full items-center'>
 				<CreatedCommunityCardSkieleton />
 				<CreatedCommunityCardSkieleton />
 			</div>
 		);
 
 	return (
-		<div className='flex justify-center flex-wrap mt-8 md:mt-12 gap-4 w-full items-center'>
+		<div className='flex justify-center flex-wrap my-8 md:my-12 gap-4 w-full items-center'>
 			{queryCommunities.length !== 0 &&
 				queryCommunities.map((communitiy) => (
 					<CreatedCommunityCard
