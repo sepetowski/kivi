@@ -17,7 +17,7 @@ export const Nav = async () => {
 	if (session) notifications = await getUnseenNotifactions(session.user.id);
 
 	return (
-		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-50 flex flex-col '>
+		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-[1000] flex flex-col '>
 			<div className='w-full max-w-[1800px] mx-auto flex justify-between items-center  p-3 md:px-6 md:py-4  '>
 				<Link className='flex items-center gap-2' href='/'>
 					<Image src='/kiviLogo.svg' width={50} height={50} alt='Kivi logo' priority />
