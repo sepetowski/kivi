@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { checkIfBucketExist } from '@/lib/checkIfBucketExist';
 import { createBucket } from '@/lib/createBucket';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -34,6 +34,8 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 	const router = useRouter();
 	const [imagePreview, setImagePreview] = useState<null | string | undefined>(image);
 	const { toast } = useToast();
+	const inputRef = useRef<null | HTMLInputElement>(null);
+
 
 	const formik = useFormik({
 		initialValues: {
@@ -136,7 +138,21 @@ export const ChangePorfileImageForm = ({ userId, image, name, onSave }: Props) =
 						)}
 					</Avatar>
 					<div className='flex flex-col space-y-1.5'>
-						<Input className='cursor-pointer' id='picture' type='file' onChange={onImageChange} />
+					<button
+						type='button'
+						className='flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+						onClick={() => {
+							inputRef.current?.click();
+						}}>
+						Choose your profile picture
+					</button>
+					<input
+						onChange={onImageChange}
+						ref={inputRef}
+						type='file'
+						id='picture'
+						className='hidden'
+					/>
 						<div className='text-xs text-muted-foreground  font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 space-y-1.5'>
 							<p>Supported formats: JPG, JPEG, GIF, PNG.</p>
 							<p>Maximum size of image is 5MB.</p>

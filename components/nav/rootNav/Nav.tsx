@@ -9,12 +9,25 @@ import { MobileNav } from './MobileNav';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 import { getAuthSession } from '@/lib/auth';
 import { getUnseenNotifactions } from '@/lib/getUnseenNotifactions';
+import { UnseenMessage } from '@/types/unseenMessages';
+import { getUnreadMessages } from '@/lib/getUnreadMessages';
 
 export const Nav = async () => {
 	const session = await getAuthSession();
 
 	let notifications = [];
-	if (session) notifications = await getUnseenNotifactions(session.user.id);
+	let unreadMesseges = 0;
+	if (session) {
+		notifications = await getUnseenNotifactions(session.user.id);
+
+		notifications = await getUnseenNotifactions(session.user.id);
+		const unreadConversations: UnseenMessage[] = await getUnreadMessages(session.user.id);
+		unreadConversations.forEach((conversation) => {
+			conversation.messages.forEach((_) => {
+				unreadMesseges++;
+			});
+		});
+	}
 
 	return (
 		<nav className=' fixed top-0 left-0 w-full border-b bg-background shadow-sm z-[1000] flex flex-col '>
@@ -55,7 +68,7 @@ export const Nav = async () => {
 						<Bell />
 					</ActiveLink>
 
-					<MobileNav userName={session.user.name} />
+					<MobileNav userName={session.user.name} unreadMesseges={unreadMesseges} />
 				</div>
 			)}
 		</nav>

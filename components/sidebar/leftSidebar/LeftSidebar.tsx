@@ -13,19 +13,29 @@ import {
 	Gamepad2,
 } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
-
 import Link from 'next/link';
 import { ActiveLink } from '@/components/ui/ActiveLink';
 import { getAuthSession } from '@/lib/auth';
 import { Separator } from '@/components/ui/separator';
 import { getUnseenNotifactions } from '@/lib/getUnseenNotifactions';
 import { Notifications } from '@prisma/client';
+import { getUnreadMessages } from '@/lib/getUnreadMessages';
+import { UnseenMessage } from '@/types/unseenMessages';
 
 export const LeftSidebar = async () => {
 	const session = await getAuthSession();
 
 	let notifications: Notifications[] = [];
-	if (session) notifications = await getUnseenNotifactions(session.user.id);
+	let unreadMesseges = 0;
+	if (session) {
+		notifications = await getUnseenNotifactions(session.user.id);
+		const unreadConversations: UnseenMessage[] = await getUnreadMessages(session.user.id);
+		unreadConversations.forEach((conversation) => {
+			conversation.messages.forEach((_) => {
+				unreadMesseges++;
+			});
+		});
+	}
 
 	return (
 		<Sidebar left={false}>
@@ -66,9 +76,15 @@ export const LeftSidebar = async () => {
 				</ActiveLink>
 
 				<ActiveLink
-					className='flex gap-3 cursor-pointer'
+					className='flex gap-3 cursor-pointer relative'
 					href='/messages'
 					include='/messages/m/'>
+					{unreadMesseges > 0 && (
+						<div className='absolute left-[-7px] top-[-12px] rounded-full  w-6 h-6 flex justify-center items-center bg-primary text-secondary text-sm  shadow-sm'>
+							{unreadMesseges <= 9 && <p>{unreadMesseges}</p>}
+							{unreadMesseges > 9 && <p>+9</p>}
+						</div>
+					)}
 					<Mail />
 					<span className='hidden lg:inline'>Messages</span>
 				</ActiveLink>

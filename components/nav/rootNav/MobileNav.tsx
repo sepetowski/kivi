@@ -16,9 +16,10 @@ import { ActiveLink } from '@/components/ui/ActiveLink';
 
 interface Props {
 	userName: string | null | undefined;
+	unreadMesseges: number;
 }
 
-export const MobileNav = ({ userName }: Props) => {
+export const MobileNav = ({ userName, unreadMesseges }: Props) => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -49,7 +50,13 @@ export const MobileNav = ({ userName }: Props) => {
 					</SheetClose>
 
 					<SheetClose className=' flex items-center gap-4' asChild>
-						<ActiveLink className='flex gap-3 cursor-pointer' href='/messages'>
+						<ActiveLink className='flex gap-3 cursor-pointer relative' href='/messages'>
+							{unreadMesseges > 0 && (
+								<div className='absolute left-[-7px] top-[-12px] rounded-full  w-6 h-6 flex justify-center items-center bg-primary text-secondary text-sm  shadow-sm'>
+									{unreadMesseges <= 9 && <p>{unreadMesseges}</p>}
+									{unreadMesseges > 9 && <p>+9</p>}
+								</div>
+							)}
 							<Mail />
 							<span>Messages</span>
 						</ActiveLink>

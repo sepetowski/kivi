@@ -40,7 +40,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						username: values.username.trim(),
+						username: values.username.trim().toLowerCase(),
 						profileDescription: values.profileDescription,
 						orignalUserName: session.data?.user.name,
 					}),
@@ -57,7 +57,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 							title: 'Username was changed.',
 						});
 						await session.update();
-						router.push(`/profile/${values.username}`);
+						router.push(`/profile/${values.username.toLowerCase()}`);
 					}
 					if (res.status === 200) {
 						toast({
@@ -70,7 +70,7 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 							title: 'Your profile data was changed.',
 						});
 						await session.update();
-						router.push(`/profile/${values.username}`);
+						router.push(`/profile/${values.username.toLowerCase()}`);
 					}
 				}
 			} catch (err) {
