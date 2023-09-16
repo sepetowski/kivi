@@ -26,7 +26,7 @@ export const MobileNav = ({ userName }: Props) => {
 					<Menu />
 				</Button>
 			</SheetTrigger>
-			<SheetContent className='overflow-y-auto'>
+			<SheetContent className='overflow-y-auto z-[2000]'>
 				<SheetHeader className='text-left'>
 					<SheetTitle className='text-2xl font-bold'>Menu</SheetTitle>
 				</SheetHeader>

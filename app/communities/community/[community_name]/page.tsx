@@ -18,6 +18,11 @@ export async function generateMetadata({ params: { community_name } }: Params): 
 		community_name,
 		session ? session.user.id : ''
 	);
+	if (!communityData)
+		return {
+			title: 'Not found',
+			description: `Not found`,
+		};
 
 	return {
 		title: communityData.name,

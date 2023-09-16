@@ -31,11 +31,11 @@ export const UserAccount = ({ name, email, image }: Props) => {
 		});
 	};
 	return (
-		<DropdownMenu>
+		<DropdownMenu >
 			<DropdownMenuTrigger className='rounded-full'>
 				<ProfileAvatar image={image} name={name} />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className='w-64' align='end' sideOffset={10}>
+			<DropdownMenuContent className='w-64 z-[1050]' align='end' sideOffset={10}>
 				<DropdownMenuLabel className='py-0 pt-1.5'>{name}</DropdownMenuLabel>
 				<DropdownMenuLabel className='py-0  pb-1.5 pt-0.5 text-xs text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
 					@{email}

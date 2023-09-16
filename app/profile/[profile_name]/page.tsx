@@ -34,6 +34,12 @@ export async function generateMetadata({ params: { profile_name } }: Params): Pr
 
 	const userData: User = await getProfileInfo(profile_name, session ? session.user.name! : '');
 
+	if (!userData)
+		return {
+			title: 'Not found',
+			description: `Not found`,
+		};
+
 	return {
 		title: userData.name,
 		description: `This is the page of ${userData.name} - Kivi social app for gamers `,
@@ -45,7 +51,6 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	if (!session) redirect('/sign-in');
 
 	const currentPath = searchParams.info ? searchParams.info : 'posts';
-	
 
 	const userData: User = await getProfileInfo(profile_name, session.user.name!);
 	const inititalPosts: Promise<ExtednedPost[]> = getProfilePosts(userData.id);
