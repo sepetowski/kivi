@@ -6,7 +6,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
-import { nanoid } from 'nanoid';
 
 declare module '@auth/core/types' {
 	interface Session {
@@ -88,6 +87,10 @@ export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET!,
 	debug: process.env.NODE_ENV === 'development',
 	callbacks: {
+		async jwt({ user, token }) {
+			if (user) return { ...token, ...user };
+			return token;
+		},
 		async session({ session, token }) {
 			if (token) {
 				session.user.id = token.sub!;
