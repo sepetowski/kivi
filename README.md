@@ -14,7 +14,7 @@ Furthermore, users have the option to save posts of interest in the "Saved" sect
 
 ## Live :globe_with_meridians:
 
-Create an account and start using **Kivi **- social app for gamers. [Join now!](https://kivi-app.vercel.app/ 'Kivi')
+Create an account and start using Kivi - social app for gamers. [Join now!](https://kivi-app.vercel.app/ 'Kivi')
 
 ## Features :sparkler:
 
