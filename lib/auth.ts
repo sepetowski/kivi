@@ -88,7 +88,11 @@ export const authOptions: NextAuthOptions = {
 	debug: process.env.NODE_ENV === 'development',
 	callbacks: {
 		async jwt({ user, token }) {
-			if (user) return { ...token, ...user };
+			if (user) {
+				console.log({ ...token, ...user });
+				return { ...token, ...user };
+			}
+			console.log(token);
 			return token;
 		},
 		async session({ session, token }) {

@@ -4,6 +4,7 @@ export const ProfileEditSchema = Yup.object().shape({
 	username: Yup.string()
 		.required('Username is required')
 		.min(3, 'Username must be at least 3 characters long')
+		.matches(/^[^\s]+$/, 'Username must be one-part')
 		.max(25, 'Username must be at least 3 characters long')
 		.trim(),
 	profileDescription: Yup.string()
