@@ -18,41 +18,41 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 ## Features :sparkler:
 
-####User Profile Customization:
+#### User Profile Customization:
 - Changing the username.
 - Modifying the profile description.
 - Changing the background image.
 - Changing the avatar.
 
-####Profile Page Information:
+#### Profile Page Information:
 - Displaying added posts.
 - Number of post likes.
 - Membership in communities and games.
 - Extensive game database for browsing and adding to one's collection.
 - ability to follow other users
 
-####Creating and joining user communities:
+#### Creating and joining user communities:
 - Posting content within communities.
 - Full control for community founders over its content.
 
-####Posts:
+#### Posts:
 - Liking and disliking posts.
 - Commenting on posts.
 - Editing and deleting one's own posts.
 - Ability to add images to posts.
 - Ability to save posts
 
-####Messages:
+#### Messages:
 - Real-time conversations.
 - Selection of a preferred theme from a palette of 12 different colors.
 
-####Notifications:
+#### Notifications:
 - Real-time notifications system
 
-####Searching for other users in the "Explore" tab: 
+#### Searching for other users in the "Explore" tab: 
 - Managing search history.
 
-####Infinite scroll:
+#### Infinite scroll:
 - fetching new data only if needed
 
 
