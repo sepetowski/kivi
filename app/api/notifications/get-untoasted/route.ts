@@ -17,6 +17,11 @@ export const GET = async (request: Request) => {
 			},
 		});
 
+		if (!notifications)
+			return new NextResponse(JSON.stringify([]), {
+				status: 200,
+			});
+
 		return new NextResponse(JSON.stringify(notifications), {
 			status: 200,
 		});
