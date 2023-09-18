@@ -52,7 +52,7 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 ####Searching for other users in the "Explore" tab: 
 - Managing search history.
 
-####Infinity Scrolling:
+####Infinite scroll:
 - fetching new data only if needed
 
 
