@@ -7,20 +7,6 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
 
-declare module '@auth/core/types' {
-	interface Session {
-		error?: 'RefreshAccessTokenError';
-	}
-}
-
-declare module '@auth/core/jwt' {
-	interface JWT {
-		access_token: string;
-		expires_at: number;
-		refresh_token: string;
-		error?: 'RefreshAccessTokenError';
-	}
-}
 
 export const authOptions: NextAuthOptions = {
 	session: {
@@ -84,17 +70,7 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	secret: process.env.NEXTAUTH_SECRET!,
-	debug: process.env.NODE_ENV === 'development',
 	callbacks: {
-		async jwt({ user, token }) {
-			if (user) {
-				console.log({ ...token, ...user });
-				return { ...token, ...user };
-			}
-			console.log(token);
-			return token;
-		},
 		async session({ session, token }) {
 			if (token) {
 				session.user.id = token.sub!;
