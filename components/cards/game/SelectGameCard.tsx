@@ -34,7 +34,7 @@ export const SelectGameCard = ({ image_background, name }: Props) => {
 				toast({
 					variant: 'destructive',
 					title: 'Oh no! Something went wrong.',
-					description: res.statusText,
+					description: `You have already added ${name} to your profile`,
 				});
 			} else {
 				toast({
