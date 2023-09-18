@@ -12,16 +12,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-	matcher: [
-		'/',
-		'/add/games',
-		'/messages',
-		'/messages/m/:path*',
-		'/r/:path*/submit',
-		'/saved',
-		'/notifications',
-		'/explore',
-		'/profilie/:path*',
-		'/profilie/details/:path',
-	],
+	matcher: ['/'],
 };
