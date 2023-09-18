@@ -24,6 +24,9 @@ export const GET = async (request: Request) => {
 						id: true,
 					},
 					where: {
+						sender: {
+							id: userId,
+						},
 						seen: false,
 					},
 				},
