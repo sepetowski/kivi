@@ -7,7 +7,6 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
 
-
 export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: 'jwt',
@@ -90,6 +89,25 @@ export const authOptions: NextAuthOptions = {
 			}
 
 			return session;
+		},
+		async jwt({ user, token }) {
+			const dbUser = await db.user.findFirst({
+				where: {
+					email: token.email,
+				},
+			});
+
+			if (!dbUser) {
+				token.id = user!.id;
+				return token;
+			}
+
+			return {
+				id: dbUser.id,
+				name: dbUser.name,
+				email: dbUser.email,
+				picture: dbUser.image,
+			};
 		},
 	},
 };
