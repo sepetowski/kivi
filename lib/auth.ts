@@ -6,6 +6,22 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
+import { nanoid } from 'nanoid';
+
+declare module '@auth/core/types' {
+	interface Session {
+		error?: 'RefreshAccessTokenError';
+	}
+}
+
+declare module '@auth/core/jwt' {
+	interface JWT {
+		access_token: string;
+		expires_at: number;
+		refresh_token: string;
+		error?: 'RefreshAccessTokenError';
+	}
+}
 
 export const authOptions: NextAuthOptions = {
 	session: {
@@ -91,6 +107,39 @@ export const authOptions: NextAuthOptions = {
 			}
 
 			return session;
+		},
+		async jwt({ token, user }) {
+			const dbUser = await db.user.findFirst({
+				where: {
+					email: token.email,
+				},
+			});
+
+			if (!dbUser) {
+				token.id = user!.id;
+				return token;
+			}
+
+			if (!dbUser.name) {
+				await db.user.update({
+					where: {
+						id: dbUser.id,
+					},
+					data: {
+						name: nanoid(10),
+					},
+				});
+			}
+
+			return {
+				id: dbUser.id,
+				name: dbUser.name,
+				email: dbUser.email,
+				picture: dbUser.image,
+			};
+		},
+		redirect() {
+			return '/';
 		},
 	},
 };
