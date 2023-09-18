@@ -16,6 +16,7 @@ import { CommentOptions } from './CommentOptions';
 import { MoreVertical } from 'lucide-react';
 import { EditCommentForm } from '@/components/forms/post/EditCommentForm';
 import { useSearchParams } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
 	id: string;
@@ -92,6 +93,11 @@ export const CommentCard = ({
 							<h4 className='text-sm'>
 								<Link href={`/profile/${comment.author.name}`}>{comment.author.name}</Link>
 							</h4>
+							{comment.wasEdited && (
+								<Badge className='hover:bg-transparent' variant={'secondary'}>
+									Edited
+								</Badge>
+							)}
 							<p className='text-xs text-muted-foreground'>
 								&#x2022; <span>{formatTimeToNow(new Date(comment.createdAt))}</span>
 							</p>

@@ -26,7 +26,7 @@ import { generateUsernameInitials } from '@/lib/generateUsernameInitials';
 import { formatTimeToNow } from '@/lib/foramtTimeToKnow';
 import { useToast } from '@/components/ui/use-toast';
 import { VoteType } from '@prisma/client';
-import { useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ExtenedComment } from '@/types/comment';
 import { CommentsCardsContener } from '@/components/conteners/posts/CommentsCardsContener';
 import { PostOptions } from './PostOptions';
@@ -94,8 +94,6 @@ export const PostCard = ({
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	
-
 
 	const onEdittHandler = () => {
 		setIsEditting((prev) => !prev);
@@ -211,7 +209,11 @@ export const PostCard = ({
 								<CardTitle className='text-sm sm:text-base lg:text-lg'>
 									<Link href={`/profile/${userName}`}>{userName}</Link>
 								</CardTitle>
-								{wasEdited && <Badge variant={'secondary'}>Edited</Badge>}
+								{wasEdited && (
+									<Badge className='hover:bg-transparent' variant={'secondary'}>
+										Edited
+									</Badge>
+								)}
 							</div>
 							<CardDescription className='text-xs sm:text-sm lg:text-base'>
 								<span>{formatTimeToNow(new Date(added))} </span>

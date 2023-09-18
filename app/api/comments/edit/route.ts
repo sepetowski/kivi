@@ -36,13 +36,14 @@ export const POST = async (request: Request) => {
 			},
 			data: {
 				text: commentText,
+				wasEdited: true,
 			},
 		});
 
 		await db.notifications.updateMany({
 			where: {
 				commentId,
-			}, 
+			},
 			data: {
 				content: commentText,
 			},
