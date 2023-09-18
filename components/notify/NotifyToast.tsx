@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Notifications } from '@prisma/client';
 import { useToast } from '@/components/ui/use-toast';
 import { usePathname, useRouter } from 'next/navigation';
+import { domain } from '@/lib/domain';
 
 export const NotifyToast = () => {
 	const { data, status } = useSession();
@@ -19,7 +20,7 @@ export const NotifyToast = () => {
 
 	const { mutate: mutateToasted } = useMutation({
 		mutationFn: async (id: string) => {
-			const res = await fetch('/api/notifications/update-toasted', {
+			const res = await fetch(`${domain}/api/notifications/update-toasted`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -29,18 +30,19 @@ export const NotifyToast = () => {
 				}),
 			});
 
-			if (res.ok) {
-				const data = await res.json();
-				return data as Notification[];
-			}
+			if (!res.ok) return [];
+
+			const data = await res.json();
+			return data as Notification[];
 		},
 	});
 
 	const { data: notifications } = useQuery({
 		queryFn: async () => {
 			if (!data?.user.id) return [];
-			const res = await fetch(`/api/notifications/get-untoasted?userId=${data?.user.id}`);
+			const res = await fetch(`${domain}/api/notifications/get-untoasted?userId=${data?.user.id}`);
 			const notifications = await res.json();
+			if (!res.ok) return [];
 			return notifications as Notifications[];
 		},
 		queryKey: ['toast-notify'],
