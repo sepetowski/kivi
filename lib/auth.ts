@@ -87,7 +87,7 @@ export const authOptions: NextAuthOptions = {
 				id: dbUser.id,
 				name: dbUser.name,
 				email: dbUser.email,
-				image: dbUser.image,
+				picture: dbUser.image,
 			};
 		},
 		async session({ session, token }) {
