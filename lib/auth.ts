@@ -6,6 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
+
 export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: 'jwt',
@@ -68,9 +69,29 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	secret: process.env.NEXTAUTH_SECRET!,
-	debug: process.env.NODE_ENV === 'development',
+	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
+		async session({ session, token }) {
+			if (token) {
+				session.user.id = token.id;
+				session.user.name = token.name?.toLowerCase();
+				session.user.email = token.email;
+				session.user.image = token.picture;
+				session.user.username = token.username?.toLowerCase();
+			}
+
+			console.log('token: ', token);
+			const user = await db.user.findUnique({
+				where: {
+					id: token.id,
+				},
+			});
+			if (user) {
+				session.user.image = user.image;
+				session.user.name = user.name?.toLowerCase();
+			}
+			return session;
+		},
 		async jwt({ token, user }) {
 			const dbUser = await db.user.findFirst({
 				where: {
@@ -89,26 +110,6 @@ export const authOptions: NextAuthOptions = {
 				email: dbUser.email,
 				picture: dbUser.image,
 			};
-		},
-		async session({ session, token }) {
-			if (token) {
-				session.user.id = token.sub!;
-				session.user.name = token.name?.toLowerCase();
-				session.user.email = token.email;
-				session.user.image = token.picture;
-				session.user.username = token.username?.toLowerCase();
-			}
-			const user = await db.user.findUnique({
-				where: {
-					id: token.sub!,
-				},
-			});
-			if (user) {
-				session.user.image = user.image;
-				session.user.name = user.name?.toLowerCase();
-			}
-
-			return session;
 		},
 		redirect() {
 			return '/';

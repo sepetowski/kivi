@@ -24,8 +24,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 			</head>
 			<body
 				className={`scrollbar-thin scrollbar-thumb-primary scrollbar-track-secondary scrollbar-thumb-rounded-md ${inter.className}`}>
-				<QueryProvider>
-					<AuthProvider>
+				<AuthProvider>
+					<QueryProvider>
 						<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 							<Nav />
 							<div className='flex justify-between w-full max-w-[2000px] mx-auto relative'>
@@ -36,8 +36,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 							<NotifyToast />
 							<Toaster />
 						</ThemeProvider>
-					</AuthProvider>
-				</QueryProvider>
+					</QueryProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);
