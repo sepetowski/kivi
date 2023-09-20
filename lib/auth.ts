@@ -6,7 +6,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcrypt';
-
 export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: 'jwt',
@@ -69,7 +68,28 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
+	secret: process.env.NEXTAUTH_SECRET!,
+	debug: process.env.NODE_ENV === 'development',
 	callbacks: {
+		async jwt({ token, user }) {
+			const dbUser = await db.user.findFirst({
+				where: {
+					email: token.email,
+				},
+			});
+
+			if (!dbUser) {
+				token.id = user!.id;
+				return token;
+			}
+
+			return {
+				id: dbUser.id,
+				name: dbUser.name,
+				email: dbUser.email,
+				image: dbUser.image,
+			};
+		},
 		async session({ session, token }) {
 			if (token) {
 				session.user.id = token.sub!;
@@ -89,28 +109,6 @@ export const authOptions: NextAuthOptions = {
 			}
 
 			return session;
-		},
-		async jwt({ user, token }) {
-			const dbUser = await db.user.findFirst({
-				where: {
-					email: token.email,
-				},
-			});
-
-			if (!dbUser) {
-				token.id = user!.id;
-				return token;
-			}
-
-			return {
-				id: dbUser.id,
-				name: dbUser.name,
-				email: dbUser.email,
-				picture: dbUser.image,
-			};
-		},
-		redirect() {
-			return '/';
 		},
 	},
 };
