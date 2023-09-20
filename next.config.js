@@ -12,9 +12,16 @@ const nextConfig = {
 			},
 			{
 				protocol: 'https',
-				hostname: '"media.rawg.io',
+				hostname: 'media.rawg.io',
+			},
+			{
+				protocol: 'https',
+				hostname: 'lh3.googleusercontent.com',
 			},
 		],
+	},
+	experimental: {
+		appDir: true,
 	},
 };
 

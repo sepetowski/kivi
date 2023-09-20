@@ -80,7 +80,6 @@ export const authOptions: NextAuthOptions = {
 				session.user.username = token.username?.toLowerCase();
 			}
 
-			console.log('token: ', token);
 			const user = await db.user.findUnique({
 				where: {
 					id: token.id,
