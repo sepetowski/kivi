@@ -137,6 +137,10 @@ export const POST = async (request: Request) => {
 
 			return new NextResponse('OK', { status: 200 });
 		}
+		return new NextResponse('Invalid Request', {
+			status: 400,
+			statusText: 'Invalid Request',
+		});
 	} catch (err) {
 		let errMsg = 'Database Error';
 		if (typeof err === 'string') {

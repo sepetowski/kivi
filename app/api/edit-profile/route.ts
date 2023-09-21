@@ -5,7 +5,8 @@ import { getAuthSession } from '@/lib/auth';
 export const POST = async (request: Request) => {
 	const session = await getAuthSession();
 
-	if (!session?.user) return new Response('Unauthorized', { status: 401 ,statusText:"Unauthorized User"});
+	if (!session?.user)
+		return new Response('Unauthorized', { status: 401, statusText: 'Unauthorized User' });
 
 	const { username, profileDescription, orignalUserName } = await request.json();
 
@@ -99,6 +100,10 @@ export const POST = async (request: Request) => {
 				statusText: 'Your profile data was changed.',
 			});
 		}
+		return new NextResponse('Invalid Request', {
+			status: 400,
+			statusText: 'Invalid Request',
+		});
 	} catch (err) {
 		let errMsg = 'Database Error';
 		if (typeof err === 'string') {
