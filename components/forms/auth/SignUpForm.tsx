@@ -57,7 +57,7 @@ export const SingUpForm = () => {
 						toast({
 							title: 'Account was created!',
 						});
-						signIn('credentials', {
+						await signIn('credentials', {
 							email: values.email,
 							password: values.password,
 							redirect: false,

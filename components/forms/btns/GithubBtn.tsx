@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const GithubBtn = ({ isSending }: Props) => {
-	const onLoginHandler = () => {
-		signIn('github');
+	const onLoginHandler = async () => {
+		await signIn('github');
 	};
 
 	return (

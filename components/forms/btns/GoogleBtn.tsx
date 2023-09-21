@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const GoogleBtn = ({ isSending }: Props) => {
-	const onLoginHandler = () => {
-		signIn('google');
+	const onLoginHandler = async () => {
+		await signIn('google');
 	};
 
 	return (

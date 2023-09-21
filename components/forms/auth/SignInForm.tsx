@@ -34,9 +34,9 @@ export const SingInForm = () => {
 		},
 		validationSchema: SigninSchema,
 
-		onSubmit: (values, { resetForm }) => {
+		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			signIn('credentials', {
+			await signIn('credentials', {
 				email: values.email,
 				password: values.password,
 				redirect: false,
