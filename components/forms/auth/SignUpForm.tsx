@@ -60,7 +60,6 @@ export const SingUpForm = () => {
 						await signIn('credentials', {
 							email: values.email,
 							password: values.password,
-							redirect: false,
 						});
 						resetForm();
 						router.refresh();

@@ -25,13 +25,15 @@ export const UserAccount = ({ name, email, image }: Props) => {
 	const router = useRouter();
 
 	const logOutHandler = () => {
-		signOut();
+		signOut({
+			callbackUrl: `${window.location.origin}/sign-in`,
+		});
 		toast({
 			title: 'You have been logout',
 		});
 	};
 	return (
-		<DropdownMenu >
+		<DropdownMenu>
 			<DropdownMenuTrigger className='rounded-full'>
 				<ProfileAvatar image={image} name={name} />
 			</DropdownMenuTrigger>

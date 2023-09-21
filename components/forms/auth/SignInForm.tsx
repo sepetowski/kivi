@@ -36,10 +36,9 @@ export const SingInForm = () => {
 
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			await signIn('credentials', {
+			const t= await signIn('credentials', {
 				email: values.email,
 				password: values.password,
-				redirect: false,
 			})
 				.then((res) => {
 					if (res?.error && res.error)
@@ -66,6 +65,7 @@ export const SingInForm = () => {
 				.finally(() => {
 					setIsSending(false);
 				});
+				console.log(t);
 		},
 	});
 	return (
