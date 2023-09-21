@@ -45,32 +45,55 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 						orignalUserName: session.data?.user.name,
 					}),
 				});
-				if (!res.ok)
-					toast({
-						variant: 'destructive',
-						title: 'Oh no! Something went wrong.',
-						description: res.statusText,
-					});
-				else {
-					if (res.status === 201) {
-						toast({
-							title: 'Username was changed.',
-						});
-						await session.update();
-						router.push(`/profile/${values.username.toLowerCase()}`);
+				if (!res.ok) {
+					switch (res.status) {
+						case 401: {
+							toast({
+								variant: 'destructive',
+								title: 'Oh no! Something went wrong.',
+								description: 'You have to provide any changes',
+							});
+							break;
+						}
+						case 402: {
+							toast({
+								variant: 'destructive',
+								title: 'Oh no! Something went wrong.',
+								description: 'Username is already taken',
+							});
+							break;
+						}
+						default:
+							toast({
+								variant: 'destructive',
+								title: 'Oh no! Something went wrong.',
+							});
 					}
-					if (res.status === 200) {
-						toast({
-							title: 'Profile description was changed',
-						});
-						router.refresh();
-					}
-					if (res.status === 202) {
-						toast({
-							title: 'Your profile data was changed.',
-						});
-						await session.update();
-						router.push(`/profile/${values.username.toLowerCase()}`);
+				} else {
+					switch (res.status) {
+						case 200: {
+							toast({
+								title: 'Profile description was changed',
+							});
+							router.refresh();
+							break;
+						}
+						case 201: {
+							toast({
+								title: 'Username was changed.',
+							});
+							await session.update();
+							router.push(`/profile/${values.username.toLowerCase()}`);
+							break;
+						}
+						case 202: {
+							toast({
+								title: 'Your profile data was changed.',
+							});
+							await session.update();
+							router.push(`/profile/${values.username.toLowerCase()}`);
+							break;
+						}
 					}
 				}
 			} catch (err) {
@@ -123,7 +146,9 @@ export const EdditProfileForm = ({ profileDescription, username }: Props) => {
 			</div>
 			<SheetFooter>
 				<SheetClose asChild>
-					<Button type='submit'>Save changes</Button>
+					<Button disabled={!(formik.dirty && formik.isValid)} type='submit'>
+						Save changes
+					</Button>
 				</SheetClose>
 			</SheetFooter>
 		</form>

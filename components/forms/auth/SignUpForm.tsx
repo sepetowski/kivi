@@ -60,9 +60,10 @@ export const SingUpForm = () => {
 						await signIn('credentials', {
 							email: values.email,
 							password: values.password,
+							redirect: false,
 						});
 
-						resetForm();
+						resetForm()
 						router.refresh();
 
 						break;
@@ -161,7 +162,10 @@ export const SingUpForm = () => {
 						<InputError error={formik.errors.password} isInputTouched={formik.touched.password} />
 					</div>
 
-					<Button disabled={isSending} type='submit' className='flex gap-2 text-lg w-full'>
+					<Button
+						disabled={isSending || !(formik.dirty && formik.isValid)}
+						type='submit'
+						className='flex gap-2 text-lg w-full'>
 						{!isSending && <>Sign Up</>}
 						{isSending && (
 							<>

@@ -36,35 +36,49 @@ export const SingInForm = () => {
 
 		onSubmit: async (values, { resetForm }) => {
 			setIsSending(true);
-			await signIn('credentials', {
-				email: values.email,
-				password: values.password,
-			})
-				.then((res) => {
-					if (res?.error && res.error)
-						toast({
-							variant: 'destructive',
-							title: res.error,
-						});
-					else if (res && res.ok && !res?.error) {
-						resetForm();
-						router.refresh();
-					} else {
-						toast({
-							variant: 'destructive',
-							title: 'Oh no! An error has occured.',
-							description: 'Something went wrong, please try again',
-							action: (
-								<ToastAction onClick={() => formik.submitForm} altText='Try again'>
-									Try again
-								</ToastAction>
-							),
-						});
-					}
-				})
-				.finally(() => {
-					setIsSending(false);
+			try {
+				const account = await signIn('credentials', {
+					email: values.email,
+					password: values.password,
+					redirect: false,
 				});
+
+				if (account?.error && account.error) {
+					toast({
+						variant: 'destructive',
+						title: account.error,
+					});
+				} else if (account && account.ok && !account?.error) {
+					resetForm();
+
+					router.refresh();
+				} else {
+					toast({
+						variant: 'destructive',
+						title: 'Oh no! An error has occured.',
+						description: 'Something went wrong, please try again',
+						action: (
+							<ToastAction onClick={() => formik.submitForm} altText='Try again'>
+								Try again
+							</ToastAction>
+						),
+					});
+				}
+			} catch (err) {
+				let errMsg = 'unkown error';
+				if (typeof err === 'string') {
+					errMsg = err;
+				} else if (err instanceof Error) {
+					errMsg = err.message;
+				}
+				toast({
+					variant: 'destructive',
+					title: 'Oh no! An error has occured.',
+					description: errMsg,
+				});
+			}
+
+			setIsSending(false);
 		},
 	});
 	return (
@@ -103,7 +117,10 @@ export const SingInForm = () => {
 						<InputError error={formik.errors.password} isInputTouched={formik.touched.password} />
 					</div>
 
-					<Button disabled={isSending} type='submit' className='flex gap-2 text-lg w-full'>
+					<Button
+						disabled={isSending || !(formik.dirty && formik.isValid)}
+						type='submit'
+						className='flex gap-2 text-lg w-full'>
 						{!isSending && <>Sign In</>}
 						{isSending && (
 							<>

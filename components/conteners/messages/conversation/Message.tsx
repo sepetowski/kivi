@@ -76,7 +76,7 @@ export const Message = ({ message, activeUserId, lastMessageId }: Props) => {
 				className={` text-white p-2  rounded-md shadow-sm flex justify-center   ${
 					isActiveUserSendMasseage ? activeThemeVaraint : 'dark:bg-muted bg-neutral-400'
 				}`}>
-				<p className='text-sm md:text-base '>{text}</p>
+				<p className='text-sm md:text-base break-words'>{text}</p>
 			</div>
 
 			{isActiveUserSendMasseage && lastMessageId === id && (

@@ -26,7 +26,7 @@ export const POST = async (request: Request) => {
 
 		if (username === name && profileDescription === originalProfileDescription)
 			return new NextResponse('You have to provide any changes', {
-				status: 400,
+				status: 401,
 				statusText: 'You have to provide any changes',
 			});
 
@@ -39,7 +39,7 @@ export const POST = async (request: Request) => {
 			});
 			if (isNotAvaible)
 				return new NextResponse('Username is already taken', {
-					status: 400,
+					status: 402,
 					statusText: 'Username is already taken',
 				});
 
@@ -81,7 +81,7 @@ export const POST = async (request: Request) => {
 			});
 			if (isNotAvaible)
 				return new NextResponse('Username is already taken', {
-					status: 400,
+					status: 402,
 					statusText: 'Username is already taken',
 				});
 
@@ -101,7 +101,7 @@ export const POST = async (request: Request) => {
 			});
 		}
 		return new NextResponse('Invalid Request', {
-			status: 400,
+			status: 500,
 			statusText: 'Invalid Request',
 		});
 	} catch (err) {

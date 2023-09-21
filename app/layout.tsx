@@ -8,6 +8,7 @@ import { LeftSidebar } from '@/components/sidebar/leftSidebar/LeftSidebar';
 import { RightSidebar } from '@/components/sidebar/rightSidebar/RightSideBar';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { NotifyToast } from '@/components/notify/NotifyToast';
+import { CookieAlert } from '@/components/cookies/CookieAlert';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,6 +33,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 								<LeftSidebar />
 								<div className='w-full '>{children}</div>
 								<RightSidebar />
+								<CookieAlert />
 							</div>
 							<NotifyToast />
 							<Toaster />

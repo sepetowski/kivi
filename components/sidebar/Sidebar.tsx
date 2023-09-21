@@ -1,5 +1,4 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
@@ -10,8 +9,6 @@ interface Props {
 
 export const Sidebar = ({ children, left }: Props) => {
 	const pathname = usePathname();
-	const session = useSession();
-
 
 	if (pathname === '/sign-in' || pathname === '/sign-up') return null;
 	else
