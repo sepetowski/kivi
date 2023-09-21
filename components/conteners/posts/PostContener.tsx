@@ -112,7 +112,7 @@ export const PostContener = ({
 			)}
 			{!profilePage && isAllPostsFetched && (
 				<li className='flex justify-center items-center text-center mt-8'>
-					<p>Thats all for now. You have seen evrything &#128512;</p>
+					<p>That&apos;s all for now. You have seen everything &#128512;</p>
 				</li>
 			)}
 		</>
