@@ -61,6 +61,7 @@ export const SingUpForm = () => {
 							email: values.email,
 							password: values.password,
 						});
+
 						resetForm();
 						router.refresh();
 
