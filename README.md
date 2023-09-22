@@ -87,7 +87,8 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 #### Real time conversations
 
-https://github.com/sepetowski/kivi/assets/114868887/7fb45272-e032-43fa-9d02-429863a148a7
+
+https://github.com/sepetowski/kivi/assets/114868887/7e921ca4-59ae-4707-a1e0-e6c4cf71f15b
 
 
 ## Screenshots :video_game:
@@ -122,20 +123,16 @@ https://github.com/sepetowski/kivi/assets/114868887/7fb45272-e032-43fa-9d02-4298
 
 #### Small screens
 
-<div style="display: flex; flex-wrap: wrap;">
+![home](https://github.com/sepetowski/kivi/assets/114868887/9f039d06-956b-4681-bf88-745b72549d7d)
+![menu](https://github.com/sepetowski/kivi/assets/114868887/a5292edd-8fbe-454c-a596-c84ac548c434)
+![profile](https://github.com/sepetowski/kivi/assets/114868887/847203a8-c570-49f4-ba54-4dba22b4acac)
+![notifications](https://github.com/sepetowski/kivi/assets/114868887/a8b848d2-df41-4f1c-80f2-3084ea267cbc)
+![conversation](https://github.com/sepetowski/kivi/assets/114868887/296d7dc7-4e5a-4f44-ad42-4b66189393bb)
+![explore](https://github.com/sepetowski/kivi/assets/114868887/09e5a3e3-4acb-4061-9e55-368c88ef1472)
+![explore-2](https://github.com/sepetowski/kivi/assets/114868887/5ad9c88a-4c15-42e9-b107-9a565ece2fa7)
+![games](https://github.com/sepetowski/kivi/assets/114868887/f3c34d41-0410-46c0-8cf5-7d0657a3108d)
 
- <img src="https://github.com/sepetowski/kivi/assets/114868887/b4b5d3c1-a86f-4ff0-acda-ba29a2f9d8cb" alt="IMG_1439" style="width: 100%; flex: 1;" >
-<img src="https://github.com/sepetowski/kivi/assets/114868887/c860bbb3-dbb0-41dc-93d8-035e945d4684" alt="IMG_1438" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/07a563e1-ff3e-4541-aff4-dba4b0b9b34d" alt="IMG_1437" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/6866955e-0260-4c0c-994f-4dba8d8bfeff" alt="IMG_1436" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/5984fe31-77c0-43d5-8d7e-d615cd0d99f1" alt="IMG_1435" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/6960199b-9d8c-4716-8f5a-14cf95627720" alt="IMG_1447" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/7ddcbaec-0ace-4fb6-bbb8-f2b913a95972" alt="IMG_1445" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/2ac2978a-2b6c-4900-93bb-58876d8031a5" alt="IMG_1443" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/6f23df87-9066-4a6b-a699-744b818719a0" alt="IMG_1441" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/571ffcdd-831c-482c-ab7f-68f5509bd2a7" alt="IMG_1440" style="width: 100%; flex: 1;">
 
-</div>
 
 
 
