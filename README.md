@@ -83,6 +83,13 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 - Shadcn/ui
 
 
+## Viedos
+
+#### Real time conversations
+
+https://github.com/sepetowski/kivi/assets/114868887/7fb45272-e032-43fa-9d02-429863a148a7
+
+
 ## Screenshots :video_game:
 
 #### Large screens
