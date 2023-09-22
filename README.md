@@ -123,47 +123,7 @@ https://github.com/sepetowski/kivi/assets/114868887/7e921ca4-59ae-4707-a1e0-e6c4
 
 #### Small screens
 
-# Tytuł Twojego Projektu
-
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 20px;">
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/9f039d06-956b-4681-bf88-745b72549d7d" alt="home">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/a5292edd-8fbe-454c-a596-c84ac548c434" alt="menu">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/847203a8-c570-49f4-ba54-4dba22b4acac" alt="profile">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/a8b848d2-df41-4f1c-80f2-3084ea267cbc" alt="notifications">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/296d7dc7-4e5a-4f44-ad42-4b66189393bb" alt="conversation">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/09e5a3e3-4acb-4061-9e55-368c88ef1472" alt="explore">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/5ad9c88a-4c15-42e9-b107-9a565ece2fa7" alt="explore-2">
-  </div>
-
-  <div>
-    <img src="https://github.com/sepetowski/kivi/assets/114868887/f3c34d41-0410-46c0-8cf5-7d0657a3108d" alt="games">
-  </div>
-
-</div>
-
-
-
-
+<img src="https://github.com/sepetowski/kivi/assets/114868887/9f039d06-956b-4681-bf88-745b72549d7d" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/a5292edd-8fbe-454c-a596-c84ac548c434" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/847203a8-c570-49f4-ba54-4dba22b4acac" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/a8b848d2-df41-4f1c-80f2-3084ea267cbc" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/296d7dc7-4e5a-4f44-ad42-4b66189393bb" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/09e5a3e3-4acb-4061-9e55-368c88ef1472" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/5ad9c88a-4c15-42e9-b107-9a565ece2fa7" width="45%"></img> <img src="https://github.com/sepetowski/kivi/assets/114868887/f3c34d41-0410-46c0-8cf5-7d0657a3108d" width="45%"></img> 
 
 
 
