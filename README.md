@@ -125,7 +125,6 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 <img src="https://github.com/sepetowski/kivi/assets/114868887/6960199b-9d8c-4716-8f5a-14cf95627720" alt="IMG_1447" style="width: 100%; flex: 1;">
 <img src="https://github.com/sepetowski/kivi/assets/114868887/7ddcbaec-0ace-4fb6-bbb8-f2b913a95972" alt="IMG_1445" style="width: 100%; flex: 1;">
 <img src="https://github.com/sepetowski/kivi/assets/114868887/2ac2978a-2b6c-4900-93bb-58876d8031a5" alt="IMG_1443" style="width: 100%; flex: 1;">
-<img src="https://github.com/sepetowski/kivi/assets/114868887/f4ed589e-277b-4a3c-9db6-6f39bae48763" alt="IMG_1442" style="width: 100%; flex: 1;">
 <img src="https://github.com/sepetowski/kivi/assets/114868887/6f23df87-9066-4a6b-a699-744b818719a0" alt="IMG_1441" style="width: 100%; flex: 1;">
 <img src="https://github.com/sepetowski/kivi/assets/114868887/571ffcdd-831c-482c-ab7f-68f5509bd2a7" alt="IMG_1440" style="width: 100%; flex: 1;">
 
