@@ -28,7 +28,7 @@ export const CookieAlert = () => {
 			<div
 				onClick={acceptCookies}
 				className='fixed inset-0 z-[2000] bg-background/80 backdrop-blur-sm w-full h-full  duration-200'></div>
-			<div className='w-full   fixed z-[2050] bottom-0  bg-background  shadow-lg flex flex-col md:flex-row md:justify-between gap-6 items-center text-white p-4 lg:p-6  border-t  duration-300'>
+			<div className='w-full   fixed z-[2050] bottom-0  bg-background  shadow-lg flex flex-col md:flex-row md:justify-between gap-6 items-center p-4 lg:p-6  border-t  duration-300'>
 				<div className='flex flex-col md:flex-row items-center gap-6 md:w-4/5 '>
 					<Image
 						className='mt-[-6rem]'

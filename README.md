@@ -1,6 +1,6 @@
 ## Kivi - soclial app for gamers! :video_game:
 
-[Kivi](https://kivi-app.vercel.app/ 'Kivi') is a social media application designed for gamers. Users can fully customize their profiles, where they can change their name, description, background image, and avatar. Additionally, users can follow other users and browse their profiles. On the profile page, you can find information about the user's added posts, the number of likes, and their memberships in communities and games they play.
+[Kivi](https://kivi-app.vercel.app 'Kivi') is a social media application designed for gamers. Users can fully customize their profiles, where they can change their name, description, background image, and avatar. Additionally, users can follow other users and browse their profiles. On the profile page, you can find information about the user's added posts, liked posts, and their memberships in communities and games they play.
 
 When it comes to games, Kivi offers an extensive database of titles from which users can browse and add them to their collection. This enables them to share their gaming preferences with other players. Each user can also create their own communities or join existing ones, where they can post content. Community founders have complete control over their content, including the ability to change the community's image, name, and description, or delete the community entirely.
 
@@ -14,7 +14,7 @@ Furthermore, users have the option to save posts of interest in the "Saved" sect
 
 ## Live :globe_with_meridians:
 
-Create an account and start using Kivi - social app for gamers. [Join now!](https://kivi-app.vercel.app/ 'Kivi')
+Create an account and start using Kivi - social app for gamers. [Join now!](https://kivi-app.vercel.app 'Kivi')
 
 ## Features :sparkler:
 
@@ -26,7 +26,7 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 #### Profile Page Information:
 - Displaying added posts.
-- Number of post likes.
+- Displaying liked posts.
 - Membership in communities and games.
 - Extensive game database for browsing and adding to one's collection.
 - ability to follow other users
@@ -68,6 +68,6 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 - TanStack Query (React Query)
 - Tailwindcss
 - Shadcn/ui
-- Formik
+
 
 ## Screenshots :video_game:
