@@ -20,6 +20,10 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 ## Features :sparkler:
 
+#### Authentication
+- You can sing in with credentials, google, github
+- JWT
+
 #### User Profile Customization:
 - Changing the username.
 - Modifying the profile description.
