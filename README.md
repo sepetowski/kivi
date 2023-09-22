@@ -84,8 +84,11 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 
 ## Screenshots :video_game:
-![cookies](https://github.com/sepetowski/kivi/assets/114868887/dc2b9135-90ae-494e-8184-945a3e64bbae)
-![singin](https://github.com/sepetowski/kivi/assets/114868887/1554720f-8a03-4187-bfff-a02612fa3d10)
+
+#### Large screen
+
+![cookies](https://github.com/sepetowski/kivi/assets/114868887/57dabaeb-ea32-4e05-b94e-21fef0f0a09e)
+![singin](https://github.com/sepetowski/kivi/assets/114868887/5b3f0d85-33a5-44d6-96b1-f850c282a657)
 ![home](https://github.com/sepetowski/kivi/assets/114868887/8e84c4fd-e289-48e2-8c77-c2843234a775)
 ![home-white](https://github.com/sepetowski/kivi/assets/114868887/30dc92dd-167d-422f-ad51-0bbde399a10e)
 ![comment](https://github.com/sepetowski/kivi/assets/114868887/ffd07b38-0cc1-4507-a5dc-51dbdb14b0a4)
@@ -95,12 +98,12 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 ![profile-communities](https://github.com/sepetowski/kivi/assets/114868887/04e16142-2823-4225-83c2-304478062826)
 ![profile-games](https://github.com/sepetowski/kivi/assets/114868887/50f9027a-8c26-4ffa-81cf-c93962432bd5)
 ![explore](https://github.com/sepetowski/kivi/assets/114868887/0028dc21-f8c3-4db0-bc38-19645faa9332)
-![explore-2](https://github.com/sepetowski/kivi/assets/114868887/cdcb580d-746d-41e3-a80c-c616d8b33f5c)
+![explore-2](https://github.com/sepetowski/kivi/assets/114868887/7afaea9a-06ec-4357-844b-53d9c532234f)
 ![other-user-profile](https://github.com/sepetowski/kivi/assets/114868887/a93f280a-589b-45b7-800d-59f5d1cde3ee)
 ![communities](https://github.com/sepetowski/kivi/assets/114868887/45874f16-0c89-410f-892c-ea8a24576537)
 ![created-communities](https://github.com/sepetowski/kivi/assets/114868887/3d5b73e8-e205-4756-bbe5-86e132eb5bd6)
 ![new-community](https://github.com/sepetowski/kivi/assets/114868887/ce6f9416-7858-4b79-8165-7131759661e6)
-![messages](https://github.com/sepetowski/kivi/assets/114868887/1385b94b-16bd-4636-a7aa-4de7c7cb5dcb)
+![messages](https://github.com/sepetowski/kivi/assets/114868887/0a2da997-a8ae-4c2a-bf5e-86d13bb56abc)
 ![conversation](https://github.com/sepetowski/kivi/assets/114868887/89d9ad2f-204c-4525-b702-344cdd3ed541)
 ![conversation-2](https://github.com/sepetowski/kivi/assets/114868887/2e5f04bf-d7ec-4967-88fe-f72529c5a9be)
 ![notifications](https://github.com/sepetowski/kivi/assets/114868887/57c673d2-2fc7-4719-9ca1-80fed5e70cce)
