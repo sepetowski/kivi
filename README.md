@@ -1,6 +1,6 @@
 ## Kivi - soclial app for gamers! :video_game:
 
-[Kivi](https://kivi-app.vercel.app 'Kivi') is a social media application designed for gamers. Users can fully customize their profiles, where they can change their name, description, background image, and avatar. Additionally, users can follow other users and browse their profiles. On the profile page, you can find information about the user's added posts, liked posts, and their memberships in communities and games they play.
+[Kivi](https://kivi-app.vercel.app 'Kivi') is a full resposnive social media application designed for gamers. Users can fully customize their profiles, where they can change their name, description, background image, and avatar. Additionally, users can follow other users and browse their profiles. On the profile page, you can find information about the user's added posts, liked posts, and their memberships in communities and games they play.
 
 When it comes to games, Kivi offers an extensive database of titles from which users can browse and add them to their collection. This enables them to share their gaming preferences with other players. Each user can also create their own communities or join existing ones, where they can post content. Community founders have complete control over their content, including the ability to change the community's image, name, and description, or delete the community entirely.
 
@@ -56,6 +56,10 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 #### Infinite scroll:
 - Fetching new data only if needed
+
+#### Responsive design
+- RWD
+- The application seamlessly adjusts to various screen sizes, ensuring optimal user experience on both small, medium and large screens.
 
 #### Theme system
 - You can choose beetwen light and dark theme. Deafult one is your system theme
