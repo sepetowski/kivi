@@ -21,9 +21,12 @@ export const authOptions: NextAuthOptions = {
 			clientId: process.env.GOOGLE_CLIENT_ID!,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 			async profile(profile) {
+				let profileName = profile.name.toLowerCase();
+				if (profileName.includes(' ')) profileName = profileName.replace(/ /g, '.');
+
 				return {
 					id: profile.sub,
-					name: profile.name.toLowerCase(),
+					name: profileName,
 					email: profile.email,
 					image: profile.picture,
 				};
@@ -33,9 +36,12 @@ export const authOptions: NextAuthOptions = {
 			clientId: process.env.GITHUB_CLIENT_ID!,
 			clientSecret: process.env.GITHUB_CLIENT_SECRET!,
 			async profile(profile) {
+				let profileName = profile.name.toLowerCase();
+				if (profileName.includes(' ')) profileName = profileName.replace(/ /g, '.');
+
 				return {
 					id: profile.id,
-					name: profile.name.toLowerCase(),
+					name: profileName,
 					email: profile.email,
 					image: profile.avatar_url,
 				};
