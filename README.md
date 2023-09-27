@@ -89,6 +89,12 @@ Create an account and start using Kivi - social app for gamers. [Join now!](http
 
 https://github.com/sepetowski/kivi/assets/114868887/7e921ca4-59ae-4707-a1e0-e6c4cf71f15b
 
+#### Real time notifications
+
+https://github.com/sepetowski/kivi/assets/114868887/a3e689f3-232f-485c-8797-de22ee053ca3
+
+me notifications
+
 ## Screenshots :video_game:
 
 #### Large screens
