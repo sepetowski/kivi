@@ -44,6 +44,7 @@ const Community = async ({ params: { community_name } }: Params) => {
 			/>
 			<div className='mt-12 mx-auto max-w-[800px]'>
 				<PostContener
+					sessionUserId={session.user.id}
 					initialPosts={communityData.posts}
 					communityName={community_name}
 					userId={session.user.id}

@@ -13,7 +13,11 @@ const Home = async () => {
 	return (
 		<main className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6 '>
 			<div className='max-w-[800px] mx-auto'>
-				<PostContener initialPosts={posts} userId={session.user.id} />
+				<PostContener
+					sessionUserId={session.user.id}
+					initialPosts={posts}
+					userId={session.user.id}
+				/>
 			</div>
 		</main>
 	);

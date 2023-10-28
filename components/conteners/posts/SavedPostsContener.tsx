@@ -4,11 +4,12 @@ import { Frown } from 'lucide-react';
 import Image from 'next/image';
 import { PostContener } from './PostContener';
 interface Props {
+	sessionUserId:string
 	posts: ExtednedPost[];
 	userId: string;
 }
 
-export const SavedPostsContener = ({ posts, userId }: Props) => {
+export const SavedPostsContener = ({ posts, userId ,sessionUserId}: Props) => {
 	return (
 		<>
 			{posts.length === 0 && (
@@ -24,7 +25,13 @@ export const SavedPostsContener = ({ posts, userId }: Props) => {
 			)}
 			{posts.length > 0 && (
 				<div className='w-full flex flex-col gap-6 '>
-					<PostContener initialPosts={posts} userId={userId} profilePage userSaved />
+					<PostContener
+						sessionUserId={sessionUserId}
+						initialPosts={posts}
+						userId={userId}
+						profilePage
+						userSaved
+					/>
 				</div>
 			)}
 		</>

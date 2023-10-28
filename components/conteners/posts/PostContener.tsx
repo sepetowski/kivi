@@ -9,6 +9,7 @@ import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 interface Props {
 	initialPosts: ExtednedPost[];
 	userId: string;
+	sessionUserId: string;
 	communityName?: string;
 	userName?: string;
 	profilePage?: boolean;
@@ -22,6 +23,7 @@ export const PostContener = ({
 	userId,
 	userName,
 	profilePage,
+	sessionUserId,
 	userLikes,
 	userSaved,
 }: Props) => {
@@ -43,7 +45,6 @@ export const PostContener = ({
 		userSaved
 	);
 
-	
 
 	return (
 		<>
@@ -51,7 +52,7 @@ export const PostContener = ({
 				{posts.map((post, i) => {
 					const { UP, DOWN } = votesReduce(post);
 
-					const userVote = post.votes.find((vote) => vote.userId === userId);
+					const userVote = post.votes.find((vote) => vote.userId === sessionUserId);
 
 					if (i === posts.length - 1) {
 						return (
@@ -60,7 +61,7 @@ export const PostContener = ({
 									fileName={post.imageName}
 									bucektName={post.bucketName}
 									creatorId={post.authorId}
-									userId={userId}
+									userId={sessionUserId}
 									postId={post.id}
 									added={post.createdAt}
 									communityName={post.community.name}
@@ -86,7 +87,7 @@ export const PostContener = ({
 								fileName={post.imageName}
 								bucektName={post.bucketName}
 								creatorId={post.authorId}
-								userId={userId}
+								userId={sessionUserId}
 								postId={post.id}
 								added={post.createdAt}
 								communityName={post.community.name}

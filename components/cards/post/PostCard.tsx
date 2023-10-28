@@ -193,6 +193,7 @@ export const PostCard = ({
 
 	if (!isMounted) return null;
 
+
 	return (
 		<Card className={`w-full ${profilePage && ' max-w-4xl flex-grow'}`}>
 			<CardHeader>

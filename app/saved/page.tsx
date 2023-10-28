@@ -19,7 +19,7 @@ const Saved = async () => {
 	return (
 		<main className=' w-full   px-4 lg:px-8  mt-36 md:mt-28 pb-6  max-w-[800px] mx-auto '>
 			{posts && posts.length > 0 && <BookmarksHeader />}
-			<SavedPostsContener posts={posts} userId={session.user.id} />
+			<SavedPostsContener sessionUserId={session.user.id} posts={posts} userId={session.user.id} />
 		</main>
 	);
 };
