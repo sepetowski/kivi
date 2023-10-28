@@ -43,7 +43,7 @@ export const PostContener = ({
 		userSaved
 	);
 
-	console.log(posts);
+	
 
 	return (
 		<>
