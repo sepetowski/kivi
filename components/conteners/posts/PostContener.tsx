@@ -43,6 +43,8 @@ export const PostContener = ({
 		userSaved
 	);
 
+	console.log(posts);
+
 	return (
 		<>
 			<ul className={`w-full flex flex-col gap-6 ${profilePage && 'pt-6'}`}>

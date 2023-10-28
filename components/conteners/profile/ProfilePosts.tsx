@@ -23,6 +23,8 @@ export const ProfilePosts = async ({
 	const session = await getAuthSession();
 	const posts = await postsPromise;
 
+	
+
 	return (
 		<div className=' mt-6 '>
 			{posts.length === 0 && (
@@ -30,9 +32,7 @@ export const ProfilePosts = async ({
 					{session && userId === session.user.id && <p className='self-start'>{paragrphs[0]}</p>}
 					{session && userId !== session.user.id && (
 						<p className='self-start'>
-							{userName}
-							{' '}
-							{paragrphs[1]}
+							{userName} {paragrphs[1]}
 						</p>
 					)}
 				</>
@@ -41,7 +41,7 @@ export const ProfilePosts = async ({
 				<div className='max-w-[800px] mx-auto'>
 					<PostContener
 						initialPosts={posts}
-						userId={userId}
+						userId={session?.user.id!}
 						userName={userName}
 						profilePage
 						userLikes={userLieks}

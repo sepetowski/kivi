@@ -57,6 +57,7 @@ const Profile = async ({ params: { profile_name }, searchParams }: Params) => {
 	const userGames: Promise<Game[]> = getUserGames(userData.id);
 	const userCommunities: Promise<Communities[]> = getProfileUserCommunities(userData.id);
 	const userLikedPosts: Promise<ExtednedPost[]> = getProfileUserLikedPosts(userData.id);
+	
 
 	return (
 		<div className='md:px-4 lg:px-8 '>
