@@ -16,7 +16,7 @@ import { GoogleBtn } from '../btns/GoogleBtn';
 import Link from 'next/link';
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SigninSchema } from '@/validations/SinginSchema';
-import { LogWithTestAccount } from './LogWithTestAccount';
+import { LogWithTestAccount } from '../btns/LogWithTestAccount';
 
 export const SingInForm = () => {
 	const { toast } = useToast();

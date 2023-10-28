@@ -42,7 +42,7 @@ export const LogWithTestAccount = ({ isSending, onSending }: Props) => {
 			onClick={loginHandler}
 			variant='outline'
 			className='flex gap-2 text-lg w-full'>
-			Sign in with test account
+			Test account
 		</Button>
 	);
 };

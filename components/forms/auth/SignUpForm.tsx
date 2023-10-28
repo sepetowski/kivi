@@ -16,7 +16,8 @@ import { GoogleBtn } from '../btns/GoogleBtn';
 
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SignupSchema } from '@/validations/SingupSchema';
-import { LogWithTestAccount } from './LogWithTestAccount';
+import { LogWithTestAccount } from '../btns/LogWithTestAccount';
+
 
 export const SingUpForm = () => {
 	const { toast } = useToast();
