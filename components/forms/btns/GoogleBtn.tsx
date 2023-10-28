@@ -18,7 +18,7 @@ export const GoogleBtn = ({ isSending }: Props) => {
 			onClick={onLoginHandler}
 			disabled={isSending}
 			variant='outline'
-			className='flex gap-2 text-lg w-full'>
+			className='flex gap-2 text-lg w-[calc((100%/2)-0.5rem)]'>
 			<Image src='/googleLogo.svg' width={25} height={25} alt='google logo' />
 			Google
 		</Button>

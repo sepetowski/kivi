@@ -18,7 +18,7 @@ export const GithubBtn = ({ isSending }: Props) => {
 			onClick={onLoginHandler}
 			disabled={isSending}
 			variant='outline'
-			className='flex gap-2 text-lg w-full'>
+			className='flex gap-2 text-lg w-[calc((100%/2)-0.5rem)]'>
 			<Github /> Github
 		</Button>
 	);

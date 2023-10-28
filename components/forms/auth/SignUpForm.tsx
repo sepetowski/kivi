@@ -16,6 +16,7 @@ import { GoogleBtn } from '../btns/GoogleBtn';
 
 import { useLoginByProviderError } from '@/hooks/useLoginByProviderError';
 import { SignupSchema } from '@/validations/SingupSchema';
+import { LogWithTestAccount } from './LogWithTestAccount';
 
 export const SingUpForm = () => {
 	const { toast } = useToast();
@@ -63,7 +64,7 @@ export const SingUpForm = () => {
 							redirect: false,
 						});
 
-						resetForm()
+						resetForm();
 						router.refresh();
 
 						break;
@@ -111,7 +112,7 @@ export const SingUpForm = () => {
 	return (
 		<div className='w-full md:w-1/2 h-full   '>
 			<div className='h-full w-full xl:w-2/3 mx-auto flex flex-col items-center justify-center p-4 md:p-6  '>
-				<h2 className='font-bold text-2xl md:text-3xl my-4 '>Create an account</h2>
+				<h2 className='font-bold text-2xl md:text-3xl my-4 md:mt-20 '>Create an account</h2>
 				<form className='w-full flex flex-col gap-4 mt-4' onSubmit={formik.handleSubmit}>
 					<div className='grid w-full  items-center gap-1.5'>
 						<Label className='font-bold' htmlFor='username'>
@@ -180,9 +181,10 @@ export const SingUpForm = () => {
 				<p className='text-sm  font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase'>
 					or continue with
 				</p>
-				<div className='w-full flex  gap-4 my-4'>
+				<div className='w-full flex flex-wrap justify-center  gap-4 my-4'>
 					<GoogleBtn isSending={isSending} />
 					<GithubBtn isSending={isSending} />
+					<LogWithTestAccount isSending={isSending} onSending={setIsSending} />
 				</div>
 
 				<p className='text-muted-foreground text-center '>
